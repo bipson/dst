@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping  package="dst1.model">
+	<class name="computer" table="computers">
+		<id name="id" column="computer_id" type="Long">
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name" type="String" unique=true/>
+		<property name="cpus" column="cpus" type="Integer"/>
+		<property name="location" column="location" type="String"/>
+		<property name="creation" column="creation_date" type="Date"/>
+		<property name="lastUpdate" column="last_update" type="Date"/>
+		<many-to-one name="cluster" column="cluster_id" class="Cluster"/>
+		<set name="executionList" table="execution_computer" cascade="all">
+			<key column="computer_id"/>
+			<many-to-many class="Computer"/>
+		</set> 
+	</class>
+</hibernate-mapping>
