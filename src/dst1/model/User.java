@@ -10,8 +10,10 @@ public class User extends Person {
 
 	private static final long serialVersionUID = -2851676057977461463L;
 
-	private String		username;
-	private byte[]		password;
+	private String	username;
+	private byte[]	password;
+	private String	accountNo;
+	private String	bankCode;
 	
 	private List<Job> jobList;
 	
@@ -19,14 +21,24 @@ public class User extends Person {
 	
 	public User(){}
 	
-	@Column(name="username")
+	@Column(name="username", unique=true, nullable=false)
 	public String getUsername() {
 		return username;
 	}
 
-	@Column(name="username")
+	@Column(name="password", length=128)
 	public byte[] getPassword() {
 		return password;
+	}
+	
+	@Column(name="account_no", unique=true)
+	public String getAccountNo() {
+		return accountNo;
+	}
+
+	@Column(name="bank_code", unique=true)
+	public String getBankCode() {
+		return bankCode;
 	}
 
 	@OneToMany(mappedBy="job")
@@ -54,5 +66,13 @@ public class User extends Person {
 
 	public void setMembershipList(List<Membership> membershipList) {
 		this.membershipList = membershipList;
+	}
+	
+	public void setAccountNo(String accountNo) {
+		this.accountNo = accountNo;
+	}
+
+	public void setBankCode(String bankCode) {
+		this.bankCode = bankCode;
 	}
 }

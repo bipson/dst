@@ -8,13 +8,15 @@ import javax.persistence.*;
 @Entity
 @Table(name="persons")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Person  implements Serializable {
+public class Person implements Serializable {
 	
 	private static final long serialVersionUID = -8718361763284334560L;
 	
 	private Long	id;
 	private String	firstName;
 	private String	lastName;
+	
+	private Address address;
 	
 	private Set<Cluster> clusterList;
 	
@@ -36,10 +38,19 @@ public class Person  implements Serializable {
 	public String getLastName() {
 		return lastName;
 	}
+
+	@Column(name="address")
+	public Address getAddress() {
+		return address;
+	}
 	
 	@OneToMany(mappedBy="cluster")
 	public Set<Cluster> getClusterList() {
 		return clusterList;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 	public void setId(Long id) {
