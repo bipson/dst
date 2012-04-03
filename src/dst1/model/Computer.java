@@ -10,12 +10,12 @@ public class Computer implements Serializable {
 	
 	private Long		id;
 	private String		name;
-	private Integer	cpus;
+	private Integer		cpus;
 	private String		location;
 	private Date		creation;
 	private Date		lastUpdate;
 	
-	private Cluster	cluster;
+	private Cluster		cluster;
 	
 	private Set<Execution> executionList;
 	
@@ -23,6 +23,22 @@ public class Computer implements Serializable {
 
 	public Long getId() {
 		return id;
+	}
+
+	public Cluster getCluster() {
+		return cluster;
+	}
+
+	public void setCluster(Cluster cluster) {
+		this.cluster = cluster;
+	}
+
+	public Set<Execution> getExecutionList() {
+		return executionList;
+	}
+
+	public void setExecutionList(Set<Execution> executionList) {
+		this.executionList = executionList;
 	}
 
 	public String getName() {
