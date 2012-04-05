@@ -1,20 +1,15 @@
 package dst1.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
+import dst1.db.interfaces.IEntity;
 
 @Entity
 @Table(name="grids")
-public class Grid implements Serializable {
+public class Grid implements IEntity<Long> {
 
 	private static final long serialVersionUID = -3900584002751525776L;
 	
@@ -23,11 +18,17 @@ public class Grid implements Serializable {
 	private String		location;
 	private BigDecimal	costsPerCPUMinute;
 	
-	private List<Membership> membershipList;
+	private Set<Membership> membershipList;
 	
-	private List<Cluster> clusterList;
-	
+	private Set<Cluster> clusterList;
+
 	public Grid() {}
+	
+	public Grid(String name, String location, BigDecimal costsPerCPUMinute) {
+		this.name = name;
+		this.location = location;
+		this.costsPerCPUMinute = costsPerCPUMinute;
+	}
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -51,13 +52,14 @@ public class Grid implements Serializable {
 		return costsPerCPUMinute;
 	}
 
-	@OneToMany(mappedBy="membership")
-	public List<Membership> getMembershipList() {
+//	@OneToMany(mappedBy="membership")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.grid", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	public Set<Membership> getMembershipList() {
 		return membershipList;
 	}
 
-	@OneToMany(mappedBy="cluster")
-	public List<Cluster> getClusterList() {
+	@OneToMany(mappedBy="grid")
+	public Set<Cluster> getClusterList() {
 		return clusterList;
 	}
 
@@ -77,12 +79,17 @@ public class Grid implements Serializable {
 		this.costsPerCPUMinute = costsPerCPUMinute;
 	}
 
-	public void setMembershipList(List<Membership> membershipList) {
+	public void setMembershipList(Set<Membership> membershipList) {
 		this.membershipList = membershipList;
 	}
 
-	public void setClusterList(List<Cluster> clusterList) {
+	public void setClusterList(Set<Cluster> clusterList) {
 		this.clusterList = clusterList;
+	}
+
+	@Override
+	public Long obtainKey() {
+		return id;
 	}
 
 }

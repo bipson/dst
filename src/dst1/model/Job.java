@@ -1,6 +1,7 @@
 package dst1.model;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 import javax.persistence.*;
 
@@ -11,7 +12,7 @@ public class Job implements Serializable {
 	private static final long serialVersionUID = -9182152775849509682L;
 
 	private Long		id;
-	private boolean	isPaid;
+	private boolean		isPaid;
 	
 	private Environment environment;
 	
@@ -30,12 +31,22 @@ public class Job implements Serializable {
 	
 	@Transient
 	public Integer getNumCPUs() {
-		return 0;
+		
+		Iterator<Computer> it = execution.getComputerList().iterator();
+		Integer numCPUs = 0;
+		
+		while (it.hasNext())
+		{
+			numCPUs += it.next().getCpus(); 
+		}
+		
+		return numCPUs;
 	}
 
 	@Transient
     public Integer getExecutionTime() {
-		return 0;
+		
+		return (int) (execution.getStart().getTime() - execution.getEnd().getTime());
 	}
     
     
@@ -45,13 +56,13 @@ public class Job implements Serializable {
 	}
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="environment_fk")
+    @JoinColumn(name="environment_fk", nullable=false)
     public Environment getEnvironment() {
 		return environment;
 	}
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_fk")
+    @JoinColumn(name="user_fk", nullable=false)
 	public User getUser() {
 		return user;
 	}

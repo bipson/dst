@@ -2,13 +2,14 @@ package dst1.model;
 
 import javax.persistence.*;
 
-import java.io.Serializable;
+import dst1.db.interfaces.IEntity;
+
 import java.util.Date;
 import java.util.Set;
 
 @Entity
 @Table(name="clusters")
-public class Cluster implements Serializable {
+public class Cluster implements IEntity<Long> {
 	
 	private static final long serialVersionUID = 2307967057488454586L;
 
@@ -28,6 +29,12 @@ public class Cluster implements Serializable {
 	private Set<Cluster> clusterParents;
 	
 	public Cluster(){}
+	
+	public Cluster(String name, Date lastService, Date nextService) {
+		this.name = name;
+		this.lastService = lastService;
+		this.nextService = nextService;
+	}
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -52,13 +59,13 @@ public class Cluster implements Serializable {
 	}
 
 	@ManyToOne
-	@JoinColumn(name="grid_fk")
+	@JoinColumn(name="grid_fk", nullable=false)
 	public Grid getGrid() {
 		return grid;
 	}
 
 	@ManyToOne
-	@JoinColumn(name="admin_fk")
+	@JoinColumn(name="admin_fk", nullable=false)
 	public Admin getAdmin() {
 		return admin;
 	}
@@ -84,9 +91,13 @@ public class Cluster implements Serializable {
 
 	@ManyToMany(
 			cascade={CascadeType.PERSIST, CascadeType.MERGE},
-	        mappedBy = "clusters",
 	        targetEntity = Cluster.class
 	    )
+	@JoinTable(
+				name="cluster_children",
+				joinColumns=@JoinColumn(name="child_id"),
+				inverseJoinColumns=@JoinColumn(name="parent_id")
+		)
 	public Set<Cluster> getClusterParents() {
 		return clusterParents;
 	}
@@ -125,5 +136,10 @@ public class Cluster implements Serializable {
 
 	public void setClusterParents(Set<Cluster> clusterParents) {
 		this.clusterParents = clusterParents;
+	}
+
+	@Override
+	public Long obtainKey() {
+		return this.id;
 	}
 }

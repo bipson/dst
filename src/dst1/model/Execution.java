@@ -2,7 +2,7 @@ package dst1.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
@@ -19,7 +19,7 @@ public class Execution implements Serializable {
 	
 	private Job 		job;
 	
-	private List<Computer> computerList;
+	private Set<Computer> computerList;
 	
 	public Execution(){}
 
@@ -45,7 +45,7 @@ public class Execution implements Serializable {
 		return status;
 	}
 
-    @OneToOne(mappedBy = "job")
+    @OneToOne(mappedBy = "execution")
 	public Job getJob() {
 		return job;
 	}
@@ -59,7 +59,7 @@ public class Execution implements Serializable {
             joinColumns=@JoinColumn(name="exec_id"),
             inverseJoinColumns=@JoinColumn(name="comp_id")
         )
-	public List<Computer> getComputerList() {
+	public Set<Computer> getComputerList() {
 		return computerList;
 	}
 
@@ -83,7 +83,7 @@ public class Execution implements Serializable {
 		this.job = job;
 	}
 
-	public void setComputerList(List<Computer> computerList) {
+	public void setComputerList(Set<Computer> computerList) {
 		this.computerList = computerList;
 	}
 }

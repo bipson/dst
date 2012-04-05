@@ -1,12 +1,26 @@
 package dst1;
 
-public class Main {
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.Set;
+import java.math.BigDecimal;
 
+import javax.management.timer.Timer;
+
+import dst1.db.AdminDao;
+import dst1.db.ClusterDao;
+import dst1.db.GridDao;
+import dst1.db.UserDao;
+import dst1.model.*;
+
+public class Main {
+	
 	private Main() {
 		super();
 	}
 
 	public static void main(String[] args) {
+		
 		dst01();
 		dst02a();
 		dst02b();
@@ -22,7 +36,91 @@ public class Main {
 	}
 
 	public static void dst01() {
+		final AdminDao adminDao = new AdminDao();
+		final ClusterDao clusterDao = new ClusterDao();
+//		final ComputerDao computerDao = new ComputerDao();
+//		final EnvironmentDao environmentDao = new EnvironmentDao();
+//		final ExecutionDao executionDao = new ExecutionDao();
+		final GridDao gridDao = new GridDao();
+// 		final JobDao jobDao = new JobDao();
+		final UserDao userDao = new UserDao();
 		
+		// Helpers
+		long now = System.currentTimeMillis();
+		
+		// Users
+		User user1 = null, user2 = null;
+		try {
+			user1 = new User("gacksi", "foo1".getBytes("UTF-8"), "123", "8000");
+			user2 = new User("quacksi", "foo2".getBytes("UTF-8"), "12345", "8000");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		user1.setFirstName("Alfred");
+		user1.setLastName("Gacksi");
+		Address address1 = new Address("gacksiStreet", "gacksiCity", "12390");
+		user1.setAddress(address1);
+		
+		user2.setFirstName("Alfredus");
+		user2.setLastName("Quacksi");
+		Address address2 = new Address("quacksiStreet", "quacksiCity", "1234590");
+		user2.setAddress(address2);
+		
+		userDao.persist(user1);
+		userDao.persist(user2);
+		
+		// Grids
+		Grid grid1 = new Grid("grid1", "cellar1", BigDecimal.valueOf(300));
+		Grid grid2 = new Grid("grid2", "cellar2", BigDecimal.valueOf(800));
+		
+		//TODO: fix memberships
+		MembershipPK membership = new MembershipPK();
+		
+		membership.setGrid(grid1);
+		membership.setUser(user1);
+		
+		gridDao.persist(grid1);
+		gridDao.persist(grid2);
+		
+		// Admins
+		Admin admin1 = null, admin2 = null;
+		
+		admin1 = new Admin();
+		admin1.setFirstName("a");
+		admin1.setLastName("dmin");
+		Address address3 = new Address("admin1Street", "admin1City", "11190");
+		admin1.setAddress(address3);
+		
+		admin2 = new Admin();
+		admin2.setFirstName("b");
+		admin2.setLastName("dmin");
+		Address address4 = new Address("admin2Street", "admin2City", "22290");
+		admin2.setAddress(address4);
+		
+		adminDao.persist(admin1);
+		adminDao.persist(admin2);
+		
+		// Clusters
+		Cluster cluster1 = null, cluster2 = null;
+		
+		cluster1 = new Cluster("Clust1", new Date(now - (8L * 52L * Timer.ONE_WEEK)),
+				new Date(now + (3L * 52L * Timer.ONE_WEEK)));
+		
+		cluster1.setAdmin(admin1);
+		//TODO: fix cluster_children
+//		cluster1.setClusterChildren((Set<Cluster>)cluster2);
+		cluster1.setGrid(grid1);
+		
+		cluster2 = new Cluster("Clust2", new Date(now - (6L * 52L * Timer.ONE_WEEK)),
+				new Date(now + (5L * 52L * Timer.ONE_WEEK)));
+		
+		cluster2.setAdmin(admin2);
+		cluster2.setGrid(grid2);
+		
+		clusterDao.persist(cluster1);
+		clusterDao.persist(cluster2);
 	}
 
 	public static void dst02a() {
@@ -57,15 +155,15 @@ public class Main {
 
 	}
 
-        public static void dst05a() {
+    public static void dst05a() {
 
-        }
+    }
 
-        public static void dst05b() {
+    public static void dst05b() {
 
-        }
+    }
 
-        public static void dst05c() {
+    public static void dst05c() {
 
-        }
+    }
 }

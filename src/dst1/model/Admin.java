@@ -15,7 +15,7 @@ public class Admin extends Person {
 	
 	public Admin(){}
 	
-	@OneToMany(mappedBy="cluster")
+	@OneToMany(mappedBy="admin")
 	public Set<Cluster> getClusterList() {
 		return clusterList;
 	}

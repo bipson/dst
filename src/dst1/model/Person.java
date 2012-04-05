@@ -1,14 +1,13 @@
 package dst1.model;
 
-import java.io.Serializable;
-import java.util.Set;
-
 import javax.persistence.*;
+
+import dst1.db.interfaces.IEntity;
 
 @Entity
 @Table(name="persons")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Person implements Serializable {
+public class Person implements IEntity<Long> {
 	
 	private static final long serialVersionUID = -8718361763284334560L;
 	
@@ -16,15 +15,14 @@ public class Person implements Serializable {
 	private String	firstName;
 	private String	lastName;
 	
+	@Embedded
 	private Address address;
-	
-	private Set<Cluster> clusterList;
 	
 	public Person(){}
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="admin_id")
+    @Column(name="person_id")
 	public Long getId() {
 		return id;
 	}
@@ -44,11 +42,6 @@ public class Person implements Serializable {
 		return address;
 	}
 	
-	@OneToMany(mappedBy="cluster")
-	public Set<Cluster> getClusterList() {
-		return clusterList;
-	}
-
 	public void setAddress(Address address) {
 		this.address = address;
 	}
@@ -66,7 +59,13 @@ public class Person implements Serializable {
 		this.lastName = lastName;
 	};
 	
-	public void setClusterList(Set<Cluster> clusterList) {
-		this.clusterList = clusterList;
+	@Override
+	public Long obtainKey() {
+		return this.id;
+	}
+
+	@Override
+	public String toString() {
+		return (getFirstName() + ' ' + getLastName());
 	}
 }

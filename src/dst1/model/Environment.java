@@ -29,7 +29,7 @@ public class Environment implements Serializable {
 		return workflow;
 	}
 
-    @Column(name="params")
+    @ElementCollection
     public List<String> getParams() {
 		return params;
 	}

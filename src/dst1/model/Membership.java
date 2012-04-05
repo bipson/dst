@@ -1,60 +1,43 @@
 package dst1.model;
 
-import java.io.Serializable;
 import java.sql.Date;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="memberships")
-public class Membership  implements Serializable {
-
-	private static final long serialVersionUID = -5890012313962061063L;
-
-	private Date	registration;
-	private Double	discount;
+@AssociationOverrides({
+	@AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "user_id")),
+	@AssociationOverride(name = "pk.grid", joinColumns = @JoinColumn(name = "grid_id"))
+})
+public class Membership {
 	
-	private User user;
+	private MembershipPK pk = new MembershipPK();
 	
-	private Grid grid;
-	
-	public Membership(){}
+	@EmbeddedId
+	public MembershipPK getPk() {
+		return pk;
+	}
 
-	@Column(name="registration")
+	public void setPk(MembershipPK pk) {
+		this.pk = pk;
+	}
+
+	@Transient
 	public Date getRegistration() {
-		return registration;
+		return getPk().getRegistration();
 	}
 
-	@Column(name="discount")
+	@Transient
 	public Double getDiscount() {
-		return discount;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="user_fk")
-	public User getUser() {
-		return user;
-	}
-
-	@ManyToOne
-	@JoinColumn(name="grid_fk")
-	public Grid getGrid() {
-		return grid;
+		return getPk().getDiscount();
 	}
 
 	public void setRegistration(Date registration) {
-		this.registration = registration;
+		getPk().setRegistration(registration);
 	}
 
 	public void setDiscount(Double discount) {
-		this.discount = discount;
-	}
-	
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	public void setGrid(Grid grid) {
-		this.grid = grid;
+		getPk().setDiscount(discount);
 	}
 }

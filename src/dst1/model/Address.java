@@ -14,6 +14,13 @@ public class Address  implements Serializable {
 	private String	zipCode;
 	
 	public Address() {};
+
+	public Address(String street, String city, String zipCode) {
+		this.street = street;
+		this.city = city;
+		this.zipCode = zipCode;
+		
+	};
 	
 	@Column(name="street")
 	public String getStreet() {
