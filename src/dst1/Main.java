@@ -9,7 +9,9 @@ import javax.management.timer.Timer;
 
 import dst1.db.AdminDao;
 import dst1.db.ClusterDao;
+import dst1.db.GenericDao;
 import dst1.db.GridDao;
+import dst1.db.MembershipDao;
 import dst1.db.UserDao;
 import dst1.model.*;
 
@@ -42,6 +44,7 @@ public class Main {
 //		final EnvironmentDao environmentDao = new EnvironmentDao();
 //		final ExecutionDao executionDao = new ExecutionDao();
 		final GridDao gridDao = new GridDao();
+		final MembershipDao membershipDao = new MembershipDao();
 // 		final JobDao jobDao = new JobDao();
 		final UserDao userDao = new UserDao();
 		
@@ -71,18 +74,25 @@ public class Main {
 		userDao.persist(user1);
 		userDao.persist(user2);
 		
-		// Grids
+		// Grids ( + Memberships)
 		Grid grid1 = new Grid("grid1", "cellar1", BigDecimal.valueOf(300));
 		Grid grid2 = new Grid("grid2", "cellar2", BigDecimal.valueOf(800));
 		
-		//TODO: fix memberships
-		MembershipPK membership = new MembershipPK();
-		
-		membership.setGrid(grid1);
-		membership.setUser(user1);
-		
 		gridDao.persist(grid1);
 		gridDao.persist(grid2);
+		
+		Membership membership1 = new Membership(new Date(), (Double.valueOf(123)));
+		
+		membership1.setGrid(grid1);
+		membership1.setUser(user1);
+		
+		Membership membership2 = new Membership(new Date(now - (5L * Timer.ONE_WEEK)), (Double.valueOf(456)));
+		
+		membership1.setGrid(grid2);
+		membership1.setUser(user2);
+		
+		membershipDao.persist(membership1);
+		membershipDao.persist(membership2);
 		
 		// Admins
 		Admin admin1 = null, admin2 = null;
