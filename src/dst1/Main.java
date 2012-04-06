@@ -2,14 +2,12 @@ package dst1;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.Set;
 import java.math.BigDecimal;
 
 import javax.management.timer.Timer;
 
 import dst1.db.AdminDao;
 import dst1.db.ClusterDao;
-import dst1.db.GenericDao;
 import dst1.db.GridDao;
 import dst1.db.MembershipDao;
 import dst1.db.UserDao;
@@ -88,8 +86,8 @@ public class Main {
 		
 		Membership membership2 = new Membership(new Date(now - (5L * Timer.ONE_WEEK)), (Double.valueOf(456)));
 		
-		membership1.setGrid(grid2);
-		membership1.setUser(user2);
+		membership2.setGrid(grid2);
+		membership2.setUser(user2);
 		
 		membershipDao.persist(membership1);
 		membershipDao.persist(membership2);
@@ -119,8 +117,6 @@ public class Main {
 				new Date(now + (3L * 52L * Timer.ONE_WEEK)));
 		
 		cluster1.setAdmin(admin1);
-		//TODO: fix cluster_children
-//		cluster1.setClusterChildren((Set<Cluster>)cluster2);
 		cluster1.setGrid(grid1);
 		
 		cluster2 = new Cluster("Clust2", new Date(now - (6L * 52L * Timer.ONE_WEEK)),
@@ -131,6 +127,13 @@ public class Main {
 		
 		clusterDao.persist(cluster1);
 		clusterDao.persist(cluster2);
+		
+		//Cluster Children
+		cluster1.getClusterChildren().add(cluster2);
+		
+		clusterDao.persist(cluster1);
+		clusterDao.persist(cluster2);
+		
 	}
 
 	public static void dst02a() {

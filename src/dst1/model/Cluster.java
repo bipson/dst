@@ -5,6 +5,7 @@ import javax.persistence.*;
 import dst1.db.interfaces.IEntity;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -24,9 +25,9 @@ public class Cluster implements IEntity<Long> {
 	
 	private Set<Computer> computerList;
 	
-	private Set<Cluster> clusterChildren;
+	private Set<Cluster> clusterChildren = new HashSet<Cluster>();
 	
-	private Set<Cluster> clusterParents;
+	private Set<Cluster> clusterParents = new HashSet<Cluster>();
 	
 	public Cluster(){}
 	
@@ -76,10 +77,7 @@ public class Cluster implements IEntity<Long> {
 		return computerList;
 	}
 
-	@ManyToMany(
-			targetEntity=Cluster.class,
-			cascade={CascadeType.PERSIST, CascadeType.MERGE}
-	)
+	@ManyToMany
 	@JoinTable(
 			name="cluster_children",
 			joinColumns=@JoinColumn(name="parent_id"),
@@ -89,15 +87,7 @@ public class Cluster implements IEntity<Long> {
 		return clusterChildren;
 	}
 
-	@ManyToMany(
-			cascade={CascadeType.PERSIST, CascadeType.MERGE},
-	        targetEntity = Cluster.class
-	    )
-	@JoinTable(
-				name="cluster_children",
-				joinColumns=@JoinColumn(name="child_id"),
-				inverseJoinColumns=@JoinColumn(name="parent_id")
-		)
+	@ManyToMany(mappedBy="clusterChildren")
 	public Set<Cluster> getClusterParents() {
 		return clusterParents;
 	}

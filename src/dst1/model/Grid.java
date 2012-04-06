@@ -32,7 +32,7 @@ public class Grid implements IEntity<Long> {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="execution_id")
+    @Column(name="grid_id")
 	public Long getId() {
 		return id;
 	}
