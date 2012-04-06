@@ -1,13 +1,14 @@
 package dst1.model;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.*;
 
+import dst1.db.interfaces.IEntity;
+
 @Entity
 @Table(name="environments")
-public class Environment implements Serializable {
+public class Environment implements IEntity<Long> {
 	
 	private static final long serialVersionUID = -3609067342056221984L;
 	
@@ -16,6 +17,11 @@ public class Environment implements Serializable {
 	private List<String>	params;
 	
 	public Environment(){}
+
+	public Environment(String workflow, List<String> params) {
+		this.workflow = workflow;
+		this.params = params;
+	}
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -44,6 +50,11 @@ public class Environment implements Serializable {
 
 	public void setParams(List<String> params) {
 		this.params = params;
+	}
+
+	@Override
+	public Long obtainKey() {
+		return this.id;
 	}
 	
 	

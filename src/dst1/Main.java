@@ -1,6 +1,7 @@
 package dst1;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.Date;
 import java.math.BigDecimal;
 
@@ -8,6 +9,8 @@ import javax.management.timer.Timer;
 
 import dst1.db.AdminDao;
 import dst1.db.ClusterDao;
+import dst1.db.ComputerDao;
+import dst1.db.EnvironmentDao;
 import dst1.db.GridDao;
 import dst1.db.MembershipDao;
 import dst1.db.UserDao;
@@ -38,8 +41,8 @@ public class Main {
 	public static void dst01() {
 		final AdminDao adminDao = new AdminDao();
 		final ClusterDao clusterDao = new ClusterDao();
-//		final ComputerDao computerDao = new ComputerDao();
-//		final EnvironmentDao environmentDao = new EnvironmentDao();
+		final ComputerDao computerDao = new ComputerDao();
+		final EnvironmentDao environmentDao = new EnvironmentDao();
 //		final ExecutionDao executionDao = new ExecutionDao();
 		final GridDao gridDao = new GridDao();
 		final MembershipDao membershipDao = new MembershipDao();
@@ -48,6 +51,13 @@ public class Main {
 		
 		// Helpers
 		long now = System.currentTimeMillis();
+		
+		// Environments
+		Environment env1 = new Environment("abcd", Arrays.asList("abc", "cde"));
+		Environment env2 = new Environment("efghi", Arrays.asList("efg", "hij"));
+		
+		environmentDao.persist(env1);
+		environmentDao.persist(env2);
 		
 		// Users
 		User user1 = null, user2 = null;
@@ -133,6 +143,22 @@ public class Main {
 		
 		clusterDao.persist(cluster1);
 		clusterDao.persist(cluster2);
+		
+		Computer computer1 = new Computer("comp1", 6, "cellar1", new Date(), new Date());
+		Computer computer2 = new Computer("comp2", 6, "cellar1", new Date(), new Date());
+		Computer computer3 = new Computer("comp3", 2, "cellar2", new Date(), new Date());
+		Computer computer4 = new Computer("comp4", 1, "cellar2", new Date(), new Date());
+		
+		computer1.setCluster(cluster1);
+		computer2.setCluster(cluster1);
+		computer3.setCluster(cluster2);
+		computer4.setCluster(cluster2);
+
+		computerDao.persist(computer1);
+		computerDao.persist(computer2);
+		computerDao.persist(computer3);
+		computerDao.persist(computer4);
+		
 		
 	}
 

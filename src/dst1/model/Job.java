@@ -1,13 +1,14 @@
 package dst1.model;
 
-import java.io.Serializable;
 import java.util.Iterator;
 
 import javax.persistence.*;
 
+import dst1.db.interfaces.IEntity;
+
 @Entity
 @Table(name="jobs")
-public class Job implements Serializable {	
+public class Job implements IEntity<Long> {	
 
 	private static final long serialVersionUID = -9182152775849509682L;
 
@@ -91,6 +92,11 @@ public class Job implements Serializable {
 
 	public void setExecution(Execution execution) {
 		this.execution = execution;
+	}
+
+	@Override
+	public Long obtainKey() {
+		return this.id;
 	}
 
 }

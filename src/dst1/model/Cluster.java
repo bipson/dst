@@ -59,14 +59,14 @@ public class Cluster implements IEntity<Long> {
 		return nextService;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="grid_fk", nullable=false)
+	@ManyToOne(optional=false)
+	@JoinColumn(name="grid_fk")
 	public Grid getGrid() {
 		return grid;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="admin_fk", nullable=false)
+	@ManyToOne(optional=false)
+	@JoinColumn(name="admin_fk")
 	public Admin getAdmin() {
 		return admin;
 	}

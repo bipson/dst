@@ -1,16 +1,17 @@
 package dst1.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-public class Computer implements Serializable {
+import dst1.db.interfaces.IEntity;
+
+public class Computer implements IEntity<Long> {
 
 	private static final long serialVersionUID = 1326696973057917601L;
 	
 	private Long		id;
 	private String		name;
-	private Integer		cpus;
+	private Integer	cpus;
 	private String		location;
 	private Date		creation;
 	private Date		lastUpdate;
@@ -20,6 +21,15 @@ public class Computer implements Serializable {
 	private Set<Execution> executionList;
 	
 	public Computer() {}
+
+	public Computer(String name, Integer cpus, String location, Date creation,
+			Date lastUpdate) {
+		this.name = name;
+		this.cpus = cpus;
+		this.location = location;
+		this.creation = creation;
+		this.lastUpdate = lastUpdate;
+	}
 
 	public Long getId() {
 		return id;
@@ -83,7 +93,10 @@ public class Computer implements Serializable {
 
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+
+	@Override
+	public Long obtainKey() {
+		return this.id;
 	};
-	
-	
 }
