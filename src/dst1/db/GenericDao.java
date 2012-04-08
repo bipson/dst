@@ -58,7 +58,6 @@ public class GenericDao<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 			rollBackTransaction();
 			throw e;
 		}
-
 	}
 
 	@Override
@@ -74,7 +73,6 @@ public class GenericDao<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 			rollBackTransaction();
 			throw e;
 		}
-
 	}
 
 	@Override
@@ -85,8 +83,6 @@ public class GenericDao<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 		catch(RuntimeException e) {
 			throw e;
 		}
-
-
 	}
 
 	private void rollBackTransaction() {

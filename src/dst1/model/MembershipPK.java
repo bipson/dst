@@ -4,23 +4,21 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-@Embeddable
 public class MembershipPK implements Serializable {
 
 	private static final long serialVersionUID = 7575176832748301904L;
 	
 	private User user;
-	
 	private Grid grid;
 	
 	public MembershipPK(){}
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
 	public User getUser() {
 		return user;
 	}
 
-	@ManyToOne
+	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
 	public Grid getGrid() {
 		return grid;
 	}
@@ -32,41 +30,37 @@ public class MembershipPK implements Serializable {
 	public void setGrid(Grid grid) {
 		this.grid = grid;
 	}
-	
+
+	@Override
 	public int hashCode() {
-		int result;
-		
-		result = getUser().hashCode();
-		result = 29 * result + getGrid().hashCode();
-		
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((grid == null) ? 0 : grid.hashCode());
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
-	
-	public boolean equals(Object other) {
-       
-		if (this == other)
-        	return true;
-        
-		if (other == null)
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		
-        if (!(other instanceof MembershipPK))
-        	return false;
+		if (!(obj instanceof MembershipPK))
+			return false;
+		MembershipPK other = (MembershipPK) obj;
+		if (grid == null) {
+			if (other.grid != null)
+				return false;
+		} else if (!grid.equals(other.grid))
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
+		return true;
+	}
+	
 
-        final MembershipPK pk = (MembershipPK) other;
-        
-        if (this.grid == null || pk.getGrid() == null)
-        	return false;
-        
-        if (this.user == null || pk.getUser() == null)
-        	return false;
-
-        if ( !pk.getUser().equals(this.user) )
-        	return false;
-        
-        if ( !pk.getGrid().equals(this.grid) )
-        	return false;
-
-        return true;
-    }
 }

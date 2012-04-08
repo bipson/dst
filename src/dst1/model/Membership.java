@@ -19,20 +19,23 @@ public class Membership implements IEntity<MembershipPK> {
 	private Date	registration;
 	private Double	discount;
 	
-	private MembershipPK pk;
+	private MembershipPK pk = new MembershipPK();
 	
-	public Membership() {
-		pk = new MembershipPK();
-	}
+	public Membership() {}
+	
 	public Membership(Date registration, Double discount) {
-		pk = new MembershipPK();
 		this.registration = registration;
 		this.discount = discount;
 	}
 	
 	@EmbeddedId
-	public MembershipPK getPk() {
+	private MembershipPK getPk() {
 		return pk;
+	}
+	
+	@SuppressWarnings("unused")
+	private void setPk(MembershipPK pk) {
+		this.pk = pk;
 	}
 	
 	@Column(name="registration")
@@ -47,16 +50,12 @@ public class Membership implements IEntity<MembershipPK> {
 	
 	@Transient
 	public User getUser() {
-		return this.pk.getUser();
+		return getPk().getUser();
 	}
 	
 	@Transient
 	public Grid getGrid() {
-		return this.pk.getGrid();
-	}
-
-	public void setPk(MembershipPK pk) {
-		this.pk = pk;
+		return getPk().getGrid();
 	}
 
 	public void setRegistration(Date registration) {
@@ -68,27 +67,29 @@ public class Membership implements IEntity<MembershipPK> {
 	}
 	
 	public void setUser(User user) {
-		this.pk.setUser(user);
+		getPk().setUser(user);
 	}
 	
 	public void setGrid(Grid grid) {
-		this.pk.setGrid(grid);
-	}
-
-	@Override
-	public MembershipPK obtainKey() {
-		return this.pk;
+		getPk().setGrid(grid);
 	}
 	
 	@Override
 	public int hashCode() {
-		
-		return pk.hashCode();
+		return (getPk() == null ? 0 : getPk().hashCode());
 	}
 	
 	@Override
 	public boolean equals(Object other) {
 		
-		return pk.equals(other);
+		if (this == other)
+			return true;
+        if (other == null || !(other instanceof Membership)) return false;
+ 
+        Membership that = (Membership) other;
+ 
+        if (getPk() != null ? !getPk().equals(that.getPk()) : that.getPk() != null) return false;
+ 
+        return true;
 	}
 }

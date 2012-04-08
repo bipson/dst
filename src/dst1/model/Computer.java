@@ -1,6 +1,7 @@
 package dst1.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import dst1.db.interfaces.IEntity;
@@ -18,7 +19,7 @@ public class Computer implements IEntity<Long> {
 	
 	private Cluster		cluster;
 	
-	private Set<Execution> executionList;
+	private Set<Execution> executionList = new HashSet<Execution>();
 	
 	public Computer() {}
 
@@ -94,9 +95,4 @@ public class Computer implements IEntity<Long> {
 	public void setLastUpdate(Date lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
-
-	@Override
-	public Long obtainKey() {
-		return this.id;
-	};
 }

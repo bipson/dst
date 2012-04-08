@@ -1,28 +1,35 @@
 package dst1.model;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.*;
 
+import dst1.db.interfaces.IEntity;
+
 @Entity
 @Table(name="executions")
-public class Execution implements Serializable {
+public class Execution implements IEntity<Long> {
 	
 	private static final long serialVersionUID = -4905763332272953160L;
 
-	private Long		id;
-	private Date		start;
-	private Date		end;
-	private JobStatus	status;
+	private Long id;
+	private Date start;
+    private Date end;
+	private JobStatus status;
 	
-	private Job 		job;
+	private Job job;
 	
 	private Set<Computer> computerList;
 	
 	public Execution(){}
 
+    public Execution(Date start, Date end, JobStatus status) {
+		this.start = start;
+		this.end = end;
+		this.status = status;
+	}
+	
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="execution_id")
@@ -40,12 +47,13 @@ public class Execution implements Serializable {
 		return end;
 	}
 
-    @Column(name="status")
+    @Column(name="status", columnDefinition = "ENUM('SCHEDULED','RUNNING','FAILED','FINISHED')", nullable=false)
+    @Enumerated(EnumType.STRING)
 	public JobStatus getStatus() {
 		return status;
 	}
 
-    @OneToOne(mappedBy = "execution")
+    @OneToOne(mappedBy = "execution", optional=false, cascade=CascadeType.ALL)
 	public Job getJob() {
 		return job;
 	}
@@ -56,8 +64,8 @@ public class Execution implements Serializable {
         )
         @JoinTable(
             name="execution_computer",
-            joinColumns=@JoinColumn(name="exec_id"),
-            inverseJoinColumns=@JoinColumn(name="comp_id")
+            joinColumns=@JoinColumn(name="execution_id"),
+            inverseJoinColumns=@JoinColumn(name="computer_id")
         )
 	public Set<Computer> getComputerList() {
 		return computerList;

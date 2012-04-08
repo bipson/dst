@@ -16,7 +16,7 @@
 		<many-to-one name="cluster" column="cluster_fk" class="Cluster" not-null="true"/>
 		<set name="executionList" table="execution_computer" cascade="all">
 			<key column="computer_id"/>
-			<many-to-many class="Computer"/>
+			<many-to-many column="execution_id" class="Execution"/>
 		</set> 
 	</class>
 </hibernate-mapping>

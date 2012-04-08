@@ -1,6 +1,8 @@
 package dst1.model;
 
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -11,6 +13,7 @@ import javax.persistence.*;
 @Table(name="users",
 	uniqueConstraints = {@UniqueConstraint(columnNames={"account_no", "bank_code"})}
 )
+@PrimaryKeyJoinColumn
 public class User extends Person {	
 
 	private static final long serialVersionUID = -2851676057977461463L;
@@ -20,9 +23,9 @@ public class User extends Person {
 	private String	accountNo;
 	private String	bankCode;
 	
-	private List<Job> jobList;
+	private Set<Job> jobList = new HashSet<Job>();
 	
-	private List<Membership> membershipList;
+	private Set<Membership> membershipList = new HashSet<Membership>();
 	
 	public User(){}
 	
@@ -62,15 +65,13 @@ public class User extends Person {
 		return bankCode;
 	}
 
-	@OneToMany(mappedBy="user")
-	public List<Job> getJobList() {
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval=true)
+	public Set<Job> getJobList() {
 		return jobList;
 	}
 
-//	@OneToMany(mappedBy="membership")
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.user", cascade =
-		{CascadeType.PERSIST, CascadeType.MERGE})
-	public List<Membership> getMembershipList() {
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pk.user")
+	public Set<Membership> getMembershipList() {
 		return membershipList;
 	}
 
@@ -90,11 +91,11 @@ public class User extends Person {
 		this.password = md.digest(password);
 	}
 
-	public void setJobList(List<Job> jobList) {
+	public void setJobList(Set<Job> jobList) {
 		this.jobList = jobList;
 	}
 
-	public void setMembershipList(List<Membership> membershipList) {
+	public void setMembershipList(Set<Membership> membershipList) {
 		this.membershipList = membershipList;
 	}
 	
@@ -104,5 +105,48 @@ public class User extends Person {
 
 	public void setBankCode(String bankCode) {
 		this.bankCode = bankCode;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((accountNo == null) ? 0 : accountNo.hashCode());
+		result = prime * result
+				+ ((bankCode == null) ? 0 : bankCode.hashCode());
+		result = prime * result + Arrays.hashCode(password);
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof User))
+			return false;
+		User other = (User) obj;
+		if (accountNo == null) {
+			if (other.accountNo != null)
+				return false;
+		} else if (!accountNo.equals(other.accountNo))
+			return false;
+		if (bankCode == null) {
+			if (other.bankCode != null)
+				return false;
+		} else if (!bankCode.equals(other.bankCode))
+			return false;
+		if (!Arrays.equals(password, other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
 	}
 }

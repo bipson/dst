@@ -51,11 +51,4 @@ public class Environment implements IEntity<Long> {
 	public void setParams(List<String> params) {
 		this.params = params;
 	}
-
-	@Override
-	public Long obtainKey() {
-		return this.id;
-	}
-	
-	
 }

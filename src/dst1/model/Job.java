@@ -12,10 +12,10 @@ public class Job implements IEntity<Long> {
 
 	private static final long serialVersionUID = -9182152775849509682L;
 
-	private Long		id;
-	private boolean		isPaid;
+	private Long		id;	
+    private boolean		isPaid;
 	
-	private Environment environment;
+    private Environment environment;
 	
 	private User user;
 	
@@ -23,11 +23,38 @@ public class Job implements IEntity<Long> {
 	
 	public Job(){}
 
+	public Job(boolean isPaid) {
+		this.isPaid = isPaid;
+	}
+
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="job_id")
 	public Long getId() {
 		return id;
+	}
+	
+    @Column(name="is_paid")
+	public boolean isPaid() {
+		return isPaid;
+	}
+    
+    @OneToOne(cascade = CascadeType.ALL, optional=false)
+    @JoinColumn(name="environment_fk")
+	public Environment getEnvironment() {
+		return environment;
+	}
+
+    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name="user_fk")
+	public User getUser() {
+		return user;
+	}
+
+	@OneToOne(cascade = CascadeType.ALL, optional=false)
+	@JoinColumn(name="execution_fk")
+	public Execution getExecution() {
+		return execution;
 	}
 	
 	@Transient
@@ -48,30 +75,6 @@ public class Job implements IEntity<Long> {
     public Integer getExecutionTime() {
 		
 		return (int) (execution.getStart().getTime() - execution.getEnd().getTime());
-	}
-    
-    
-    @Column(name="is_paid")
-	public boolean isPaid() {
-		return isPaid;
-	}
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="environment_fk", nullable=false)
-    public Environment getEnvironment() {
-		return environment;
-	}
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="user_fk", nullable=false)
-	public User getUser() {
-		return user;
-	}
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="execution_fk")
-	public Execution getExecution() {
-		return execution;
 	}
 
 	public void setId(Long id) {
@@ -95,8 +98,28 @@ public class Job implements IEntity<Long> {
 	}
 
 	@Override
-	public Long obtainKey() {
-		return this.id;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Job))
+			return false;
+		Job other = (Job) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

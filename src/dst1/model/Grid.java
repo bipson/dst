@@ -1,6 +1,7 @@
 package dst1.model;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -18,9 +19,9 @@ public class Grid implements IEntity<Long> {
 	private String		location;
 	private BigDecimal	costsPerCPUMinute;
 	
-	private Set<Membership> membershipList;
+	private Set<Membership> membershipList = new HashSet<Membership>();
 	
-	private Set<Cluster> clusterList;
+	private Set<Cluster> clusterList = new HashSet<Cluster>();
 
 	public Grid() {}
 	
@@ -52,8 +53,7 @@ public class Grid implements IEntity<Long> {
 		return costsPerCPUMinute;
 	}
 
-//	@OneToMany(mappedBy="membership")
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.grid", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToMany(mappedBy = "pk.grid", cascade = CascadeType.ALL)
 	public Set<Membership> getMembershipList() {
 		return membershipList;
 	}
@@ -88,8 +88,28 @@ public class Grid implements IEntity<Long> {
 	}
 
 	@Override
-	public Long obtainKey() {
-		return id;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Grid))
+			return false;
+		Grid other = (Grid) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

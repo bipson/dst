@@ -1,19 +1,15 @@
 package dst1;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
-import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.management.timer.Timer;
 
-import dst1.db.AdminDao;
-import dst1.db.ClusterDao;
-import dst1.db.ComputerDao;
-import dst1.db.EnvironmentDao;
-import dst1.db.GridDao;
-import dst1.db.MembershipDao;
-import dst1.db.UserDao;
+import dst1.db.*;
 import dst1.model.*;
 
 public class Main {
@@ -39,19 +35,29 @@ public class Main {
 	}
 
 	public static void dst01() {
-		final AdminDao adminDao = new AdminDao();
-		final ClusterDao clusterDao = new ClusterDao();
-		final ComputerDao computerDao = new ComputerDao();
-		final EnvironmentDao environmentDao = new EnvironmentDao();
-//		final ExecutionDao executionDao = new ExecutionDao();
-		final GridDao gridDao = new GridDao();
-		final MembershipDao membershipDao = new MembershipDao();
-// 		final JobDao jobDao = new JobDao();
-		final UserDao userDao = new UserDao();
+		final GenericDao<Admin, Long> adminDao =
+				new GenericDao<Admin, Long>(Admin.class);
+		final GenericDao<Cluster, Long> clusterDao =
+				new GenericDao<Cluster, Long>(Cluster.class);
+		final GenericDao<Computer, Long> computerDao =
+				new GenericDao<Computer, Long>(Computer.class);
+		final GenericDao<Environment, Long> environmentDao =
+				new GenericDao<Environment, Long>(Environment.class);
+		final GenericDao<Execution, Long> executionDao =
+				new GenericDao<Execution, Long>(Execution.class);
+		final GenericDao<Grid, Long> gridDao =
+				new GenericDao<Grid, Long>(Grid.class);
+		final GenericDao<Membership, MembershipPK> membershipDao =
+				new GenericDao<Membership, MembershipPK>(Membership.class);
+ 		final GenericDao<Job, Long> jobDao =
+ 				new GenericDao<Job, Long>(Job.class);
+		final GenericDao<User, Long> userDao =
+				new GenericDao<User, Long>(User.class);
 		
 		// Helpers
 		long now = System.currentTimeMillis();
 		
+		// Add some Test-entities
 		// Environments
 		Environment env1 = new Environment("abcd", Arrays.asList("abc", "cde"));
 		Environment env2 = new Environment("efghi", Arrays.asList("efg", "hij"));
@@ -71,13 +77,11 @@ public class Main {
 		
 		user1.setFirstName("Alfred");
 		user1.setLastName("Gacksi");
-		Address address1 = new Address("gacksiStreet", "gacksiCity", "12390");
-		user1.setAddress(address1);
+		user1.setAddress(new Address("gacksiStreet", "gacksiCity", "12390"));
 		
 		user2.setFirstName("Alfredus");
 		user2.setLastName("Quacksi");
-		Address address2 = new Address("quacksiStreet", "quacksiCity", "1234590");
-		user2.setAddress(address2);
+		user2.setAddress(new Address("quacksiStreet", "quacksiCity", "1234590"));
 		
 		userDao.persist(user1);
 		userDao.persist(user2);
@@ -94,10 +98,19 @@ public class Main {
 		membership1.setGrid(grid1);
 		membership1.setUser(user1);
 		
+		user1.getMembershipList().add(membership1);
+		grid1.getMembershipList().add(membership1);
+		
 		Membership membership2 = new Membership(new Date(now - (5L * Timer.ONE_WEEK)), (Double.valueOf(456)));
 		
 		membership2.setGrid(grid2);
 		membership2.setUser(user2);
+		
+		user2.getMembershipList().add(membership2);
+		grid2.getMembershipList().add(membership2);
+		
+		userDao.persist(user1);
+		userDao.persist(user2);
 		
 		membershipDao.persist(membership1);
 		membershipDao.persist(membership2);
@@ -129,21 +142,28 @@ public class Main {
 		cluster1.setAdmin(admin1);
 		cluster1.setGrid(grid1);
 		
+		grid1.getClusterList().add(cluster1);
+		admin1.getClusterList().add(cluster1);
+		
 		cluster2 = new Cluster("Clust2", new Date(now - (6L * 52L * Timer.ONE_WEEK)),
 				new Date(now + (5L * 52L * Timer.ONE_WEEK)));
 		
 		cluster2.setAdmin(admin2);
 		cluster2.setGrid(grid2);
 		
+		grid2.getClusterList().add(cluster2);
+		admin2.getClusterList().add(cluster2);
+		
 		clusterDao.persist(cluster1);
 		clusterDao.persist(cluster2);
 		
-		//Cluster Children
+		// Cluster Children
 		cluster1.getClusterChildren().add(cluster2);
 		
 		clusterDao.persist(cluster1);
 		clusterDao.persist(cluster2);
 		
+		// Computers
 		Computer computer1 = new Computer("comp1", 6, "cellar1", new Date(), new Date());
 		Computer computer2 = new Computer("comp2", 6, "cellar1", new Date(), new Date());
 		Computer computer3 = new Computer("comp3", 2, "cellar2", new Date(), new Date());
@@ -159,7 +179,116 @@ public class Main {
 		computerDao.persist(computer3);
 		computerDao.persist(computer4);
 		
+		cluster1.getComputerList().add(computer1);
+		cluster1.getComputerList().add(computer2);
+		cluster2.getComputerList().add(computer3);
+		cluster2.getComputerList().add(computer4);
 		
+		// Jobs
+		Job job1 = new Job(true);
+		Job job2 = new Job(false);
+		
+		job1.setEnvironment(env1);
+		job1.setUser(user1);		
+		
+		job2.setEnvironment(env2);
+		job2.setUser(user2);
+		
+		// Executions
+		Execution exec1 = new Execution(
+				new Date(), new Date(now + 3L * Timer.ONE_WEEK), JobStatus.RUNNING);
+		Execution exec2 = new Execution(
+				new Date(now + 2L * Timer.ONE_WEEK), new Date(now + 4L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
+		
+		// Don't like the look of this, shouldn't this be defined through grid-memberships?
+		Set<Computer> user1GridComp = new HashSet<Computer>();
+		user1GridComp.add(computer1);
+		user1GridComp.add(computer2);
+		user1GridComp.add(computer3);
+		user1GridComp.add(computer4);
+		
+		exec1.setComputerList(user1GridComp);
+		
+		// Don't like the look of this, shouldn't this be defined through grid-memberships?
+		Set<Computer> user2GridComp = new HashSet<Computer>();
+		user2GridComp.add(computer3);
+		user2GridComp.add(computer4);
+		
+		exec2.setComputerList(user2GridComp);
+		
+		job1.setExecution(exec1);
+		exec1.setJob(job1);
+		user1.getJobList().add(job1);
+		job2.setExecution(exec2);
+		exec2.setJob(job2);
+		user2.getJobList().add(job2);
+		
+		jobDao.persist(job1);
+		jobDao.persist(job2);
+		
+		userDao.persist(user1);
+		
+		executionDao.persist(exec1);
+		executionDao.persist(exec2);
+		
+		computer1.getExecutionList().add(exec1);
+		computer2.getExecutionList().add(exec1);
+		computer3.getExecutionList().add(exec1);
+		computer4.getExecutionList().add(exec1);
+
+		computer3.getExecutionList().add(exec2);
+		computer4.getExecutionList().add(exec2);
+		
+		System.out.println("Added Test Entities to Database");
+		
+		// Retrieve some of the Test-Entities
+		
+		System.out.println("Retrieving some Test Entities");
+		
+		User testUser = userDao.get(user1.getId());
+		System.out.println("testUser: " +testUser.toString());
+		System.out.println("testUser-address: " +testUser.getAddress().toString());
+		System.out.println("testUser-memberships: " +testUser.getMembershipList());
+		System.out.println("testUser-jobs: " +testUser.getJobList());
+		System.out.println("jumping to grid in first membership in list...");
+		Membership testMembership = (Membership)(testUser.getMembershipList().toArray())[0];
+		Grid testGrid = testMembership.getGrid();
+		System.out.println("testuser-grid: " +testGrid.toString());
+		System.out.println("testuser-grid-membership: " +testGrid.getMembershipList().toString());
+		System.out.println("testuser-grid-Clusters: " +testGrid.getClusterList().toString());
+		System.out.println("jumping to first cluster in cluster-list...");
+		Cluster testCluster = (Cluster)(testGrid.getClusterList().toArray()[0]);
+		System.out.println("testcluster: " +testCluster.toString());
+		System.out.println("testcluster-computers: " +testCluster.getComputerList());
+		System.out.println("testcluster-grids: " +testCluster.getGrid().toString());
+		System.out.println("testcluster-admin: " +testCluster.getAdmin().toString());
+		System.out.println("testcluster-cluster_children: " +testCluster.getClusterChildren().toString());
+		System.out.println("jumping to first computer in computer-list...");
+		Computer testComputer = (Computer)(testCluster.getComputerList().toArray()[0]);
+		System.out.println("testComputer: " +testComputer.toString());
+		System.out.println("testComputer-clusters: " +testComputer.getCluster());
+		System.out.println("jumping to first exeuction in execution-list...");
+		Execution testExecution = (Execution)(testComputer.getExecutionList().toArray()[0]);
+		System.out.println("testExecution: " +testExecution.toString());
+		System.out.println("testExecution-job: " +testExecution.getJob().toString());
+		System.out.println("testExecution-computers: " +testExecution.getComputerList().toString());
+		System.out.println("jumping to first job in job-list...");
+		Job testJob = (Job)(testExecution.getJob());
+		System.out.println("testJob: " +testJob.toString());
+		System.out.println("testJob-user: " +testJob.getUser().toString());
+		System.out.println("testJob-exec: " +testJob.getExecution().toString());
+		System.out.println("testJob-env: " +testJob.getEnvironment().toString());
+		
+		System.out.println("jumping to first job in list...");
+//		Job testjob = user1.getJobList();
+//		System.out.println("job: " +testjob.toString());
+//		System.out.println("job-env: " +testjob.getEnvironment().toString());
+		
+		Admin testAdmin = adminDao.get(admin1.getId());
+		System.out.println("testAdmin: " +testAdmin.toString());
+		System.out.println("testAdmin-clusters: " +testAdmin.getClusterList());
+		
+		Cluster testCluster2 = clusterDao.get(cluster1.getId());
 	}
 
 	public static void dst02a() {
