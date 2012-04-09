@@ -14,7 +14,7 @@
 		<property name="creation" column="creation_date" type="date"/>
 		<property name="lastUpdate" column="last_update" type="date"/>
 		<many-to-one name="cluster" column="cluster_fk" class="Cluster" not-null="true"/>
-		<set name="executionList" table="execution_computer" cascade="all">
+		<set name="executionList" table="execution_computer" inverse="true">
 			<key column="computer_id"/>
 			<many-to-many column="execution_id" class="Execution"/>
 		</set> 

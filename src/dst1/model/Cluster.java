@@ -60,22 +60,25 @@ public class Cluster implements IEntity<Long> {
 	}
 
 	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+	@JoinColumn(name="grid_fk")
 	public Grid getGrid() {
 		return grid;
 	}
 
-	@ManyToOne(optional=false)
+	@ManyToOne(optional=false, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+	@JoinColumn(name="admin_fk")
 	public Admin getAdmin() {
 		return admin;
 	}
 	
-	@OneToMany
+	@OneToMany(cascade=CascadeType.ALL)
+//	(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="cluster_fk")
 	public Set<Computer> getComputerList() {
 		return computerList;
 	}
 
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinTable(
 			name="cluster_children",
 			joinColumns=@JoinColumn(name="parent_id"),
@@ -85,7 +88,7 @@ public class Cluster implements IEntity<Long> {
 		return clusterChildren;
 	}
 
-	@ManyToMany(mappedBy="clusterChildren")
+	@ManyToMany(mappedBy="clusterChildren", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
 	public Set<Cluster> getClusterParents() {
 		return clusterParents;
 	}
@@ -124,30 +127,5 @@ public class Cluster implements IEntity<Long> {
 
 	public void setClusterParents(Set<Cluster> clusterParents) {
 		this.clusterParents = clusterParents;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Cluster))
-			return false;
-		Cluster other = (Cluster) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
 	}
 }

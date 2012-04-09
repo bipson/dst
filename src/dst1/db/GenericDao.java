@@ -2,27 +2,26 @@ package dst1.db;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
-import javax.persistence.metamodel.EntityType;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 
 import dst1.db.interfaces.IEntity;
 import dst1.db.interfaces.IEntityDao;
 
-@SuppressWarnings("hiding")
-public class GenericDao<EntityType extends IEntity<EntityKeyType>, EntityKeyType extends Serializable> implements IEntityDao<EntityType, EntityKeyType> {
+public class GenericDao <EntityType extends IEntity<EntityKeyType>,EntityKeyType extends Serializable> implements IEntityDao<EntityType, EntityKeyType> {
 
 	private static EntityManager entityManager;
-	private static EntityManagerFactory entityManagerFactory;
+	private static EntityManagerFactory emf;
 
 	private Class<EntityType> entityClass;
 
 	public GenericDao(Class<EntityType> entityClass) {
 		this.entityClass = entityClass;
-		
-		if (entityManager == null) {
-			entityManagerFactory = Persistence.createEntityManagerFactory("grid");
-			entityManager = entityManagerFactory.createEntityManager();
-		}
+	}
+
+	public static void initEntityManagerFactory(EntityManagerFactory emf) {
+		GenericDao.emf = emf;
+		GenericDao.entityManager = GenericDao.emf.createEntityManager();
 	}
 
 	public static EntityManager getEntityManager() {
@@ -58,6 +57,7 @@ public class GenericDao<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 			rollBackTransaction();
 			throw e;
 		}
+
 	}
 
 	@Override
@@ -73,6 +73,7 @@ public class GenericDao<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 			rollBackTransaction();
 			throw e;
 		}
+
 	}
 
 	@Override
@@ -83,6 +84,8 @@ public class GenericDao<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 		catch(RuntimeException e) {
 			throw e;
 		}
+
+
 	}
 
 	private void rollBackTransaction() {
@@ -96,11 +99,9 @@ public class GenericDao<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 				entityManager.isOpen()) {
 			entityManager.close();
 		}
-		if(entityManagerFactory != null &&
-				entityManagerFactory.isOpen()) {
-			entityManagerFactory.close();
+		if(emf != null &&
+				emf.isOpen()) {
+			emf.close();
 		}
 	}
-
-	
 }

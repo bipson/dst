@@ -59,8 +59,7 @@ public class Execution implements IEntity<Long> {
 	}
 
     @ManyToMany(
-            targetEntity=Computer.class,
-            cascade={CascadeType.PERSIST, CascadeType.MERGE}
+            targetEntity=Computer.class
         )
         @JoinTable(
             name="execution_computer",

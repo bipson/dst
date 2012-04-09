@@ -13,12 +13,12 @@ public class MembershipPK implements Serializable {
 	
 	public MembershipPK(){}
 
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToOne
 	public User getUser() {
 		return user;
 	}
 
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToOne
 	public Grid getGrid() {
 		return grid;
 	}

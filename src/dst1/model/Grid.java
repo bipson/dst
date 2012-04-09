@@ -53,7 +53,7 @@ public class Grid implements IEntity<Long> {
 		return costsPerCPUMinute;
 	}
 
-	@OneToMany(mappedBy = "pk.grid", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "pk.grid")
 	public Set<Membership> getMembershipList() {
 		return membershipList;
 	}

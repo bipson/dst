@@ -39,19 +39,19 @@ public class Job implements IEntity<Long> {
 		return isPaid;
 	}
     
-    @OneToOne(cascade = CascadeType.ALL, optional=false)
+    @OneToOne(optional=false)
     @JoinColumn(name="environment_fk")
 	public Environment getEnvironment() {
 		return environment;
 	}
 
-    @ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToOne(optional=false)
     @JoinColumn(name="user_fk")
 	public User getUser() {
 		return user;
 	}
 
-	@OneToOne(cascade = CascadeType.ALL, optional=false)
+	@OneToOne(optional=false, cascade=CascadeType.ALL)
 	@JoinColumn(name="execution_fk")
 	public Execution getExecution() {
 		return execution;
@@ -101,7 +101,11 @@ public class Job implements IEntity<Long> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result
+				+ ((environment == null) ? 0 : environment.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (isPaid ? 1231 : 1237);
+		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 
@@ -114,12 +118,23 @@ public class Job implements IEntity<Long> {
 		if (!(obj instanceof Job))
 			return false;
 		Job other = (Job) obj;
+		if (environment == null) {
+			if (other.environment != null)
+				return false;
+		} else if (!environment.equals(other.environment))
+			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (isPaid != other.isPaid)
+			return false;
+		if (user == null) {
+			if (other.user != null)
+				return false;
+		} else if (!user.equals(other.user))
+			return false;
 		return true;
 	}
-
 }

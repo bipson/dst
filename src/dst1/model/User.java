@@ -65,12 +65,12 @@ public class User extends Person {
 		return bankCode;
 	}
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval=true)
+	@OneToMany(mappedBy = "user", orphanRemoval=true)
 	public Set<Job> getJobList() {
 		return jobList;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pk.user")
+	@OneToMany(mappedBy = "pk.user")
 	public Set<Membership> getMembershipList() {
 		return membershipList;
 	}

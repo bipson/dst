@@ -5,9 +5,12 @@ import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Set;
 
 import javax.management.timer.Timer;
+import javax.persistence.Persistence;
 
 import dst1.db.*;
 import dst1.model.*;
@@ -19,6 +22,9 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
+		
+		// Init EntityManager for DAOs
+		GenericDao.initEntityManagerFactory(Persistence.createEntityManagerFactory("grid"));
 		
 		dst01();
 		dst02a();
@@ -58,9 +64,12 @@ public class Main {
 		long now = System.currentTimeMillis();
 		
 		// Add some Test-entities
+		System.out.println("========================");
+		System.out.println("Will now add some Test-Entities");
+
 		// Environments
-		Environment env1 = new Environment("abcd", Arrays.asList("abc", "cde"));
-		Environment env2 = new Environment("efghi", Arrays.asList("efg", "hij"));
+		Environment env1 = new Environment("abcd", new LinkedList<String>(Arrays.asList("abc", "cde")));
+		Environment env2 = new Environment("efghi", new LinkedList<String>(Arrays.asList("efg", "hij")));
 		
 		environmentDao.persist(env1);
 		environmentDao.persist(env2);
@@ -226,10 +235,11 @@ public class Main {
 		jobDao.persist(job1);
 		jobDao.persist(job2);
 		
-		userDao.persist(user1);
-		
 		executionDao.persist(exec1);
 		executionDao.persist(exec2);
+		
+		userDao.persist(user1);
+		userDao.persist(user2);
 		
 		computer1.getExecutionList().add(exec1);
 		computer2.getExecutionList().add(exec1);
@@ -241,21 +251,23 @@ public class Main {
 		
 		System.out.println("Added Test Entities to Database");
 		
-		// Retrieve some of the Test-Entities
-		
-		System.out.println("Retrieving some Test Entities");
+		// Retrieve some of the Entities
+		System.out.println("========================");
+		System.out.println("Retrieving some Entities");
 		
 		User testUser = userDao.get(user1.getId());
 		System.out.println("testUser: " +testUser.toString());
 		System.out.println("testUser-address: " +testUser.getAddress().toString());
 		System.out.println("testUser-memberships: " +testUser.getMembershipList());
 		System.out.println("testUser-jobs: " +testUser.getJobList());
+		
 		System.out.println("jumping to grid in first membership in list...");
 		Membership testMembership = (Membership)(testUser.getMembershipList().toArray())[0];
 		Grid testGrid = testMembership.getGrid();
 		System.out.println("testuser-grid: " +testGrid.toString());
 		System.out.println("testuser-grid-membership: " +testGrid.getMembershipList().toString());
 		System.out.println("testuser-grid-Clusters: " +testGrid.getClusterList().toString());
+		
 		System.out.println("jumping to first cluster in cluster-list...");
 		Cluster testCluster = (Cluster)(testGrid.getClusterList().toArray()[0]);
 		System.out.println("testcluster: " +testCluster.toString());
@@ -263,15 +275,18 @@ public class Main {
 		System.out.println("testcluster-grids: " +testCluster.getGrid().toString());
 		System.out.println("testcluster-admin: " +testCluster.getAdmin().toString());
 		System.out.println("testcluster-cluster_children: " +testCluster.getClusterChildren().toString());
+		
 		System.out.println("jumping to first computer in computer-list...");
 		Computer testComputer = (Computer)(testCluster.getComputerList().toArray()[0]);
 		System.out.println("testComputer: " +testComputer.toString());
 		System.out.println("testComputer-clusters: " +testComputer.getCluster());
+		
 		System.out.println("jumping to first exeuction in execution-list...");
 		Execution testExecution = (Execution)(testComputer.getExecutionList().toArray()[0]);
 		System.out.println("testExecution: " +testExecution.toString());
 		System.out.println("testExecution-job: " +testExecution.getJob().toString());
 		System.out.println("testExecution-computers: " +testExecution.getComputerList().toString());
+		
 		System.out.println("jumping to first job in job-list...");
 		Job testJob = (Job)(testExecution.getJob());
 		System.out.println("testJob: " +testJob.toString());
@@ -279,16 +294,70 @@ public class Main {
 		System.out.println("testJob-exec: " +testJob.getExecution().toString());
 		System.out.println("testJob-env: " +testJob.getEnvironment().toString());
 		
-		System.out.println("jumping to first job in list...");
-//		Job testjob = user1.getJobList();
-//		System.out.println("job: " +testjob.toString());
-//		System.out.println("job-env: " +testjob.getEnvironment().toString());
+		// Update some entities
+		System.out.println("========================");
+		System.out.println("Will now update some entities...");
 		
-		Admin testAdmin = adminDao.get(admin1.getId());
-		System.out.println("testAdmin: " +testAdmin.toString());
-		System.out.println("testAdmin-clusters: " +testAdmin.getClusterList());
+		Admin testAdmin = adminDao.get(admin2.getId());
+		System.out.println("testCluster is now: "+ testCluster.toString());
+		System.out.println("testCluster-admin is now: "+ testCluster.getAdmin().toString());
+		System.out.println("testAdmin is now: "+ testAdmin.toString());
+		System.out.println("testAdmin-cluster is now: "+ testAdmin.getClusterList().toString());
 		
-		Cluster testCluster2 = clusterDao.get(cluster1.getId());
+		testCluster.setAdmin(testAdmin);
+		testAdmin.getClusterList().add(testCluster);
+		clusterDao.update(testCluster);
+		adminDao.update(testAdmin);
+		System.out.println("Changed testCluster-admin to other admin");
+		
+		System.out.println("show it:");
+		testCluster = clusterDao.get(testCluster.getId());
+		System.out.println("testCluster is now: "+ testCluster.toString());
+		testAdmin = adminDao.get(admin2.getId());
+		System.out.println("testCluster-admin is now: "+ testCluster.getAdmin().toString());
+		System.out.println("testAdmin-clusters is now: "+ testAdmin.getClusterList().toString());
+		
+		Environment testEnvironment = environmentDao.get(env1.getId());
+		System.out.println("testEnvironment is now: "+ testEnvironment.toString());
+		System.out.println("testEnvironment-params is now: "+ testEnvironment.getParams().toString());
+		
+		testEnvironment.getParams().add("ulabula");
+		environmentDao.update(testEnvironment);
+		
+		testEnvironment = environmentDao.get(env1.getId());
+		System.out.println("testEnvironment is now: "+ testEnvironment.toString());
+		System.out.println("testEnvironment-params is now: "+ testEnvironment.getParams().toString());
+
+		// Delete some entities
+		System.out.println("========================");
+		System.out.println("Will now delete some Test-Entities again");
+		
+		Job testJob2 = jobDao.get(job2.getId());
+		Execution testExec = executionDao.get(testJob2.getExecution().getId());
+		Iterator<Computer> compsIt = testExec.getComputerList().iterator();
+		while (compsIt.hasNext()) {
+			Computer comp = compsIt.next();
+			comp.getExecutionList().remove(testExec);
+			computerDao.update(comp);
+		}
+		jobDao.delete(testJob2);
+		System.out.println("Removed job");
+		
+//		Computer testComputer2 = computerDao.get(computer3.getId());
+//		Iterator<Execution> execs = testComputer2.getExecutionList().iterator();
+//		while (execs.hasNext()) {
+//			Execution ex = execs.next();
+//			ex.getComputerList().remove(testComputer2);
+//			testComputer.getExecutionList().remove(ex);
+//		}
+//		Cluster testClust = testComputer2.getCluster();
+//		testClust.getComputerList().remove(testComputer2);
+//		clusterDao.update(testClust);
+//		computerDao.delete(testComputer2);
+//		System.out.println("Removed computer");
+
+		GenericDao.shutdown();
+		
 	}
 
 	public static void dst02a() {
