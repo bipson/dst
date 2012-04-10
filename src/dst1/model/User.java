@@ -10,11 +10,20 @@ import java.security.NoSuchAlgorithmException;
 import javax.persistence.*;
 
 @Entity
+@NamedQueries({
+	@NamedQuery(name="User.find", query="SELECT u FROM User u JOIN u.membershipList m "+
+			"WHERE m.pk.grid.name = :gridname AND "+
+			"(SELECT COUNT (joblist) FROM User u JOIN u.jobList joblist) >= :jobcount"),
+	@NamedQuery(name="User.mostActive", query="SELECT u FROM User u "+
+			"WHERE (SELECT COUNT (loblist) FROM User u1 JOIN u1.jobList loblist) " +
+			">= ALL(SELECT COUNT (joblist) FROM User u2 JOIN u2.jobList joblist)")
+})
+
 @Table(name="users",
 	uniqueConstraints = {@UniqueConstraint(columnNames={"account_no", "bank_code"})}
 )
 @PrimaryKeyJoinColumn
-public class User extends Person {	
+public class User extends Person {
 
 	private static final long serialVersionUID = -2851676057977461463L;
 
@@ -80,15 +89,7 @@ public class User extends Person {
 	}
 
 	public void setPassword(byte[] password) {
-		MessageDigest md = null;
-		
-		try {
-			md = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-	
-		this.password = md.digest(password);
+		this.password = password;
 	}
 
 	public void setJobList(Set<Job> jobList) {

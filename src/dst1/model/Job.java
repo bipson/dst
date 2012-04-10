@@ -39,7 +39,7 @@ public class Job implements IEntity<Long> {
 		return isPaid;
 	}
     
-    @OneToOne(optional=false)
+    @OneToOne(optional=false, cascade=CascadeType.ALL)
     @JoinColumn(name="environment_fk")
 	public Environment getEnvironment() {
 		return environment;

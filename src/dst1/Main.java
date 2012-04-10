@@ -2,15 +2,19 @@ package dst1;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import javax.management.timer.Timer;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import dst1.db.*;
 import dst1.model.*;
@@ -38,6 +42,8 @@ public class Main {
 		dst05a();
 		dst05b();
 		dst05c();
+		
+		GenericDao.shutdown();
 	}
 
 	public static void dst01() {
@@ -74,11 +80,19 @@ public class Main {
 		environmentDao.persist(env1);
 		environmentDao.persist(env2);
 		
+		MessageDigest md = null;
+		
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		
 		// Users
 		User user1 = null, user2 = null;
 		try {
-			user1 = new User("gacksi", "foo1".getBytes("UTF-8"), "123", "8000");
-			user2 = new User("quacksi", "foo2".getBytes("UTF-8"), "12345", "8000");
+			user1 = new User("gacksi", md.digest("foo1".getBytes("UTF-8")), "123", "8000");
+			user2 = new User("quacksi", md.digest("foo2".getBytes("UTF-8")), "12345", "8000");
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -348,20 +362,75 @@ public class Main {
 //		while (execs.hasNext()) {
 //			Execution ex = execs.next();
 //			ex.getComputerList().remove(testComputer2);
-//			testComputer.getExecutionList().remove(ex);
+//			testComputer2.getExecutionList().remove(ex);
 //		}
 //		Cluster testClust = testComputer2.getCluster();
 //		testClust.getComputerList().remove(testComputer2);
 //		clusterDao.update(testClust);
 //		computerDao.delete(testComputer2);
 //		System.out.println("Removed computer");
-
-		GenericDao.shutdown();
 		
 	}
 
 	public static void dst02a() {
-
+		
+		long now = System.currentTimeMillis();
+		
+		TypedQuery<User> userFind = GenericDao.getEntityManager().createNamedQuery("User.find", User.class);
+		
+		userFind.setParameter("gridname", "grid1");
+		userFind.setParameter("jobcount", 1l);
+		
+		List<User> foo = userFind.getResultList();
+		
+		System.out.println("findUser-Result: "+foo.toString());
+		
+		TypedQuery<User> userMax = GenericDao.getEntityManager().createNamedQuery("User.mostActive", User.class);
+		foo = userFind.getResultList();
+		System.out.println("findMaxUser-Result: "+foo.toString());
+		
+		final GenericDao<Environment, Long> environmentDao =
+				new GenericDao<Environment, Long>(Environment.class);
+		final GenericDao<User, Long> userDao =
+				new GenericDao<User, Long>(User.class);
+		final GenericDao<Job, Long> jobDao =
+				new GenericDao<Job, Long>(Job.class);
+		final GenericDao<Execution, Long> execDao =
+				new GenericDao<Execution, Long>(Execution.class);
+		
+		Environment env2 = new Environment("efghi", new LinkedList<String>(Arrays.asList("efg", "hij")));
+		Environment env3 = new Environment("efgdfahi", new LinkedList<String>(Arrays.asList("edfafg", "adfhij")));
+		
+		environmentDao.persist(env2);
+		Job jobX = new Job(false);
+		Job jobY = new Job(false);
+		
+		jobX.setEnvironment(env2);
+		
+		User user2 = userDao.get(2l);
+		jobX.setUser(user2);
+		jobX.setEnvironment(env2);
+		jobY.setUser(user2);
+		jobY.setEnvironment(env3);
+		user2.getJobList().add(jobX);
+		user2.getJobList().add(jobY);
+		
+		Execution exec1 = new Execution(
+				new Date(), new Date(now + 5L * Timer.ONE_WEEK), JobStatus.RUNNING);
+		Execution exec2 = new Execution(
+				new Date(), new Date(now + 4L * Timer.ONE_WEEK), JobStatus.RUNNING);
+		
+		jobX.setExecution(exec1);
+		jobY.setExecution(exec2);
+		
+		jobDao.persist(jobX);
+		jobDao.persist(jobY);
+		
+		userDao.persist(user2);
+		
+		foo = userMax.getResultList();
+		
+		System.out.println("findMaxUser-Result: "+foo.toString());
 	}
 
 	public static void dst02b() {

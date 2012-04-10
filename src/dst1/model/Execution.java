@@ -58,14 +58,12 @@ public class Execution implements IEntity<Long> {
 		return job;
 	}
 
-    @ManyToMany(
-            targetEntity=Computer.class
-        )
-        @JoinTable(
-            name="execution_computer",
-            joinColumns=@JoinColumn(name="execution_id"),
-            inverseJoinColumns=@JoinColumn(name="computer_id")
-        )
+    @ManyToMany()
+    @JoinTable(
+        name="execution_computer",
+        joinColumns=@JoinColumn(name="execution_id"),
+        inverseJoinColumns=@JoinColumn(name="computer_id")
+    )
 	public Set<Computer> getComputerList() {
 		return computerList;
 	}
