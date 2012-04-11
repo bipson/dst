@@ -376,9 +376,6 @@ public class Main {
 			ex.getComputerList().remove(testComputer2);
 			testComputer2.getExecutionList().remove(ex);
 		}
-//		Cluster testClust = testComputer2.getCluster();
-//		testClust.getComputerList().remove(testComputer2);
-//		clusterDao.update(testClust);
 		computerDao.delete(testComputer2);
 		System.out.println("Removed computer");
 		
@@ -392,10 +389,10 @@ public class Main {
 		
 		long now = System.currentTimeMillis();
 		
-		TypedQuery<User> userFind = GenericDao.getEntityManager().createNamedQuery("User.find3", User.class);
+		TypedQuery<User> userFind = GenericDao.getEntityManager().createNamedQuery("User.find", User.class);
 		TypedQuery<User> userMax = GenericDao.getEntityManager().createNamedQuery("User.mostActive", User.class);
 		
-		userFind.setParameter("gridname", "grid1");
+		userFind.setParameter("gridname", "grid2");
 		userFind.setParameter("jobcount", 1l);
 		
 		List<User> foo = userFind.getResultList();
