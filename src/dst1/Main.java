@@ -17,6 +17,8 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import dst1.db.*;
+import dst1.interceptor.SQLInterceptor;
+import dst1.listener.DefaultListener;
 import dst1.model.*;
 
 public class Main {
@@ -47,6 +49,11 @@ public class Main {
 	}
 
 	public static void dst01() {
+		
+		System.out.println("=====================");
+		System.out.println("========= 01 ========");
+		System.out.println("=====================");
+		
 		final GenericDao<Admin, Long> adminDao =
 				new GenericDao<Admin, Long>(Admin.class);
 		final GenericDao<Cluster, Long> clusterDao =
@@ -70,7 +77,6 @@ public class Main {
 		long now = System.currentTimeMillis();
 		
 		// Add some Test-entities
-		System.out.println("========================");
 		System.out.println("Will now add some Test-Entities");
 
 		// Environments
@@ -274,6 +280,7 @@ public class Main {
 		System.out.println("testUser-address: " +testUser.getAddress().toString());
 		System.out.println("testUser-memberships: " +testUser.getMembershipList());
 		System.out.println("testUser-jobs: " +testUser.getJobList());
+		System.out.println("--->");
 		
 		System.out.println("jumping to grid in first membership in list...");
 		Membership testMembership = (Membership)(testUser.getMembershipList().toArray())[0];
@@ -281,6 +288,7 @@ public class Main {
 		System.out.println("testuser-grid: " +testGrid.toString());
 		System.out.println("testuser-grid-membership: " +testGrid.getMembershipList().toString());
 		System.out.println("testuser-grid-Clusters: " +testGrid.getClusterList().toString());
+		System.out.println("--->");
 		
 		System.out.println("jumping to first cluster in cluster-list...");
 		Cluster testCluster = (Cluster)(testGrid.getClusterList().toArray()[0]);
@@ -289,17 +297,21 @@ public class Main {
 		System.out.println("testcluster-grids: " +testCluster.getGrid().toString());
 		System.out.println("testcluster-admin: " +testCluster.getAdmin().toString());
 		System.out.println("testcluster-cluster_children: " +testCluster.getClusterChildren().toString());
+		System.out.println("--->");
 		
 		System.out.println("jumping to first computer in computer-list...");
 		Computer testComputer = (Computer)(testCluster.getComputerList().toArray()[0]);
 		System.out.println("testComputer: " +testComputer.toString());
 		System.out.println("testComputer-clusters: " +testComputer.getCluster());
+		System.out.println("testComputer-executions: " +testComputer.getExecutionList());
+		System.out.println("--->");
 		
 		System.out.println("jumping to first exeuction in execution-list...");
 		Execution testExecution = (Execution)(testComputer.getExecutionList().toArray()[0]);
 		System.out.println("testExecution: " +testExecution.toString());
 		System.out.println("testExecution-job: " +testExecution.getJob().toString());
 		System.out.println("testExecution-computers: " +testExecution.getComputerList().toString());
+		System.out.println("--->");
 		
 		System.out.println("jumping to first job in job-list...");
 		Job testJob = (Job)(testExecution.getJob());
@@ -357,26 +369,31 @@ public class Main {
 		jobDao.delete(testJob2);
 		System.out.println("Removed job");
 		
-//		Computer testComputer2 = computerDao.get(computer3.getId());
-//		Iterator<Execution> execs = testComputer2.getExecutionList().iterator();
-//		while (execs.hasNext()) {
-//			Execution ex = execs.next();
-//			ex.getComputerList().remove(testComputer2);
-//			testComputer2.getExecutionList().remove(ex);
-//		}
+		Computer testComputer2 = computerDao.get(computer3.getId());
+		Iterator<Execution> execs = testComputer2.getExecutionList().iterator();
+		while (execs.hasNext()) {
+			Execution ex = execs.next();
+			ex.getComputerList().remove(testComputer2);
+			testComputer2.getExecutionList().remove(ex);
+		}
 //		Cluster testClust = testComputer2.getCluster();
 //		testClust.getComputerList().remove(testComputer2);
 //		clusterDao.update(testClust);
-//		computerDao.delete(testComputer2);
-//		System.out.println("Removed computer");
+		computerDao.delete(testComputer2);
+		System.out.println("Removed computer");
 		
 	}
 
 	public static void dst02a() {
 		
+		System.out.println("=====================");
+		System.out.println("========= 2a ========");
+		System.out.println("=====================");
+		
 		long now = System.currentTimeMillis();
 		
-		TypedQuery<User> userFind = GenericDao.getEntityManager().createNamedQuery("User.find", User.class);
+		TypedQuery<User> userFind = GenericDao.getEntityManager().createNamedQuery("User.find3", User.class);
+		TypedQuery<User> userMax = GenericDao.getEntityManager().createNamedQuery("User.mostActive", User.class);
 		
 		userFind.setParameter("gridname", "grid1");
 		userFind.setParameter("jobcount", 1l);
@@ -385,8 +402,7 @@ public class Main {
 		
 		System.out.println("findUser-Result: "+foo.toString());
 		
-		TypedQuery<User> userMax = GenericDao.getEntityManager().createNamedQuery("User.mostActive", User.class);
-		foo = userFind.getResultList();
+		foo = userMax.getResultList();
 		System.out.println("findMaxUser-Result: "+foo.toString());
 		
 		final GenericDao<Environment, Long> environmentDao =
@@ -395,8 +411,6 @@ public class Main {
 				new GenericDao<User, Long>(User.class);
 		final GenericDao<Job, Long> jobDao =
 				new GenericDao<Job, Long>(Job.class);
-		final GenericDao<Execution, Long> execDao =
-				new GenericDao<Execution, Long>(Execution.class);
 		
 		Environment env2 = new Environment("efghi", new LinkedList<String>(Arrays.asList("efg", "hij")));
 		Environment env3 = new Environment("efgdfahi", new LinkedList<String>(Arrays.asList("edfafg", "adfhij")));
@@ -429,47 +443,166 @@ public class Main {
 		userDao.persist(user2);
 		
 		foo = userMax.getResultList();
-		
 		System.out.println("findMaxUser-Result: "+foo.toString());
 	}
 
 	public static void dst02b() {
-
+		
+		System.out.println("=====================");
+		System.out.println("========= 2b ========");
+		System.out.println("=====================");
+		
+		final GenericDao<User, Long> userDao =
+				new GenericDao<User, Long>(User.class);
+		
+		userDao.get(1l);
 	}
 
 	public static void dst02c() {
+		
+		System.out.println("=====================");
+		System.out.println("========= 2c ========");
+		System.out.println("=====================");
 
 	}
 
 	public static void dst03() {
+		
+		System.out.println("=====================");
+		System.out.println("========= 03 ========");
+		System.out.println("=====================");
 
 	}
 
 	public static void dst04a() {
+		long now = System.currentTimeMillis();
 
+		System.out.println("=====================");
+		System.out.println("========= 4a ========");
+		System.out.println("=====================");
+		
+		final GenericDao<Environment, Long> environmentDao =
+				new GenericDao<Environment, Long>(Environment.class);
+		final GenericDao<User, Long> userDao =
+				new GenericDao<User, Long>(User.class);
+		final GenericDao<Job, Long> jobDao =
+				new GenericDao<Job, Long>(Job.class);
+		final GenericDao<Execution, Long> execDao =
+				new GenericDao<Execution, Long>(Execution.class);
+		
+		Environment env = new Environment("efghdfai", new LinkedList<String>(Arrays.asList("efgad", "hdfaij")));
+		
+		environmentDao.persist(env);
+		Job jobX = new Job(false);
+		System.out.println("Job is now new!");
+		
+		jobX.setEnvironment(env);
+		
+		User user = userDao.get(1l);
+		jobX.setUser(user);
+		jobX.setEnvironment(env);
+		user.getJobList().add(jobX);
+		
+		Execution exec = new Execution(
+				new Date(), new Date(now + 5L * Timer.ONE_WEEK), JobStatus.RUNNING);
+		
+		jobX.setExecution(exec);
+
+		//Will now Persist the new Job
+		jobDao.persist(jobX);
+
+		userDao.update(user);	//We need to update user, so association is saved correctly
+		System.out.println("New Job persisted: "+ jobX.toString());
+		System.out.println("Job is now managed!");
+		
+		//Will now Detach the Job
+		GenericDao.getEntityManager().detach(jobX);
+		System.out.println("Job is now detached!");
+		
+		jobX.setPaid(true);
+		System.out.println("Changed something");
+		
+		//Will now Re-attach the Job
+		jobX = jobDao.update(jobX);
+		System.out.println("Job is now managed again!");
+		
+		//Will retrieve Job
+		Job jobY = jobDao.get(jobX.getId());
+		
+		//Will now Remove Job
+		jobDao.delete(jobY);
+		System.out.println("Job is now removed");
+		
 	}
 
 	public static void dst04b() {
-
+		System.out.println("=====================");
+		System.out.println("========= 4b ========");
+		System.out.println("=====================");
+		
+		final GenericDao<Computer, Long> computerDao =
+				new GenericDao<Computer, Long>(Computer.class);
+		
+		Computer computer = computerDao.get(1l);
+		
+		System.out.println("Computer creation time: "+computer.getCreation().toString());
+		System.out.println("Computer update time: "+computer.getLastUpdate().toString());
+		
+		computer.setCpus(8);
+		
+		computerDao.update(computer);
+		
+		System.out.println("Computer update time: "+computer.getLastUpdate().toString());
 	}
 
 	public static void dst04c() {
-
+		System.out.println("=====================");
+		System.out.println("========= 4c ========");
+		System.out.println("=====================");
+		
+		System.out.println("Load Operations:			" + DefaultListener.getLoadCnt());
+		System.out.println("Update Operations:			" + DefaultListener.getUpdateCnt());
+		System.out.println("Remove Operations:			" + DefaultListener.getRemoveCnt() + "\n");
+		System.out.println("Persist Operations:			" + DefaultListener.getPersistCnt());
+		System.out.println("Overall time to persist:	" + DefaultListener.getTotalPersistTime()+ "ms");
+		System.out.println("Average time to persist:	" + (float) ((float)DefaultListener.getTotalPersistTime()/(float)DefaultListener.getPersistCnt()) +"ms");
 	}
 
 	public static void dst04d() {
+		System.out.println("=====================");
+		System.out.println("========= 4d ========");
+		System.out.println("=====================");
 
+		System.out.println("Counted select statements for Computers and Executes before Reset: " + SQLInterceptor.getSelectCount());
+		
+		SQLInterceptor.resetSelectCount();
+		
+		dst02b();
+		
+		System.out.println("Counted select statements for Computers and Executes: " + SQLInterceptor.getSelectCount());
 	}
 
     public static void dst05a() {
 
+		System.out.println("=====================");
+		System.out.println("========= 5a ========");
+		System.out.println("=====================");
+    	
     }
 
     public static void dst05b() {
 
+		System.out.println("=====================");
+		System.out.println("========= 5b ========");
+		System.out.println("=====================");
+    	
     }
 
     public static void dst05c() {
+    	
+		System.out.println("=====================");
+		System.out.println("========= 5c ========");
+		System.out.println("=====================");
 
     }
 }

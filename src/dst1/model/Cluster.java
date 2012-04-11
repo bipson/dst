@@ -71,7 +71,7 @@ public class Cluster implements IEntity<Long> {
 		return admin;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany()
 //	(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="cluster_fk")
 	public Set<Computer> getComputerList() {

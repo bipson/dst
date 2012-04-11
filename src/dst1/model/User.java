@@ -13,10 +13,19 @@ import javax.persistence.*;
 @NamedQueries({
 	@NamedQuery(name="User.find", query="SELECT u FROM User u JOIN u.membershipList m "+
 			"WHERE m.pk.grid.name = :gridname AND "+
-			"(SELECT COUNT (joblist) FROM User u JOIN u.jobList joblist) >= :jobcount"),
+			"SIZE(u.jobList) >= :jobcount"),
+//	@NamedQuery(name="User.find2", query="SELECT u FROM User u JOIN u.membershipList m "+
+//			"JOIN m.pk.grid g JOIN g.clusterList cluL JOIN cluL.computerList comL JOIN comL.executionList e "+
+//			"JOIN e.job j "+
+//			"WHERE m.pk.grid.name = :gridname AND "+
+//			"SIZE(u.jobList) >= :jobcount"),
+	@NamedQuery(name="User.find3", query="SELECT u FROM User u JOIN u.membershipList m "+
+			"WHERE m.pk.grid.name = :gridname AND "+
+			"(SELECT COUNT(j) FROM m JOIN m.pk.grid g JOIN g.clusterList cluL JOIN cluL.computerList comL JOIN comL.executionList e "+
+			"JOIN e.job j GROUP BY u.id) >= :jobcount"),
 	@NamedQuery(name="User.mostActive", query="SELECT u FROM User u "+
-			"WHERE (SELECT COUNT (loblist) FROM User u1 JOIN u1.jobList loblist) " +
-			">= ALL(SELECT COUNT (joblist) FROM User u2 JOIN u2.jobList joblist)")
+			"WHERE SIZE(u.jobList) >= "+
+			"ALL(SELECT COUNT(joblist) FROM User s JOIN s.jobList joblist GROUP BY s.id)"),
 })
 
 @Table(name="users",
