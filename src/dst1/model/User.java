@@ -21,7 +21,8 @@ import javax.persistence.*;
 //			"SIZE(u.jobList) >= :jobcount"),
 	@NamedQuery(name="User.find3", query="SELECT u FROM User u JOIN u.membershipList m "+
 			"WHERE m.pk.grid.name = :gridname AND "+
-			"(SELECT COUNT(j) FROM m JOIN m.pk.grid g JOIN g.clusterList cluL JOIN cluL.computerList comL JOIN comL.executionList e "+
+			"(SELECT COUNT(j) FROM m JOIN m.pk.grid g JOIN g.clusterList cluL "+
+			"JOIN cluL.computerList comL JOIN comL.executionList e "+
 			"JOIN e.job j GROUP BY u.id) >= :jobcount"),
 	@NamedQuery(name="User.mostActive", query="SELECT u FROM User u "+
 			"WHERE SIZE(u.jobList) >= "+
