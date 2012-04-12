@@ -2,6 +2,7 @@ package dst1;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.UnknownHostException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
@@ -23,6 +24,14 @@ import javax.validation.ValidatorFactory;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.ejb.HibernateEntityManager;
+
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.Mongo;
+import com.mongodb.MongoException;
 
 import dst1.db.*;
 import dst1.interceptor.SQLInterceptor;
@@ -635,7 +644,129 @@ public class Main {
 		System.out.println("=====================");
 		System.out.println("========= 5a ========");
 		System.out.println("=====================");
-    	
+
+		//DB connection
+		Mongo m = null;
+		
+		try {
+			m = new Mongo();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MongoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		DB db = m.getDB( "grid" );
+		DBCollection coll = db.getCollection("job_workflow");
+		
+		// Get all finished Jobs
+		Job jobX = new Job();
+		@SuppressWarnings("unchecked")
+		List<Job> finishedJobs = JobCriteria.byExample(jobX);
+		
+		Long i = 0L;
+		
+		for(Job job: finishedJobs) {
+		
+			BasicDBObject doc = new BasicDBObject();
+			
+			doc.put("job_id", job.getId());
+			doc.put("last_updated", System.currentTimeMillis());
+						
+			BasicDBObject result = new BasicDBObject();
+			
+			doc.put("output", job.getEnvironment().getWorkflow());
+		
+			doc.put("type", "text");
+			
+			coll.insert(doc);
+			
+			if (i <= job.getId())
+				i = job.getId()+1;
+		}
+		
+		// Because we need at least 5 different documents, 4 more "imaginary" documents
+		
+		BasicDBObject doc = new BasicDBObject();
+		
+		doc.put("job_id", i++);
+		doc.put("last_updated", System.currentTimeMillis());
+					
+		BasicDBObject result = new BasicDBObject();
+		
+		int[][] matrix = {{1,0,0,0},{0,1,0,0},{0,0,1,0},{0,0,0,1}}; 
+		
+		result.put("matrix", matrix);
+		
+		doc.put("result_matrix", result);
+	
+		doc.put("type", "identity_matrix");
+		
+		coll.insert(doc);
+		
+		//3
+		doc = new BasicDBObject();
+		
+		doc.put("job_id", i++);
+		doc.put("last_updated", System.currentTimeMillis());
+					
+		BasicDBObject block = new BasicDBObject();
+		
+		block.put("alignment_nr", 0);
+		
+		BasicDBObject primary = new BasicDBObject();
+		
+		primary.put("chromosome", "chr11");
+		primary.put("start", "30001012");
+		primary.put("end", "3001075");
+		
+		BasicDBObject align = new BasicDBObject();
+		
+		align.put("chromosome", "chr13");
+		align.put("start", "70568380");
+		align.put("end", "70568443");
+		
+		block.put("primary", primary);
+		block.put("align", align);
+		block.put("blastz", 3500);
+		
+		String[] seq = {"TCAGCTCATAAATCACCTCCTGCCACAAGCCTGGCCTGGTCCCAGGAGAGTGTCCAGGCTCAGA","TCTGTTCATAAACCACCTGCCATGACAAGCCTGGCCTGTTCCCAAGACAATGTCCAGGCTCAGA"};
+		
+		block.put("seq", seq);
+		
+		doc.put("aliognment_block", block);
+		
+		coll.insert(doc);
+		
+		//4
+		doc = new BasicDBObject();
+		
+		doc.put("job_id", i++);
+		doc.put("last_updated", System.currentTimeMillis());
+	
+		BasicDBObject logs = new BasicDBObject();
+		
+		String[] log_set = {"Starting" , "Running" , "Still Running" , "Finished"};
+
+		logs.put("log_set", log_set);
+				
+		doc.put("logs", logs);
+		
+		coll.insert(doc);
+		
+		//5
+		doc = new BasicDBObject();
+		
+		doc.put("job_id", i++);
+		doc.put("last_updated", System.currentTimeMillis());
+		
+		coll.insert(doc);
+		
+		//create index on job_id field
+		coll.createIndex(new BasicDBObject("job_id", 1));
+		
     }
 
     public static void dst05b() {
@@ -644,6 +775,47 @@ public class Main {
 		System.out.println("========= 5b ========");
 		System.out.println("=====================");
     	
+		//DB connection
+		Mongo m = null;
+		
+		try {
+			m = new Mongo();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MongoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		DB db = m.getDB( "grid" );
+		DBCollection coll = db.getCollection("job_workflow");
+		
+		// query by job_id
+		BasicDBObject query = new BasicDBObject();
+
+        query.put("job_id", 1L);
+
+        DBCursor jobCursor = coll.find(query);
+
+        while(jobCursor.hasNext()) {
+            System.out.println(jobCursor.next());
+        }
+		
+        // query by last_updated > 1325397600
+        BasicDBObject queryFilter = new BasicDBObject();
+        queryFilter.put("_id", 0);
+        queryFilter.put("job_id", 0);
+        queryFilter.put("last_updated", 0);
+        
+        query = new BasicDBObject();
+        query.put("last_updated", new BasicDBObject("$gt", 1325397600));
+
+        jobCursor = coll.find(query, queryFilter);
+
+        while(jobCursor.hasNext()) {
+            System.out.println(jobCursor.next());
+        }
     }
 
     public static void dst05c() {
@@ -652,5 +824,6 @@ public class Main {
 		System.out.println("========= 5c ========");
 		System.out.println("=====================");
 
+		
     }
 }

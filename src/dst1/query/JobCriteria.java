@@ -33,7 +33,12 @@ public class JobCriteria {
 		HibernateEntityManager hem = GenericDao.getEntityManager().unwrap(HibernateEntityManager.class);
 		Session session = hem.getSession();
 		
-		Execution exec = job.getExecution();
+		Execution exec = null;
+		if (job.getExecution() != null)
+			exec = job.getExecution();
+		else
+			exec = new Execution();
+		
 		exec.setStatus(JobStatus.FINISHED);
 		
 		Criteria criteria = session.createCriteria(Job.class)
