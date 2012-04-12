@@ -4,12 +4,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import javax.persistence.*;
 
 @Entity
+
 @NamedQueries({
 	@NamedQuery(name="User.find", query="SELECT DISTINCT u FROM User u JOIN u.membershipList m "+
 			"JOIN m.pk.grid g JOIN g.clusterList cluL JOIN cluL.computerList comL "+
@@ -25,6 +23,12 @@ import javax.persistence.*;
 @Table(name="users",
 	uniqueConstraints = {@UniqueConstraint(columnNames={"account_no", "bank_code"})}
 )
+
+@org.hibernate.annotations.Table( appliesTo = "users", indexes = {
+      @org.hibernate.annotations.Index(name="pass", columnNames = "password"),
+   }
+)
+
 @PrimaryKeyJoinColumn
 public class User extends Person {
 
@@ -42,19 +46,11 @@ public class User extends Person {
 	public User(){}
 	
 	public User(String username, byte[] password, String accountNo, String bankCode) {
-		MessageDigest md = null;
 		
 		this.username = username;
 		this.accountNo = accountNo;
 		this.bankCode = bankCode;
-		
-		try {
-			md = MessageDigest.getInstance("MD5");
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-	
-		this.password = md.digest(password);
+		this.password = password;
 	}
 	
 	@Column(name="username", unique=true, nullable=false)
@@ -62,7 +58,7 @@ public class User extends Person {
 		return username;
 	}
 
-	@Column(name="password", length=16)
+	@Column(name="password", columnDefinition="VARCHAR(16)")
 	public byte[] getPassword() {
 		return password;
 	}

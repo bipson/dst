@@ -109,6 +109,14 @@ public class Main {
 			e.printStackTrace();
 		}
 		
+		try {
+			System.out.println(MessageDigest.isEqual(md.digest("foo1".getBytes("UTF-8")), user1.getPassword()));
+			System.out.println(MessageDigest.isEqual(md.digest("foo2".getBytes("UTF-8")), user1.getPassword()));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		user1.setFirstName("Alfred");
 		user1.setLastName("Gacksi");
 		user1.setAddress(new Address("gacksiStreet", "gacksiCity", "12390"));
@@ -456,6 +464,15 @@ public class Main {
 		Execution ex = executionDao.get(1l);
 		
 		execX.setStart(ex.getStart());
+		execX.setEnd(ex.getEnd());
+		
+		execX.setJob(jobX);
+		
+		jobX.setExecution(execX);
+		
+		System.out.println("Jobs by example: "+JobCriteria.byExample(jobX));
+		
+		execX.setStart(new Date(System.currentTimeMillis() + 150L * Timer.ONE_WEEK));
 		execX.setEnd(ex.getEnd());
 		
 		execX.setJob(jobX);

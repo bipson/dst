@@ -13,7 +13,7 @@ public class Job implements IEntity<Long> {
 	private static final long serialVersionUID = -9182152775849509682L;
 
 	private Long		id;	
-    private boolean		isPaid;
+    private Boolean		isPaid;
 	
     private Environment environment;
 	
@@ -35,7 +35,7 @@ public class Job implements IEntity<Long> {
 	}
 	
     @Column(name="is_paid")
-	public boolean isPaid() {
+	public Boolean isPaid() {
 		return isPaid;
 	}
     
@@ -81,7 +81,7 @@ public class Job implements IEntity<Long> {
 		this.id = id;
 	}
 
-	public void setPaid(boolean isPaid) {
+	public void setPaid(Boolean isPaid) {
 		this.isPaid = isPaid;
 	}
 
