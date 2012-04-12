@@ -30,6 +30,8 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.MapReduceCommand;
+import com.mongodb.MapReduceOutput;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 
@@ -823,7 +825,46 @@ public class Main {
 		System.out.println("=====================");
 		System.out.println("========= 5c ========");
 		System.out.println("=====================");
-
 		
+		//Map and Reduce Functions
+		
+		final String map_js = "function map() {" +
+				"for (var key in this) {" +
+					"if (key != \"_id\" && key != \"job_id\" && key != \"last_updated\") {" +
+						"emit(key, 1);" +
+					"}" +
+				"}" +
+			"}";
+		
+		final String reduce_js = "function reduce(key, values) {" +
+				"var n = 0;" +
+				"values.forEach(function(value) {" +
+					"n++;" +
+				"});" +
+				"return n;" +
+			"}";
+
+		//DB connection
+		Mongo m = null;
+		
+		try {
+			m = new Mongo();
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MongoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		DB db = m.getDB( "grid" );
+		DBCollection coll = db.getCollection("job_workflow");
+		
+		MapReduceOutput out = coll.mapReduce(map_js, reduce_js, null,
+				MapReduceCommand.OutputType.INLINE, null);
+		
+		for ( DBObject obj : out.results() ) {
+		    System.out.println( obj );
+		}
     }
 }
