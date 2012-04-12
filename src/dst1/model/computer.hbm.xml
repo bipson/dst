@@ -19,4 +19,8 @@
 			<many-to-many column="execution_id" class="Execution"/>
 		</set> 
 	</class>
+	
+	<query name="findVienna">
+        <![CDATA[from Computer c where c.location LIKE 'AUT-VIE%']]>
+    </query>
 </hibernate-mapping>

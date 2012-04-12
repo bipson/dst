@@ -12,9 +12,8 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="User.find", query="SELECT DISTINCT u FROM User u JOIN u.membershipList m "+
-			"JOIN m.pk.grid g JOIN g.clusterList cluL "+
-			"JOIN cluL.computerList comL JOIN comL.executionList e "+
-			"JOIN e.job j "+
+			"JOIN m.pk.grid g JOIN g.clusterList cluL JOIN cluL.computerList comL "+
+			"JOIN comL.executionList e JOIN e.job j "+
 			"WHERE m.pk.grid.name = :gridname "+
 			"AND "+
 			"((SELECT COUNT(j.id) FROM j GROUP BY u.id)) >= :jobcount"),

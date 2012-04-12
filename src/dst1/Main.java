@@ -16,10 +16,15 @@ import javax.management.timer.Timer;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.ejb.HibernateEntityManager;
+
 import dst1.db.*;
 import dst1.interceptor.SQLInterceptor;
 import dst1.listener.DefaultListener;
 import dst1.model.*;
+import dst1.query.JobCriteria;
 
 public class Main {
 	
@@ -193,8 +198,8 @@ public class Main {
 		clusterDao.persist(cluster2);
 		
 		// Computers
-		Computer computer1 = new Computer("comp1", 6, "cellar1", new Date(), new Date());
-		Computer computer2 = new Computer("comp2", 6, "cellar1", new Date(), new Date());
+		Computer computer1 = new Computer("comp1", 6, "AUT-VIE", new Date(), new Date());
+		Computer computer2 = new Computer("comp2", 6, "AUT-VIE", new Date(), new Date());
 		Computer computer3 = new Computer("comp3", 2, "cellar2", new Date(), new Date());
 		Computer computer4 = new Computer("comp4", 1, "cellar2", new Date(), new Date());
 		
@@ -225,7 +230,7 @@ public class Main {
 		
 		// Executions
 		Execution exec1 = new Execution(
-				new Date(), new Date(now + 3L * Timer.ONE_WEEK), JobStatus.RUNNING);
+				new Date(), new Date(now + 3L * Timer.ONE_WEEK), JobStatus.FINISHED);
 		Execution exec2 = new Execution(
 				new Date(now + 2L * Timer.ONE_WEEK), new Date(now + 4L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
 		
@@ -392,7 +397,7 @@ public class Main {
 		TypedQuery<User> userFind = GenericDao.getEntityManager().createNamedQuery("User.find", User.class);
 		TypedQuery<User> userMax = GenericDao.getEntityManager().createNamedQuery("User.mostActive", User.class);
 		
-		userFind.setParameter("gridname", "grid2");
+		userFind.setParameter("gridname", "grid1");
 		userFind.setParameter("jobcount", 1l);
 		
 		List<User> foo = userFind.getResultList();
@@ -402,45 +407,6 @@ public class Main {
 		foo = userMax.getResultList();
 		System.out.println("findMaxUser-Result: "+foo.toString());
 		
-		final GenericDao<Environment, Long> environmentDao =
-				new GenericDao<Environment, Long>(Environment.class);
-		final GenericDao<User, Long> userDao =
-				new GenericDao<User, Long>(User.class);
-		final GenericDao<Job, Long> jobDao =
-				new GenericDao<Job, Long>(Job.class);
-		
-		Environment env2 = new Environment("efghi", new LinkedList<String>(Arrays.asList("efg", "hij")));
-		Environment env3 = new Environment("efgdfahi", new LinkedList<String>(Arrays.asList("edfafg", "adfhij")));
-		
-		environmentDao.persist(env2);
-		Job jobX = new Job(false);
-		Job jobY = new Job(false);
-		
-		jobX.setEnvironment(env2);
-		
-		User user2 = userDao.get(2l);
-		jobX.setUser(user2);
-		jobX.setEnvironment(env2);
-		jobY.setUser(user2);
-		jobY.setEnvironment(env3);
-		user2.getJobList().add(jobX);
-		user2.getJobList().add(jobY);
-		
-		Execution exec1 = new Execution(
-				new Date(), new Date(now + 5L * Timer.ONE_WEEK), JobStatus.RUNNING);
-		Execution exec2 = new Execution(
-				new Date(), new Date(now + 4L * Timer.ONE_WEEK), JobStatus.RUNNING);
-		
-		jobX.setExecution(exec1);
-		jobY.setExecution(exec2);
-		
-		jobDao.persist(jobX);
-		jobDao.persist(jobY);
-		
-		userDao.persist(user2);
-		
-		foo = userMax.getResultList();
-		System.out.println("findMaxUser-Result: "+foo.toString());
 	}
 
 	public static void dst02b() {
@@ -449,10 +415,26 @@ public class Main {
 		System.out.println("========= 2b ========");
 		System.out.println("=====================");
 		
-		final GenericDao<User, Long> userDao =
-				new GenericDao<User, Long>(User.class);
+		HibernateEntityManager hem = GenericDao.getEntityManager().unwrap(HibernateEntityManager.class);
+		Session hSession = hem.getSession();
 		
-		userDao.get(1l);
+		Query query = hSession.getNamedQuery("findVienna");
+		
+		@SuppressWarnings("unchecked")
+		List<Computer> computers = (List<Computer>) query.list();
+		
+		System.out.println("Result: "+ computers.toString());
+		
+		long count = 0;
+		
+		for (Computer computer: computers) {
+			for (Execution exec: computer.getExecutionList()) {
+				count += exec.getEnd().getTime() - exec.getStart().getTime();
+			}
+		}
+		
+		System.out.println("Sum of computation time: " + count +"ms");
+		
 	}
 
 	public static void dst02c() {
@@ -460,7 +442,27 @@ public class Main {
 		System.out.println("=====================");
 		System.out.println("========= 2c ========");
 		System.out.println("=====================");
+		
+		final GenericDao<Execution, Long> executionDao =
+				new GenericDao<Execution, Long>(Execution.class);
+		
+		System.out.println("Jobs by User and Workflow: "+JobCriteria.byUserWorkflow("gacksi", "abcd"));
 
+		System.out.println("Jobs by User and Workflow that does not exist: "+JobCriteria.byUserWorkflow("gacksi", "abcde"));
+		
+		Job jobX = new Job();
+		Execution execX = new Execution();
+		
+		Execution ex = executionDao.get(1l);
+		
+		execX.setStart(ex.getStart());
+		execX.setEnd(ex.getEnd());
+		
+		execX.setJob(jobX);
+		
+		jobX.setExecution(execX);
+		
+		System.out.println("Jobs by example: "+JobCriteria.byExample(jobX));
 	}
 
 	public static void dst03() {
@@ -517,7 +519,7 @@ public class Main {
 		System.out.println("Job is now detached!");
 		
 		jobX.setPaid(true);
-		System.out.println("Changed something");
+		System.out.println("Changed something...");
 		
 		//Will now Re-attach the Job
 		jobX = jobDao.update(jobX);
@@ -525,6 +527,7 @@ public class Main {
 		
 		//Will retrieve Job
 		Job jobY = jobDao.get(jobX.getId());
+		System.out.println("Retrieved this exact Job!");
 		
 		//Will now Remove Job
 		jobDao.delete(jobY);
@@ -569,8 +572,6 @@ public class Main {
 		System.out.println("=====================");
 		System.out.println("========= 4d ========");
 		System.out.println("=====================");
-
-		System.out.println("Counted select statements for Computers and Executes before Reset: " + SQLInterceptor.getSelectCount());
 		
 		SQLInterceptor.resetSelectCount();
 		
