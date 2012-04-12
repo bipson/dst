@@ -827,7 +827,6 @@ public class Main {
 		System.out.println("=====================");
 		
 		//Map and Reduce Functions
-		
 		final String map_js = "function map() {" +
 				"for (var key in this) {" +
 					"if (key != \"_id\" && key != \"job_id\" && key != \"last_updated\") {" +
