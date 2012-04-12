@@ -15,6 +15,10 @@ import java.util.Set;
 import javax.management.timer.Timer;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -487,7 +491,36 @@ public class Main {
 		System.out.println("=====================");
 		System.out.println("========= 03 ========");
 		System.out.println("=====================");
+		
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+		Validator validator = factory.getValidator();
 
+		Computer comp = new Computer("fo", 0, "asdfadf-adfa",
+				new Date(System.currentTimeMillis()+23123l),
+				new Date(System.currentTimeMillis()+123134l));
+		
+		Set<ConstraintViolation<Computer>> constraintViolations =
+				validator.validate(comp);
+		
+		System.out.println("This instance should throw all constraint violations: ");
+		Iterator<ConstraintViolation<Computer>> it = constraintViolations.iterator();
+		
+		while (it.hasNext()) {
+			System.out.println("msg: " + it.next().getMessage());
+		}
+		
+		comp = new Computer("fo42342", 1, "AUT-VIE@1040",
+				new Date(System.currentTimeMillis()-23123l),
+				new Date(System.currentTimeMillis()-123134l));
+		
+		constraintViolations = validator.validate(comp);
+		
+		System.out.println("This instance should throw no constraint violations: ");
+		it = constraintViolations.iterator();
+		
+		while (it.hasNext()) {
+			System.out.println("msg: " + it.next().getMessage());
+		}
 	}
 
 	public static void dst04a() {

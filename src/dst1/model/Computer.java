@@ -4,7 +4,13 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 import dst1.db.interfaces.IEntity;
+import dst1.validator.CPUs;
 
 public class Computer implements IEntity<Long> {
 
@@ -52,22 +58,29 @@ public class Computer implements IEntity<Long> {
 		this.executionList = executionList;
 	}
 
+	@Size(min = 5, max = 25)
 	public String getName() {
 		return name;
 	}
 
+	@CPUs(min = 2, max = 8)
 	public Integer getCpus() {
 		return cpus;
 	}
 
+	@Pattern(regexp="[A-Z]{3}-[A-Z]{3}@[0-9]{4,}")
 	public String getLocation() {
 		return location;
 	}
 
+	@NotNull
+	@Past
 	public Date getCreation() {
 		return creation;
 	}
 
+	@NotNull
+	@Past
 	public Date getLastUpdate() {
 		return lastUpdate;
 	}
