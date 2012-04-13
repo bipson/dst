@@ -10,7 +10,7 @@ import dst1.db.interfaces.IEntityDao;
 
 public class GenericDao <EntityType extends IEntity<EntityKeyType>,EntityKeyType extends Serializable> implements IEntityDao<EntityType, EntityKeyType> {
 
-	private static EntityManager entityManager;
+	private static EntityManager em;
 	private static EntityManagerFactory emf;
 
 	private Class<EntityType> entityClass;
@@ -19,88 +19,82 @@ public class GenericDao <EntityType extends IEntity<EntityKeyType>,EntityKeyType
 		this.entityClass = entityClass;
 	}
 
-	public static void initEntityManagerFactory(EntityManagerFactory emf) {
+	public static void initEMF(EntityManagerFactory emf) {
 		GenericDao.emf = emf;
-		GenericDao.entityManager = GenericDao.emf.createEntityManager();
+		GenericDao.em = GenericDao.emf.createEntityManager();
 	}
 
 	public static EntityManager getEntityManager() {
-		return GenericDao.entityManager;
+		return GenericDao.em;
 	}
 
 	@Override
 	public void delete(EntityType entity) {
 		try {
-			entityManager.getTransaction().begin();
-			entityManager.remove(entity);
-			entityManager.getTransaction().commit();
+			em.getTransaction().begin();
+			em.remove(entity);
+			em.getTransaction().commit();
 		}
-		catch (RuntimeException runTime) {
+		catch (RuntimeException e) {
 			rollBackTransaction();
-			throw runTime;
+			throw e;
 		}
 	}
 
 	@Override
 	public EntityType get(EntityKeyType key) {
-		return entityManager.find(entityClass, key);
+		return em.find(entityClass, key);
 	}
 
 	@Override
 	public void persist(EntityType entity) {
-		entityManager.getTransaction().begin();
+		em.getTransaction().begin();
 		try {
-			entityManager.persist(entity);
-			entityManager.getTransaction().commit();
+			em.persist(entity);
+			em.getTransaction().commit();
 		}
 		catch(RuntimeException e) {
 			rollBackTransaction();
 			throw e;
 		}
-
 	}
 
 	@Override
 	public EntityType update(EntityType entity) {
 		EntityType merged;
-		entityManager.getTransaction().begin();
+		em.getTransaction().begin();
 		try {
-			merged = entityManager.merge(entity);
-			entityManager.getTransaction().commit();
+			merged = em.merge(entity);
+			em.getTransaction().commit();
 			return merged;
 		}
 		catch(RuntimeException e) {
 			rollBackTransaction();
 			throw e;
 		}
-
 	}
 
 	@Override
 	public void refresh(EntityType entity) {
 		try {
-			entityManager.refresh(entity);
+			em.refresh(entity);
 		}
 		catch(RuntimeException e) {
 			throw e;
 		}
-
-
 	}
 
 	private void rollBackTransaction() {
 
-		if (entityManager.getTransaction().isActive())
-			entityManager.getTransaction().rollback();
+		if (em.getTransaction().isActive())
+			em.getTransaction().rollback();
 	}
 
 	public static void shutdown() {
-		if(entityManager != null &&
-				entityManager.isOpen()) {
-			entityManager.close();
+		if(em != null && em.isOpen()) {
+			em.close();
 		}
-		if(emf != null &&
-				emf.isOpen()) {
+		if(emf != null && emf.isOpen()) {
 			emf.close();
 		}
 	}

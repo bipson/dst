@@ -16,7 +16,7 @@ public class Admin extends Person {
 	
 	public Admin(){}
 	
-	@OneToMany(mappedBy="admin", orphanRemoval=true)
+	@OneToMany(mappedBy="admin")
 	public Set<Cluster> getClusterList() {
 		return clusterList;
 	}

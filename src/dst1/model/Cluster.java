@@ -59,26 +59,25 @@ public class Cluster implements IEntity<Long> {
 		return nextService;
 	}
 
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToOne
 	@JoinColumn(name="grid_fk")
 	public Grid getGrid() {
 		return grid;
 	}
 
-	@ManyToOne(optional=false, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToOne(optional=false)
 	@JoinColumn(name="admin_fk")
 	public Admin getAdmin() {
 		return admin;
 	}
 	
 	@OneToMany()
-//	(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
 	@JoinColumn(name="cluster_fk")
 	public Set<Computer> getComputerList() {
 		return computerList;
 	}
 
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToMany
 	@JoinTable(
 			name="cluster_children",
 			joinColumns=@JoinColumn(name="parent_id"),
@@ -88,7 +87,7 @@ public class Cluster implements IEntity<Long> {
 		return clusterChildren;
 	}
 
-	@ManyToMany(mappedBy="clusterChildren", cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToMany(mappedBy="clusterChildren")
 	public Set<Cluster> getClusterParents() {
 		return clusterParents;
 	}

@@ -50,7 +50,7 @@ public class Main {
 	public static void main(String[] args) {
 		
 		// Init EntityManager for DAOs
-		GenericDao.initEntityManagerFactory(Persistence.createEntityManagerFactory("grid"));
+		GenericDao.initEMF(Persistence.createEntityManagerFactory("grid"));
 		
 		dst01();
 		dst02a();
@@ -61,9 +61,9 @@ public class Main {
 		dst04b();
 		dst04c();
 		dst04d();
-		dst05a();
-		dst05b();
-		dst05c();
+//		dst05a();
+//		dst05b();
+//		dst05c();
 		
 		GenericDao.shutdown();
 	}
@@ -74,6 +74,9 @@ public class Main {
 		System.out.println("========= 01 ========");
 		System.out.println("=====================");
 		
+		// TODO: actually write these classes
+		// as soon as an desired transaction does not work you will need
+		// wrappers (for the more complex associations) for now it seems to work
 		final GenericDao<Admin, Long> adminDao =
 				new GenericDao<Admin, Long>(Admin.class);
 		final GenericDao<Cluster, Long> clusterDao =
@@ -94,7 +97,6 @@ public class Main {
 				new GenericDao<User, Long>(User.class);
 		
 		// Helpers
-		long now = System.currentTimeMillis();
 		
 		// Add some Test-entities
 		System.out.println("Will now add some Test-Entities");
@@ -158,7 +160,7 @@ public class Main {
 		user1.getMembershipList().add(membership1);
 		grid1.getMembershipList().add(membership1);
 		
-		Membership membership2 = new Membership(new Date(now - (5L * Timer.ONE_WEEK)), (Double.valueOf(456)));
+		Membership membership2 = new Membership(new Date(System.currentTimeMillis() - (5L * Timer.ONE_WEEK)), (Double.valueOf(456)));
 		
 		membership2.setGrid(grid2);
 		membership2.setUser(user2);
@@ -193,8 +195,8 @@ public class Main {
 		// Clusters
 		Cluster cluster1 = null, cluster2 = null;
 		
-		cluster1 = new Cluster("Clust1", new Date(now - (8L * 52L * Timer.ONE_WEEK)),
-				new Date(now + (3L * 52L * Timer.ONE_WEEK)));
+		cluster1 = new Cluster("Clust1", new Date(System.currentTimeMillis() - (8L * 52L * Timer.ONE_WEEK)),
+				new Date(System.currentTimeMillis() + (3L * 52L * Timer.ONE_WEEK)));
 		
 		cluster1.setAdmin(admin1);
 		cluster1.setGrid(grid1);
@@ -202,8 +204,8 @@ public class Main {
 		grid1.getClusterList().add(cluster1);
 		admin1.getClusterList().add(cluster1);
 		
-		cluster2 = new Cluster("Clust2", new Date(now - (6L * 52L * Timer.ONE_WEEK)),
-				new Date(now + (5L * 52L * Timer.ONE_WEEK)));
+		cluster2 = new Cluster("Clust2", new Date(System.currentTimeMillis() - (6L * 52L * Timer.ONE_WEEK)),
+				new Date(System.currentTimeMillis() + (5L * 52L * Timer.ONE_WEEK)));
 		
 		cluster2.setAdmin(admin2);
 		cluster2.setGrid(grid2);
@@ -253,9 +255,9 @@ public class Main {
 		
 		// Executions
 		Execution exec1 = new Execution(
-				new Date(), new Date(now + 3L * Timer.ONE_WEEK), JobStatus.FINISHED);
+				new Date(), new Date(System.currentTimeMillis() + 3L * Timer.ONE_WEEK), JobStatus.FINISHED);
 		Execution exec2 = new Execution(
-				new Date(now + 2L * Timer.ONE_WEEK), new Date(now + 4L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
+				new Date(System.currentTimeMillis() + 2L * Timer.ONE_WEEK), new Date(System.currentTimeMillis() + 4L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
 		
 		// Don't like the look of this, shouldn't this be defined through grid-memberships?
 		Set<Computer> user1GridComp = new HashSet<Computer>();
@@ -415,8 +417,6 @@ public class Main {
 		System.out.println("========= 2a ========");
 		System.out.println("=====================");
 		
-		long now = System.currentTimeMillis();
-		
 		TypedQuery<User> userFind = GenericDao.getEntityManager().createNamedQuery("User.find", User.class);
 		TypedQuery<User> userMax = GenericDao.getEntityManager().createNamedQuery("User.mostActive", User.class);
 		
@@ -520,7 +520,7 @@ public class Main {
 			System.out.println("msg: " + it.next().getMessage());
 		}
 		
-		comp = new Computer("fo42342", 1, "AUT-VIE@1040",
+		comp = new Computer("fo42342", 2, "AUT-VIE@1040",
 				new Date(System.currentTimeMillis()-23123l),
 				new Date(System.currentTimeMillis()-123134l));
 		
@@ -547,8 +547,6 @@ public class Main {
 				new GenericDao<User, Long>(User.class);
 		final GenericDao<Job, Long> jobDao =
 				new GenericDao<Job, Long>(Job.class);
-		final GenericDao<Execution, Long> execDao =
-				new GenericDao<Execution, Long>(Execution.class);
 		
 		Environment env = new Environment("efghdfai", new LinkedList<String>(Arrays.asList("efgad", "hdfaij")));
 		
@@ -677,8 +675,6 @@ public class Main {
 			doc.put("job_id", job.getId());
 			doc.put("last_updated", System.currentTimeMillis());
 						
-			BasicDBObject result = new BasicDBObject();
-			
 			doc.put("output", job.getEnvironment().getWorkflow());
 		
 			doc.put("type", "text");
