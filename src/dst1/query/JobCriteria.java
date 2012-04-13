@@ -30,6 +30,11 @@ public class JobCriteria {
 	
 	@SuppressWarnings("rawtypes")
 	public static List byExample(Job job) {
+		// TODO: make javadoc of this
+		// Note: The query does only check Job and associated Execution (if any)
+		// not less and not more and fixed JobStatus in Execution (namely
+		// JobStatus.FINISHED (will be overwritten) as requested by assignment
+		// This is obviously DANGEROUS (how should user know?)
 		HibernateEntityManager hem = GenericDao.getEntityManager().unwrap(HibernateEntityManager.class);
 		Session session = hem.getSession();
 		

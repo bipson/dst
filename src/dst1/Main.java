@@ -473,7 +473,7 @@ public class Main {
 		
 		// Comment on query: To optimize for the assignment, the query does an
 		// explicit inner join fetch with executions (although the result seems
-		// to be the same for the number of selects, due to default eager
+		// to be the same regarding the number of selects, due to default eager
 		// fetching of all objects).
 		// Obviously this is DANGEROUS, only computers with an assigned
 		// execution are returned by this query!
@@ -504,7 +504,8 @@ public class Main {
 		
 		System.out.println("Jobs by User and Workflow: "+JobCriteria.byUserWorkflow("gacksi", "abcd"));
 
-		System.out.println("Jobs by User and Workflow that does not exist: "+JobCriteria.byUserWorkflow("gacksi", "abcde"));
+		System.out.println(" - V - A query that should not give any result");
+		System.out.println("Jobs by User and Workflow: "+JobCriteria.byUserWorkflow("gacksi", "abcde"));
 		
 		Job jobX = new Job();
 		Execution execX = new Execution();
@@ -518,15 +519,21 @@ public class Main {
 		
 		jobX.setExecution(execX);
 		
+		
+		// Calling the query
+		// Note: The query does only check Job and associated Execution (if any)
+		// not less and not more and fixed JobStatus in Execution (namely
+		// JobStatus.FINISHED (will be overwritten) as requested by assignment
+		// This is obviously DANGEROUS (how should user know?)
 		System.out.println("Jobs by example: "+JobCriteria.byExample(jobX));
 		
 		execX.setStart(new Date(System.currentTimeMillis() + 150L * Timer.ONE_WEEK));
-		execX.setEnd(ex.getEnd());
 		
 		execX.setJob(jobX);
 		
 		jobX.setExecution(execX);
-		
+
+		System.out.println(" - V - A query that should not give any result");
 		System.out.println("Jobs by example: "+JobCriteria.byExample(jobX));
 	}
 
@@ -553,7 +560,7 @@ public class Main {
 			System.out.println("msg: " + it.next().getMessage());
 		}
 
-		System.out.println("This instance should NOT throw any constraint violations: ");
+		System.out.println(" - V - This instance should NOT throw any constraint violations: ");
 		comp = new Computer("fo42342", 2, "AUT-VIE@1040",
 				new Date(System.currentTimeMillis()-23123l),
 				new Date(System.currentTimeMillis()-123134l));
@@ -872,7 +879,8 @@ public class Main {
 		//Map and Reduce Functions
 		final String map_js = "function map() {" +
 				"for (var key in this) {" +
-					"if (key != \"_id\" && key != \"job_id\" && key != \"last_updated\") {" +
+					"if (key != \"_id\" && key != \"job_id\" &&" +
+												" key != \"last_updated\") {" +
 						"emit(key, 1);" +
 					"}" +
 				"}" +
