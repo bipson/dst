@@ -401,6 +401,32 @@ public class Main {
 		computerDao.delete(testComputer2);
 		System.out.println("Removed computer");
 		
+		// Reinserting another execution (for 2b)
+		Execution insertExec = new Execution(
+				new Date(System.currentTimeMillis() + 2L * Timer.ONE_WEEK), new Date(System.currentTimeMillis() + 7L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
+		Environment insertEnv = new Environment("abcd", new LinkedList<String>(Arrays.asList("abc", "cde")));
+		
+		environmentDao.persist(insertEnv);
+		
+		// Don't like the look of this, shouldn't this be defined through grid-memberships?
+		Computer insertCom = computerDao.get(4l);
+		User insertUser = userDao.get(2l);
+		Job insertJob = new Job(false);
+		
+		insertJob.setEnvironment(insertEnv);
+		insertJob.setUser(insertUser);
+		
+		insertExec.getComputerList().add(insertCom);
+		
+		insertJob.setExecution(insertExec);
+		insertExec.setJob(insertJob);
+		insertUser.getJobList().add(insertJob);
+		
+		jobDao.persist(insertJob);
+		
+		userDao.persist(insertUser);
+		
+		insertCom.getExecutionList().add(insertExec);
 	}
 
 	public static void dst02a() {
@@ -432,42 +458,6 @@ public class Main {
 		
 		HibernateEntityManager hem = GenericDao.getEntityManager().unwrap(HibernateEntityManager.class);
 		Session hSession = hem.getSession();
-		
- 		final GenericDao<Job, Long> jobDao =
- 				new GenericDao<Job, Long>(Job.class);
-		final GenericDao<User, Long> userDao =
-				new GenericDao<User, Long>(User.class);
-		final GenericDao<Environment, Long> environmentDao =
-				new GenericDao<Environment, Long>(Environment.class);
-		final GenericDao<Computer, Long> computerDao =
-				new GenericDao<Computer, Long>(Computer.class);
-		
-		// Reinserting another execution
-		Execution insertExec = new Execution(
-				new Date(System.currentTimeMillis() + 2L * Timer.ONE_WEEK), new Date(System.currentTimeMillis() + 7L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
-		Environment insertEnv = new Environment("abcd", new LinkedList<String>(Arrays.asList("abc", "cde")));
-		
-		environmentDao.persist(insertEnv);
-		
-		// Don't like the look of this, shouldn't this be defined through grid-memberships?
-		Computer insertCom = computerDao.get(4l);
-		User insertUser = userDao.get(2l);
-		Job insertJob = new Job(false);
-		
-		insertJob.setEnvironment(insertEnv);
-		insertJob.setUser(insertUser);
-		
-		insertExec.getComputerList().add(insertCom);
-		
-		insertJob.setExecution(insertExec);
-		insertExec.setJob(insertJob);
-		insertUser.getJobList().add(insertJob);
-		
-		jobDao.persist(insertJob);
-		
-		userDao.persist(insertUser);
-		
-		insertCom.getExecutionList().add(insertExec);
 		
 		// calling of the query and calculation
 		
