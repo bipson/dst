@@ -1,6 +1,7 @@
 package dst1.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ public class Execution implements IEntity<Long> {
 	
 	private Job job;
 	
-	private Set<Computer> computerList;
+	private Set<Computer> computerList = new HashSet<Computer>();
 	
 	public Execution(){}
 

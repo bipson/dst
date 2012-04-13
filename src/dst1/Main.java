@@ -61,9 +61,9 @@ public class Main {
 		dst04b();
 		dst04c();
 		dst04d();
-//		dst05a();
-//		dst05b();
-//		dst05c();
+		dst05a();
+		dst05b();
+		dst05c();
 		
 		GenericDao.shutdown();
 	}
@@ -121,14 +121,6 @@ public class Main {
 		try {
 			user1 = new User("gacksi", md.digest("foo1".getBytes("UTF-8")), "123", "8000");
 			user2 = new User("quacksi", md.digest("foo2".getBytes("UTF-8")), "12345", "8000");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			System.out.println(MessageDigest.isEqual(md.digest("foo1".getBytes("UTF-8")), user1.getPassword()));
-			System.out.println(MessageDigest.isEqual(md.digest("foo2".getBytes("UTF-8")), user1.getPassword()));
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -226,7 +218,7 @@ public class Main {
 		Computer computer1 = new Computer("comp1", 6, "AUT-VIE", new Date(), new Date());
 		Computer computer2 = new Computer("comp2", 6, "AUT-VIE", new Date(), new Date());
 		Computer computer3 = new Computer("comp3", 2, "cellar2", new Date(), new Date());
-		Computer computer4 = new Computer("comp4", 1, "cellar2", new Date(), new Date());
+		Computer computer4 = new Computer("comp4", 1, "AUT-VIE", new Date(), new Date());
 		
 		computer1.setCluster(cluster1);
 		computer2.setCluster(cluster1);
@@ -257,7 +249,7 @@ public class Main {
 		Execution exec1 = new Execution(
 				new Date(), new Date(System.currentTimeMillis() + 3L * Timer.ONE_WEEK), JobStatus.FINISHED);
 		Execution exec2 = new Execution(
-				new Date(System.currentTimeMillis() + 2L * Timer.ONE_WEEK), new Date(System.currentTimeMillis() + 4L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
+				new Date(System.currentTimeMillis() + 2L * Timer.ONE_WEEK), new Date(System.currentTimeMillis() + 7L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
 		
 		// Don't like the look of this, shouldn't this be defined through grid-memberships?
 		Set<Computer> user1GridComp = new HashSet<Computer>();
@@ -441,6 +433,50 @@ public class Main {
 		HibernateEntityManager hem = GenericDao.getEntityManager().unwrap(HibernateEntityManager.class);
 		Session hSession = hem.getSession();
 		
+ 		final GenericDao<Job, Long> jobDao =
+ 				new GenericDao<Job, Long>(Job.class);
+		final GenericDao<User, Long> userDao =
+				new GenericDao<User, Long>(User.class);
+		final GenericDao<Environment, Long> environmentDao =
+				new GenericDao<Environment, Long>(Environment.class);
+		final GenericDao<Computer, Long> computerDao =
+				new GenericDao<Computer, Long>(Computer.class);
+		
+		// Reinserting another execution
+		Execution insertExec = new Execution(
+				new Date(System.currentTimeMillis() + 2L * Timer.ONE_WEEK), new Date(System.currentTimeMillis() + 7L * Timer.ONE_WEEK), JobStatus.SCHEDULED);
+		Environment insertEnv = new Environment("abcd", new LinkedList<String>(Arrays.asList("abc", "cde")));
+		
+		environmentDao.persist(insertEnv);
+		
+		// Don't like the look of this, shouldn't this be defined through grid-memberships?
+		Computer insertCom = computerDao.get(4l);
+		User insertUser = userDao.get(2l);
+		Job insertJob = new Job(false);
+		
+		insertJob.setEnvironment(insertEnv);
+		insertJob.setUser(insertUser);
+		
+		insertExec.getComputerList().add(insertCom);
+		
+		insertJob.setExecution(insertExec);
+		insertExec.setJob(insertJob);
+		insertUser.getJobList().add(insertJob);
+		
+		jobDao.persist(insertJob);
+		
+		userDao.persist(insertUser);
+		
+		insertCom.getExecutionList().add(insertExec);
+		
+		// calling of the query and calculation
+		
+		// Comment on query: To optimize for the assignment, the query does an
+		// explicit inner join fetch with executions (although the result seems
+		// to be the same for the number of selects, due to default eager
+		// fetching of all objects).
+		// Obviously this is DANGEROUS, only computers with an assigned
+		// execution are returned by this query!
 		Query query = hSession.getNamedQuery("findVienna");
 		
 		@SuppressWarnings("unchecked")
@@ -448,16 +484,13 @@ public class Main {
 		
 		System.out.println("Result: "+ computers.toString());
 		
-		long count = 0;
-		
 		for (Computer computer: computers) {
+			long count = 0;
 			for (Execution exec: computer.getExecutionList()) {
 				count += exec.getEnd().getTime() - exec.getStart().getTime();
 			}
+			System.out.println("Computation time (computer: " + computer.toString() + "): " + count +"ms");
 		}
-		
-		System.out.println("Sum of computation time: " + count +"ms");
-		
 	}
 
 	public static void dst02c() {
@@ -571,26 +604,38 @@ public class Main {
 
 		userDao.update(user);	//We need to update user, so association is saved correctly
 		System.out.println("New Job persisted: "+ jobX.toString());
-		System.out.println("Job is now managed!");
 		
-		//Will now Detach the Job
+		// Job was persisted, is now managed and saved to db on commit
+		
+		// Will now Detach the Job
 		GenericDao.getEntityManager().detach(jobX);
 		System.out.println("Job is now detached!");
+		
+		// Job is now detached and changes will not take effect until Job is
+		// merged again
 		
 		jobX.setPaid(true);
 		System.out.println("Changed something...");
 		
-		//Will now Re-attach the Job
+		// Will now Re-attach the Job
 		jobX = jobDao.update(jobX);
-		System.out.println("Job is now managed again!");
+		System.out.println("Job is now merged");
 		
-		//Will retrieve Job
+		// Job is now managed again.
+		
+		// Will retrieve Job
 		Job jobY = jobDao.get(jobX.getId());
 		System.out.println("Retrieved this exact Job!");
+		
+		// new Job object is now also managed (same entity in db)
 		
 		//Will now Remove Job
 		jobDao.delete(jobY);
 		System.out.println("Job is now removed");
+		
+		// Job is now removed in the db, application still has two Job objects
+		// that could be persisted again, then they would be managed
+		// if not, objects will be detached on shutdown of entity manager
 		
 	}
 
@@ -764,6 +809,8 @@ public class Main {
 		
 		//create index on job_id field
 		coll.createIndex(new BasicDBObject("job_id", 1));
+		
+		System.out.println("Iserted 5 distinct elements to db");
 		
     }
 
