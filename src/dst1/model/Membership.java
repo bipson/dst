@@ -73,23 +73,4 @@ public class Membership implements IEntity<MembershipPK> {
 	public void setGrid(Grid grid) {
 		getPk().setGrid(grid);
 	}
-	
-	@Override
-	public int hashCode() {
-		return (getPk() == null ? 0 : getPk().hashCode());
-	}
-	
-	@Override
-	public boolean equals(Object other) {
-		
-		if (this == other)
-			return true;
-        if (other == null || !(other instanceof Membership)) return false;
- 
-        Membership that = (Membership) other;
- 
-        if (getPk() != null ? !getPk().equals(that.getPk()) : that.getPk() != null) return false;
- 
-        return true;
-	}
 }

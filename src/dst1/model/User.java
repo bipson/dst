@@ -1,6 +1,5 @@
 package dst1.model;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -105,48 +104,5 @@ public class User extends Person {
 
 	public void setBankCode(String bankCode) {
 		this.bankCode = bankCode;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result
-				+ ((accountNo == null) ? 0 : accountNo.hashCode());
-		result = prime * result
-				+ ((bankCode == null) ? 0 : bankCode.hashCode());
-		result = prime * result + Arrays.hashCode(password);
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (!(obj instanceof User))
-			return false;
-		User other = (User) obj;
-		if (accountNo == null) {
-			if (other.accountNo != null)
-				return false;
-		} else if (!accountNo.equals(other.accountNo))
-			return false;
-		if (bankCode == null) {
-			if (other.bankCode != null)
-				return false;
-		} else if (!bankCode.equals(other.bankCode))
-			return false;
-		if (!Arrays.equals(password, other.password))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
 	}
 }

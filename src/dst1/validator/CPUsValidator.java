@@ -18,7 +18,7 @@ public class CPUsValidator implements ConstraintValidator<CPUs, Integer> {
 		if (value == null)
 			return true;
 		
-		if ((value <= min) || (value >= max)) {
+		if ((value < min) || (value > max)) {
 			constraintContext.disableDefaultConstraintViolation();
 			constraintContext.buildConstraintViolationWithTemplate(
 					"{dst1.constraints.CPUs.message}"  ).addConstraintViolation();

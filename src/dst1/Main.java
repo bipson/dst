@@ -506,6 +506,7 @@ public class Main {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		Validator validator = factory.getValidator();
 
+		System.out.println("This instance should throw all constraint violations: ");
 		Computer comp = new Computer("fo", 0, "asdfadf-adfa",
 				new Date(System.currentTimeMillis()+23123l),
 				new Date(System.currentTimeMillis()+123134l));
@@ -513,20 +514,19 @@ public class Main {
 		Set<ConstraintViolation<Computer>> constraintViolations =
 				validator.validate(comp);
 		
-		System.out.println("This instance should throw all constraint violations: ");
 		Iterator<ConstraintViolation<Computer>> it = constraintViolations.iterator();
 		
 		while (it.hasNext()) {
 			System.out.println("msg: " + it.next().getMessage());
 		}
-		
+
+		System.out.println("This instance should NOT throw any constraint violations: ");
 		comp = new Computer("fo42342", 2, "AUT-VIE@1040",
 				new Date(System.currentTimeMillis()-23123l),
 				new Date(System.currentTimeMillis()-123134l));
 		
 		constraintViolations = validator.validate(comp);
 		
-		System.out.println("This instance should throw no constraint violations: ");
 		it = constraintViolations.iterator();
 		
 		while (it.hasNext()) {
