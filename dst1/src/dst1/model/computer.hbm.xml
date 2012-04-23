@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"
+>
+<hibernate-mapping package="dst1.model">
+	<class name="Computer" table="computers">
+		<id name="id" column="computer_id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="name" column="name" type="string" unique="true"/>
+		<property name="cpus" column="cpus" type="integer"/>
+		<property name="location" column="location" type="string"/>
+		<property name="creation" column="creation_date" type="date"/>
+		<property name="lastUpdate" column="last_update" type="date"/>
+		<many-to-one name="cluster" column="cluster_fk" class="Cluster" not-null="true"/>
+		<set name="executionList" table="execution_computer" inverse="true">
+			<key column="computer_id"/>
+			<many-to-many column="execution_id" class="Execution"/>
+		</set> 
+	</class>
+	
+	<query name="findVienna">
+        <![CDATA[FROM Computer c JOIN FETCH c.executionList ex WHERE c.location LIKE 'AUT-VIE%' GROUP BY c.id]]>
+    </query>
+</hibernate-mapping>
