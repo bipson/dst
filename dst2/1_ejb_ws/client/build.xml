@@ -42,7 +42,7 @@
 
 	<!-- set your main class -->
 	<target name="run" depends="compile">
-		<java classname="your.main.class" fork="true" classpathref="classpath" />
+		<java classname="dst2.ejb.Client" fork="true" classpathref="classpath" />
 	</target>
 
 	<target name="clean">
