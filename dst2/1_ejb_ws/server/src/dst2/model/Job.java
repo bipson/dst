@@ -4,11 +4,9 @@ import java.util.Iterator;
 
 import javax.persistence.*;
 
-import dst2.db.interfaces.IEntity;
-
 @Entity
 @Table(name="jobs")
-public class Job implements IEntity<Long> {	
+public class Job {	
 
 	private static final long serialVersionUID = -9182152775849509682L;
 

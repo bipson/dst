@@ -4,15 +4,13 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import dst2.db.interfaces.IEntity;
-
 @Entity
 @Table(name="memberships")
 @AssociationOverrides({
 	@AssociationOverride(name = "pk.user", joinColumns = @JoinColumn(name = "user_id")),
 	@AssociationOverride(name = "pk.grid", joinColumns = @JoinColumn(name = "grid_id"))
 })
-public class Membership implements IEntity<Long> {
+public class Membership {
 	
 	private static final long serialVersionUID = 4294549842113372395L;
 

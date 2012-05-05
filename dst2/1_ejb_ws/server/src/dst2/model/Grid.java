@@ -6,11 +6,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import dst2.db.interfaces.IEntity;
-
 @Entity
 @Table(name="grids")
-public class Grid implements IEntity<Long> {
+public class Grid {
 
 	private static final long serialVersionUID = -3900584002751525776L;
 	

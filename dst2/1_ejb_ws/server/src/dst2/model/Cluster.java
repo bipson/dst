@@ -2,15 +2,13 @@ package dst2.model;
 
 import javax.persistence.*;
 
-import dst2.db.interfaces.IEntity;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name="clusters")
-public class Cluster implements IEntity<Long> {
+public class Cluster {
 	
 	private static final long serialVersionUID = 2307967057488454586L;
 

@@ -6,11 +6,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import dst2.db.interfaces.IEntity;
-
 @Entity
 @Table(name="computers")
-public class Computer implements IEntity<Long> {
+public class Computer {
 
 	private static final long serialVersionUID = 1326696973057917601L;
 	

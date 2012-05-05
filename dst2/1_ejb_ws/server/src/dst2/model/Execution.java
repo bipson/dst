@@ -6,11 +6,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-import dst2.db.interfaces.IEntity;
-
 @Entity
 @Table(name="executions")
-public class Execution implements IEntity<Long> {
+public class Execution {
 	
 	private static final long serialVersionUID = -4905763332272953160L;
 

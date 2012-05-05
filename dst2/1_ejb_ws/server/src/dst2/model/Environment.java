@@ -4,11 +4,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import dst2.db.interfaces.IEntity;
-
 @Entity
 @Table(name="environments")
-public class Environment implements IEntity<Long> {
+public class Environment {
 	
 	private static final long serialVersionUID = -3609067342056221984L;
 	

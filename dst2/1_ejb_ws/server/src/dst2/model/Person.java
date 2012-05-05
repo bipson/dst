@@ -2,12 +2,10 @@ package dst2.model;
 
 import javax.persistence.*;
 
-import dst2.db.interfaces.IEntity;
-
 @Entity
 @Table(name="persons")
 @Inheritance(strategy=InheritanceType.JOINED)
-public class Person implements IEntity<Long> {
+public class Person {
 	
 	private static final long serialVersionUID = -8718361763284334560L;
 	
