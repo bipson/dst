@@ -1,5 +1,7 @@
 package dst2.ejb;
 
+import java.math.BigDecimal;
+
 import javax.ejb.Remote;
 
 import dst2.model.PriceStep;
@@ -8,5 +10,5 @@ import dst2.model.PriceStep;
 public interface PriceManagerBeanRemote {
 	public void StorePriceSteps(PriceStep priceStep);
 
-	public Integer RetrieveFee(Integer numberOfJobs);
+	public BigDecimal RetrieveFee(Integer numberOfJobs);
 }

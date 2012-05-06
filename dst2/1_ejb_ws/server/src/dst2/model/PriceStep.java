@@ -11,11 +11,15 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "price_steps")
-public class PriceStep {
+public class PriceStep implements Comparable<PriceStep> {
 	private Long id;
 	private Integer numberOfHistoricalJobs;
 	private BigDecimal price;
 	
+	public PriceStep() {
+		super();
+	}
+
 	public PriceStep(Long id, Integer numberOfHistoricalJobs, BigDecimal price) {
 		super();
 		this.id = id;
@@ -51,5 +55,10 @@ public class PriceStep {
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
-	
+
+	@Override
+	public int compareTo(PriceStep other) {
+		return (this.getNumberOfHistoricalJobs() - other.getNumberOfHistoricalJobs());
+	}
+
 }
