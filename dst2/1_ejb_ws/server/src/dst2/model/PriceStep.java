@@ -15,14 +15,13 @@ public class PriceStep implements Comparable<PriceStep> {
 	private Long id;
 	private Integer numberOfHistoricalJobs;
 	private BigDecimal price;
-	
+
 	public PriceStep() {
 		super();
 	}
 
-	public PriceStep(Long id, Integer numberOfHistoricalJobs, BigDecimal price) {
+	public PriceStep(Integer numberOfHistoricalJobs, BigDecimal price) {
 		super();
-		this.id = id;
 		this.numberOfHistoricalJobs = numberOfHistoricalJobs;
 		this.price = price;
 	}
@@ -34,7 +33,7 @@ public class PriceStep implements Comparable<PriceStep> {
 		return id;
 	}
 
-	@Column(name = "number_of_historical_jobs")
+	@Column(name = "number_of_historical_jobs", unique = true)
 	public Integer getNumberOfHistoricalJobs() {
 		return numberOfHistoricalJobs;
 	}
@@ -58,7 +57,8 @@ public class PriceStep implements Comparable<PriceStep> {
 
 	@Override
 	public int compareTo(PriceStep other) {
-		return (this.getNumberOfHistoricalJobs() - other.getNumberOfHistoricalJobs());
+		return (this.getNumberOfHistoricalJobs() - other
+				.getNumberOfHistoricalJobs());
 	}
 
 }

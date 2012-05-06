@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Collections;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Lock;
+import javax.ejb.LockType;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
@@ -16,35 +18,37 @@ import dst2.model.PriceStep;
 
 @Startup
 @Singleton
-public class PriceManagerBean implements PriceManagerBeanRemote {
+public class PriceManagerBean {
 
 	@PersistenceContext
 	EntityManager em;
 
-	ArrayList<PriceStep> priceStepCache = new ArrayList<PriceStep>();
+	private ArrayList<PriceStep> priceStepCache = new ArrayList<PriceStep>();
 
 	@SuppressWarnings("unchecked")
 	@PostConstruct
 	void init() {
-		Query query = em.createQuery("SELECT p FROM PriceStep e");
-		priceStepCache.addAll((Collection<? extends PriceStep>) query
-				.getResultList());
+		Query query = em.createQuery("SELECT p FROM PriceStep p");
+		Collection<? extends PriceStep> col = (Collection<PriceStep>) query
+				.getResultList();
+		if (!(col.isEmpty()))
+			priceStepCache.addAll(col);
 	}
 
-	@Override
+	@Lock(LockType.WRITE)
 	public void StorePriceSteps(PriceStep priceStep) {
 		priceStepCache.add(priceStep);
 		Collections.sort(priceStepCache);
 		em.persist(priceStep);
 	}
 
-	@Override
+	@Lock(LockType.READ)
 	public BigDecimal RetrieveFee(Integer numberOfJobs) {
 		if (priceStepCache.isEmpty())
 			return BigDecimal.ZERO;
 		if (priceStepCache.get(priceStepCache.size() - 1)
 				.getNumberOfHistoricalJobs() < numberOfJobs)
-			return BigDecimal.ZERO;
+			return priceStepCache.get(priceStepCache.size() - 1).getPrice();
 		if (priceStepCache.get(0).getNumberOfHistoricalJobs() < numberOfJobs)
 			return priceStepCache.get(0).getPrice();
 
