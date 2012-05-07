@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
+import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
-import javax.ejb.AsyncResult;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,7 +46,7 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 		Query query = em
 				.createQuery("SELECT u FROM User u JOIN FETCH u.jobList");
-		User user = (User) query.getResultList().get(0);
+		User user = (User) query.getSingleResult();
 
 		for (Job job : user.getJobList()) {
 			if (job.getExecution().getStatus() == JobStatus.FINISHED

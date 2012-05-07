@@ -4,26 +4,37 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="computers")
+@Table(name = "computers")
 public class Computer {
 
 	private static final long serialVersionUID = 1326696973057917601L;
-	
-	private Long		id;
-	private String		name;
-	private Integer	cpus;
-	private String		location;
-	private Date		creation;
-	private Date		lastUpdate;
-	
-	private Cluster		cluster;
-	
+
+	private Long id;
+	private String name;
+	private Integer cpus;
+	private String location;
+	private Date creation;
+	private Date lastUpdate;
+
+	private Cluster cluster;
+
 	private Set<Execution> executionList = new HashSet<Execution>();
-	
-	public Computer() {}
+
+	public Computer() {
+	}
 
 	public Computer(String name, Integer cpus, String location, Date creation,
 			Date lastUpdate) {
@@ -35,8 +46,8 @@ public class Computer {
 	}
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="computer_id")
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "computer_id")
 	public Long getId() {
 		return id;
 	}
@@ -45,35 +56,35 @@ public class Computer {
 		return name;
 	}
 
-	@Column(name="cpus")
+	@Column(name = "cpus")
 	public Integer getCpus() {
 		return cpus;
 	}
 
-	@Column(name="location")
+	@Column(name = "location")
 	public String getLocation() {
 		return location;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="creation")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "creation")
 	public Date getCreation() {
 		return creation;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name="last_update")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "last_update")
 	public Date getLastUpdate() {
 		return lastUpdate;
 	}
-	
-	@ManyToOne(optional=false)
-	@JoinColumn(name="cluster_fk")
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "cluster_fk")
 	public Cluster getCluster() {
 		return cluster;
 	}
-	
-	@ManyToMany(mappedBy="computerList")
+
+	@ManyToMany(mappedBy = "computerList")
 	public Set<Execution> getExecutionList() {
 		return executionList;
 	}

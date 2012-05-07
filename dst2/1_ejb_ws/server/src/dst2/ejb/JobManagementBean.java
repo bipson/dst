@@ -12,24 +12,23 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
 import javax.persistence.Query;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.NotSupportedException;
-import javax.transaction.RollbackException;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import dst2.exception.NotEnoughCPUsAvailableException;
 import dst2.exception.NotLoggedInException;
 import dst2.exception.ResourceNotAvailableException;
+import dst2.model.AuditLog;
 import dst2.model.Cluster;
 import dst2.model.Computer;
 import dst2.model.Environment;
 import dst2.model.Execution;
+import dst2.model.FunctionParam;
 import dst2.model.Grid;
 import dst2.model.Job;
 import dst2.model.JobStatus;
@@ -49,6 +48,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	boolean loggedIn = false;
 	User user;
 	List<Job> jobList = new ArrayList<Job>();
+	List<Computer> assignedComputers = new ArrayList<Computer>();
 
 	@Override
 	public void loginUser(String username, String password) {
@@ -67,7 +67,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		Query query = em.createQuery(
 				"SELECT u FROM User u WHERE u.username LIKE :name")
 				.setParameter("name", username);
-		user = (User) query.getResultList().get(0);
+		user = (User) query.getSingleResult();
 		try {
 			hash = md.digest(password.getBytes("UTF8"));
 		} catch (UnsupportedEncodingException e) {
@@ -86,7 +86,6 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		EntityManager em = emf.createEntityManager();
 
 		// TODO maybe make a query of this?
-
 		Integer availCPUs = 0;
 
 		Grid grid = em.find(Grid.class, grid_id);
@@ -116,20 +115,21 @@ public class JobManagementBean implements JobManagementBeanRemote {
 
 			Set<Computer> execComputerList = new HashSet<Computer>();
 
-			for (Cluster cluster : clusterList) {
+			overAll: for (Cluster cluster : clusterList) {
 				Set<Computer> computerList = cluster.getComputerList();
 				for (Computer computer : computerList) {
-					if (!computer.getExecutionList().isEmpty()) {
-						continue;
-					} else {
+					if (assignedComputers.contains(computer))
+						break;
+					for (Execution tempExec : computer.getExecutionList()) {
+						if (tempExec.getEnd() != null)
+							break;
 						execComputerList.add(computer);
+						assignedComputers.add(computer);
 						numCPUs -= computer.getCpus();
 						if (numCPUs <= 0)
-							break;
+							break overAll;
 					}
 				}
-				if (numCPUs <= 0)
-					break;
 			}
 
 			exec.setComputerList(execComputerList);
@@ -165,11 +165,18 @@ public class JobManagementBean implements JobManagementBeanRemote {
 				for (Computer computer : exec.getComputerList()) {
 					Computer compInDb = em.find(Computer.class,
 							computer.getId(), LockModeType.WRITE);
-					if (!compInDb.getExecutionList().isEmpty()) {
+					if (compInDb == null) {
 						utx.rollback();
-						throw new ResourceNotAvailableException("Computer "
-								+ compInDb.toString()
-								+ " is no longer avaiable");
+						throw new ResourceNotAvailableException(
+								"Computer not in DB anymore");
+					}
+					for (Execution tempExec : computer.getExecutionList()) {
+						if (tempExec.getEnd() != null) {
+							utx.rollback();
+							throw new ResourceNotAvailableException("Computer "
+									+ compInDb.toString()
+									+ " is no longer avaiable");
+						}
 					}
 				}
 
@@ -182,40 +189,17 @@ public class JobManagementBean implements JobManagementBeanRemote {
 				}
 			}
 			utx.commit();
-		} catch (RuntimeException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SystemException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicMixedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (HeuristicRollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (RollbackException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			// TODO WTF
 			try {
 				utx.rollback();
-			} catch (IllegalStateException e) {
+			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SystemException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			} finally {
-				em.close();
+				e.printStackTrace();
 			}
+		} finally {
+			em.close();
 		}
 
 	}
@@ -253,5 +237,30 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		}
 
 		em.close();
+	}
+
+	@AroundInvoke
+	public Object jobManagementAuditInterceptor(InvocationContext ctx)
+			throws Exception {
+		EntityManager em = emf.createEntityManager();
+
+		int i = 0;
+		AuditLog auditLog = new AuditLog();
+
+		auditLog.setMethodName(ctx.getMethod().getName());
+		auditLog.setDate(new Date());
+		for (Object o : ctx.getParameters()) {
+			FunctionParam param = new FunctionParam();
+			param.setClassName(o.getClass().getName());
+			param.setIndex(i++);
+			param.setValue(o.toString());
+			auditLog.getParams().add(param);
+		}
+
+		em.persist(auditLog);
+
+		em.close();
+
+		return ctx.proceed();
 	}
 }

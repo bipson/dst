@@ -47,6 +47,10 @@
             	<include name="dst2/ejb/TestingBeanRemote.class" />
             	<include name="dst2/ejb/GeneralManagementBeanRemote.class" />
             	<include name="dst2/ejb/JobManagementBeanRemote.class"/>
+            	<!-- the Exceptions -->
+            	<include name="dst2/exception/NotEnoughCPUsAvailableException.class"/>
+            	<include name="dst2/exception/NotLoggedInException.class"/>
+            	<include name="dst2/exception/ResourceNotAvailableException.class"/>
             	
             </fileset>
         </jar>

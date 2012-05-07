@@ -19,7 +19,6 @@ public class Client {
 			e.printStackTrace();
 		} 
 
-		// name is whatever JNDI name you gave it 
 		TestingBeanRemote testbean = null;
 		try {
 			testbean = (TestingBeanRemote) ctx.lookup("dst2.ejb.TestingBeanRemote");
