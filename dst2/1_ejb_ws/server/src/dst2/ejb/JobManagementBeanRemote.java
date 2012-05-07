@@ -1,5 +1,6 @@
 package dst2.ejb;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -7,7 +8,6 @@ import javax.ejb.Remote;
 import dst2.exception.NotEnoughCPUsAvailableException;
 import dst2.exception.NotLoggedInException;
 import dst2.exception.ResourceNotAvailableException;
-import dst2.model.Job;
 
 @Remote
 public interface JobManagementBeanRemote {
@@ -20,7 +20,7 @@ public interface JobManagementBeanRemote {
 	public void checkout() throws NotLoggedInException,
 			ResourceNotAvailableException;
 
-	public List<Job> getJobList(Long grid_id);
-
 	public void clearJobList(Long grid_id);
+
+	public HashMap<Long, Integer> getJobList();
 }

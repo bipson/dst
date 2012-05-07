@@ -5,6 +5,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,10 +46,10 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	@Resource
 	UserTransaction utx;
 
-	boolean loggedIn = false;
-	User user;
-	List<Job> jobList = new ArrayList<Job>();
-	List<Computer> assignedComputers = new ArrayList<Computer>();
+	private User user;
+	private List<Job> jobList = new ArrayList<Job>();
+	private List<Computer> assignedComputers = new ArrayList<Computer>();
+	private HashMap<Long, Integer> gridJobCount;
 
 	@Override
 	public void loginUser(String username, String password) {
@@ -67,7 +68,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		Query query = em.createQuery(
 				"SELECT u FROM User u WHERE u.username LIKE :name")
 				.setParameter("name", username);
-		user = (User) query.getSingleResult();
+		User tempUser = (User) query.getSingleResult();
 		try {
 			hash = md.digest(password.getBytes("UTF8"));
 		} catch (UnsupportedEncodingException e) {
@@ -75,7 +76,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 			e.printStackTrace();
 		}
 		if (hash == user.getPassword()) {
-			loggedIn = true;
+			user = tempUser;
 		}
 	}
 
@@ -125,6 +126,11 @@ public class JobManagementBean implements JobManagementBeanRemote {
 							break;
 						execComputerList.add(computer);
 						assignedComputers.add(computer);
+						if (gridJobCount.containsKey(grid_id)) {
+							gridJobCount.put(grid_id,
+									gridJobCount.get(grid_id) + 1);
+						} else
+							gridJobCount.put(grid_id, 1);
 						numCPUs -= computer.getCpus();
 						if (numCPUs <= 0)
 							break overAll;
@@ -134,8 +140,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 
 			exec.setComputerList(execComputerList);
 
-			if (loggedIn)
-				jobList.add(job);
+			jobList.add(job);
 		}
 		em.close();
 	}
@@ -146,7 +151,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	public void checkout() throws NotLoggedInException,
 			ResourceNotAvailableException {
 
-		if (!loggedIn) {
+		if (user == null) {
 			throw new NotLoggedInException();
 		}
 
@@ -205,22 +210,8 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	}
 
 	@Override
-	public List<Job> getJobList(Long grid_id) {
-		EntityManager em = emf.createEntityManager();
-
-		List<Job> result = new ArrayList<Job>();
-
-		// TODO check if easier way
-		for (Job job : jobList) {
-			for (Computer comp : job.getExecution().getComputerList()) {
-				if (comp.getCluster().getGrid().getId() == grid_id) {
-					result.add(job);
-				}
-			}
-		}
-
-		em.close();
-		return result;
+	public HashMap<Long, Integer> getJobList() {
+		return this.gridJobCount;
 	}
 
 	@Override
@@ -234,6 +225,10 @@ public class JobManagementBean implements JobManagementBeanRemote {
 					jobList.remove(job);
 				}
 			}
+		}
+
+		if (gridJobCount.containsKey(grid_id)) {
+			gridJobCount.put(grid_id, 0);
 		}
 
 		em.close();

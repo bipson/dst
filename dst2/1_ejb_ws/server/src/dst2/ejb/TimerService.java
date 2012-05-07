@@ -23,8 +23,9 @@ public class TimerService {
 
 	@Schedule(minute = "*")
 	public void executeJobs() {
-		// TODO improve query?
-		Query query = em.createQuery("SELECT j FROM Job j JOIN FETCH j.execution");
+		// TODO improve query - go over executions?
+		Query query = em
+				.createQuery("SELECT j FROM Job j JOIN FETCH j.execution");
 		Collection<Job> col = (Collection<Job>) query.getResultList();
 		if (!(col.isEmpty())) {
 			for (Job job : col) {
