@@ -18,7 +18,7 @@ import dst2.model.PriceStep;
 
 @Startup
 @Singleton
-public class PriceManagerBean {
+public class PriceManagementBean {
 
 	@PersistenceContext
 	EntityManager em;

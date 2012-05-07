@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import javax.ejb.Remove;
 import javax.ejb.Stateless;
 import javax.management.timer.Timer;
 import javax.persistence.EntityManager;
@@ -33,6 +34,7 @@ public class TestingBean implements TestingBeanRemote {
 	@PersistenceContext
 	EntityManager em;
 
+	@Remove
 	public void InsertTestEntities() {
 
 		// Add some Test-entities
