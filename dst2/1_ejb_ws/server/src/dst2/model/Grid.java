@@ -4,25 +4,32 @@ import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-@Table(name="grids")
+@Table(name = "grids")
 public class Grid {
 
 	private static final long serialVersionUID = -3900584002751525776L;
-	
-	private Long		id;
-	private String		name;
-	private String		location;
-	private BigDecimal	costsPerCPUMinute;
-	
+
+	private Long id;
+	private String name;
+	private String location;
+	private BigDecimal costsPerCPUMinute;
+
 	private Set<Membership> membershipList = new HashSet<Membership>();
-	
+
 	private Set<Cluster> clusterList = new HashSet<Cluster>();
 
-	public Grid() {}
-	
+	public Grid() {
+	}
+
 	public Grid(String name, String location, BigDecimal costsPerCPUMinute) {
 		this.name = name;
 		this.location = location;
@@ -30,23 +37,23 @@ public class Grid {
 	}
 
 	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name="grid_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "grid_id")
 	public Long getId() {
 		return id;
 	}
 
-	@Column(name="name", unique=true)
+	@Column(name = "name", unique = true)
 	public String getName() {
 		return name;
 	}
 
-	@Column(name="location")
+	@Column(name = "location")
 	public String getLocation() {
 		return location;
 	}
 
-	@Column(name="costs_per_cpu_minute")
+	@Column(name = "costs_per_cpu_minute")
 	public BigDecimal getCostsPerCPUMinute() {
 		return costsPerCPUMinute;
 	}
@@ -56,7 +63,7 @@ public class Grid {
 		return membershipList;
 	}
 
-	@OneToMany(mappedBy="grid")
+	@OneToMany(mappedBy = "grid")
 	public Set<Cluster> getClusterList() {
 		return clusterList;
 	}

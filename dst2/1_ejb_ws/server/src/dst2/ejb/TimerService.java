@@ -26,6 +26,7 @@ public class TimerService {
 		// TODO improve query - go over executions?
 		Query query = em
 				.createQuery("SELECT j FROM Job j JOIN FETCH j.execution");
+		@SuppressWarnings("unchecked")
 		Collection<Job> col = (Collection<Job>) query.getResultList();
 		if (!(col.isEmpty())) {
 			for (Job job : col) {
@@ -33,6 +34,8 @@ public class TimerService {
 				if (exec.getStart() != null && exec.getEnd() == null) {
 					exec.setEnd(new Date());
 					exec.setStatus(JobStatus.FINISHED);
+					em.persist(em);
+					em.flush();
 				}
 			}
 		}

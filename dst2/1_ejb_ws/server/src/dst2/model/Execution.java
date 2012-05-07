@@ -45,7 +45,7 @@ public class Execution {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "execution_id")
 	public Long getId() {
 		return id;

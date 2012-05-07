@@ -9,6 +9,7 @@ import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.management.timer.Timer;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -45,7 +46,9 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 		Integer numberOfJobs = 0;
 
 		Query query = em
-				.createQuery("SELECT u FROM User u JOIN FETCH u.jobList");
+				.createQuery(
+						"SELECT u FROM User u JOIN FETCH u.jobList WHERE u.username LIKE :username")
+				.setParameter("username", username);
 		User user = (User) query.getSingleResult();
 
 		for (Job job : user.getJobList()) {
@@ -70,7 +73,8 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 					tempCPJ.executionCosts.add(costsPerMinute.multiply(
 							new BigDecimal(numCPUs)).multiply(
-							new BigDecimal(job.getExecutionTime())));
+							new BigDecimal(job.getExecutionTime()
+									/ Timer.ONE_MINUTE)));
 
 					for (Membership membership : user.getMembershipList()) {
 						if (comp.getCluster().getGrid()
@@ -90,6 +94,8 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 			}
 			job.setPaid(true);
+			em.merge(job);
+			em.flush();
 		}
 
 		if (!costsPerJob.isEmpty()) {
@@ -121,6 +127,7 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 			bill.concat("Overall Costs: --> " + totalCosts + " <--\n");
 
 		}
+
 		return new AsyncResult<String>(bill);
 	}
 

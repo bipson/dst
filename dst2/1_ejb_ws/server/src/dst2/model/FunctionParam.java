@@ -11,20 +11,24 @@ import javax.persistence.Table;
 @Table(name = "function_params")
 public class FunctionParam {
 	private Long id;
-	private Integer index;
+	private int index_nr;
 	private String className;
 	private String value;
 
+	public FunctionParam() {
+		super();
+	}
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "audit_param_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "function_param_id")
 	public Long getId() {
 		return id;
 	}
 
-	@Column(name = "index")
-	public Integer getIndex() {
-		return index;
+	@Column(name = "index_nr")
+	public int getIndex() {
+		return index_nr;
 	}
 
 	@Column(name = "class_name")
@@ -37,8 +41,8 @@ public class FunctionParam {
 		return value;
 	}
 
-	public void setIndex(Integer index) {
-		this.index = index;
+	public void setIndex(int index) {
+		this.index_nr = index;
 	}
 
 	public void setClassName(String className) {

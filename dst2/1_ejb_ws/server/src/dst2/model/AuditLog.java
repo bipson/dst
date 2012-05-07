@@ -26,8 +26,12 @@ public class AuditLog {
 	private Set<FunctionParam> params = new HashSet<FunctionParam>();
 	private String result;
 
+	public AuditLog() {
+		super();
+	}
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "audit_id")
 	public Long getId() {
 		return id;
@@ -45,7 +49,7 @@ public class AuditLog {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "audit_function_params", joinColumns = @JoinColumn(name = "audit_fk"), inverseJoinColumns = @JoinColumn(name = "audit_param_fk"))
+	@JoinTable(name = "audit_function_params", joinColumns = @JoinColumn(name = "audit_fk"), inverseJoinColumns = @JoinColumn(name = "function_param_fk"))
 	public Set<FunctionParam> getParams() {
 		return params;
 	}
@@ -74,4 +78,5 @@ public class AuditLog {
 	public void setParams(Set<FunctionParam> params) {
 		this.params = params;
 	}
+
 }

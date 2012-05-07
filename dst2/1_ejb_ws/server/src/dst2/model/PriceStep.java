@@ -27,7 +27,7 @@ public class PriceStep implements Comparable<PriceStep> {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "price_step_id")
 	public Long getId() {
 		return id;

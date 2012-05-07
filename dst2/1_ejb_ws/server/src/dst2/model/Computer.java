@@ -46,7 +46,7 @@ public class Computer {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "computer_id")
 	public Long getId() {
 		return id;

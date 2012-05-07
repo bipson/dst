@@ -29,7 +29,7 @@ import dst2.model.Membership;
 import dst2.model.User;
 
 @Stateless
-public class TestingBean implements TestingBeanRemote {
+public class TestBean implements TestBeanRemote {
 
 	@PersistenceContext
 	EntityManager em;

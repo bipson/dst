@@ -49,7 +49,7 @@ public class Cluster {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cluster_id")
 	public Long getId() {
 		return id;

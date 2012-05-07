@@ -12,12 +12,13 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.ejb.Remove;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.UserTransaction;
 
@@ -38,13 +39,11 @@ import dst2.model.User;
 @Stateful
 public class JobManagementBean implements JobManagementBeanRemote {
 
-	// @PersistenceContext
-	// EntityManager em;
+	@PersistenceContext
+	EntityManager em;
 
 	@Resource
-	EntityManagerFactory emf;
-	@Resource
-	UserTransaction utx;
+	private SessionContext context;
 
 	private User user;
 	private List<Job> jobList = new ArrayList<Job>();
@@ -54,7 +53,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	@Override
 	public void loginUser(String username, String password) {
 
-		EntityManager em = emf.createEntityManager();
+		// EntityManager em = emf.createEntityManager();
 
 		MessageDigest md = null;
 		byte[] hash = null;
@@ -84,7 +83,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	public void addJob(Long grid_id, Integer numCPUs, String workflow,
 			List<String> params) throws NotEnoughCPUsAvailableException {
 
-		EntityManager em = emf.createEntityManager();
+		// EntityManager em = emf.createEntityManager();
 
 		// TODO maybe make a query of this?
 		Integer availCPUs = 0;
@@ -142,7 +141,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 
 			jobList.add(job);
 		}
-		em.close();
+		// em.close();
 	}
 
 	// TODO: check transaction management
@@ -151,11 +150,13 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	public void checkout() throws NotLoggedInException,
 			ResourceNotAvailableException {
 
+		UserTransaction utx = context.getUserTransaction();
+
 		if (user == null) {
 			throw new NotLoggedInException();
 		}
 
-		EntityManager em = emf.createEntityManager();
+		// EntityManager em = emf.createEntityManager();
 
 		try {
 			utx.begin();
@@ -204,7 +205,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 				e.printStackTrace();
 			}
 		} finally {
-			em.close();
+			// em.close();
 		}
 
 	}
@@ -216,7 +217,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 
 	@Override
 	public void clearJobList(Long grid_id) {
-		EntityManager em = emf.createEntityManager();
+		// EntityManager em = emf.createEntityManager();
 
 		// TODO check if easier way
 		for (Job job : jobList) {
@@ -231,13 +232,15 @@ public class JobManagementBean implements JobManagementBeanRemote {
 			gridJobCount.put(grid_id, 0);
 		}
 
-		em.close();
+		// em.close();
 	}
 
 	@AroundInvoke
 	public Object jobManagementAuditInterceptor(InvocationContext ctx)
 			throws Exception {
-		EntityManager em = emf.createEntityManager();
+		// EntityManager em = emf.createEntityManager();
+		UserTransaction utx = context.getUserTransaction();
+		utx.begin();
 
 		int i = 0;
 		AuditLog auditLog = new AuditLog();
@@ -253,8 +256,9 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		}
 
 		em.persist(auditLog);
+		utx.commit();
 
-		em.close();
+		// em.close();
 
 		return ctx.proceed();
 	}
