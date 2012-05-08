@@ -73,11 +73,6 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 				CostsPerJob tempCPJ = new CostsPerJob();
 
-				// TODO Debug
-				if (job.getExecution() == null) {
-					return new AsyncResult<String>("Execution null!\n");
-				}
-
 				// Add execution costs
 				for (Computer comp : job.getExecution().getComputerList()) {
 
@@ -94,30 +89,27 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 					Integer numCPUs = comp.getCpus();
 
-					tempCPJ.executionCosts.add(costsPerMinute.multiply(
-							new BigDecimal(numCPUs)).multiply(
-							new BigDecimal(job.getExecutionTime()
-									/ Timer.ONE_MINUTE)));
+					// TODO simplify
+					tempCPJ.executionCosts = tempCPJ.executionCosts
+							.add(costsPerMinute.multiply(
+									new BigDecimal(numCPUs)).multiply(
+									new BigDecimal(job.getExecutionTime()
+											/ Timer.ONE_MINUTE)));
 
 					for (Membership membership : user.getMembershipList()) {
 
-						// TODO: Debug
-						if (membership.getGrid() == null) {
-							return new AsyncResult<String>(
-									"Grid from membership null!\n");
-						}
-
 						if (comp.getCluster().getGrid()
 								.equals(membership.getGrid())) {
-							tempCPJ.executionCosts.subtract(new BigDecimal(
-									membership.getDiscount()));
+							tempCPJ.executionCosts = tempCPJ.executionCosts
+									.subtract(new BigDecimal(membership
+											.getDiscount()));
 						}
 					}
 					tempCPJ.computerCount++;
 				}
 
 				// Add setup costs
-				tempCPJ.setupCosts.add(priceManagerBean
+				tempCPJ.setupCosts = tempCPJ.setupCosts.add(priceManagerBean
 						.RetrieveFee(numberOfJobs));
 
 				costsPerJob.add(tempCPJ);
@@ -131,7 +123,7 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 		if (!costsPerJob.isEmpty()) {
 
-			bill = "--- Your bill ---\n";
+			bill = "--- Bill for user: " + username + " ---\n";
 
 			// TODO total price, price per job, setup costs, execution costs,
 			// computers per job
@@ -146,13 +138,15 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 				bill += ("Execution costs: " + cpj.executionCosts + "\n");
 				bill += ("Costs for this Job : "
 						+ cpj.setupCosts.add(cpj.executionCosts) + "\n");
+				bill += (" . . . . . . . . . . . . . . . .\n");
 
-				executionCosts.add(cpj.executionCosts);
-				setupCosts.add(cpj.setupCosts);
-				totalCosts.add(cpj.executionCosts.add(cpj.setupCosts));
+				executionCosts = executionCosts.add(cpj.executionCosts);
+				setupCosts = setupCosts.add(cpj.setupCosts);
+				totalCosts = totalCosts.add(cpj.executionCosts
+						.add(cpj.setupCosts));
 			}
 
-			bill += ("Your Sum - - - - - - - -\n");
+			bill += ("=-=-= Bill Sum =-=-=-=-=-=-=-=-\n");
 			bill += ("Setup Costs overall: " + setupCosts + "\n");
 			bill += ("Execution Costs overall: " + executionCosts + "\n");
 			bill += ("Overall Costs: --> " + totalCosts + " <--\n");

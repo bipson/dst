@@ -79,8 +79,13 @@ public class Client {
 			String[] params = { "ad", "daf", "dfad" };
 			jobBean.addJob(1L, 1, "asdfa",
 					new ArrayList<String>(Arrays.asList(params)));
+		} catch (NotEnoughCPUsAvailableException e) {
+			System.out.println("OHOH, not enough CPUs :(");
+			e.printStackTrace();
+		}
+		try {
 			String[] params2 = { "aadfd", "ddfaaf", "dfadfad" };
-			jobBean.addJob(2L, 2, "dfaga",
+			jobBean.addJob(1L, 2, "dfaga",
 					new ArrayList<String>(Arrays.asList(params2)));
 		} catch (NotEnoughCPUsAvailableException e) {
 			System.out.println("OHOH, not enough CPUs :(");
@@ -99,7 +104,7 @@ public class Client {
 				.println("User assigned jobs, hopefully succeeded, press Enter to continue...");
 		scan.nextLine();
 
-		// ¥ Replay the last step with a different user, but this time try to
+		// ï¿½ Replay the last step with a different user, but this time try to
 		// assign more jobs for a grid than there are free computers. Delete the
 		// job assignments for a grid, request the assigned amount of jobs and
 		// finally successfully submit your temporary job list.
@@ -115,6 +120,13 @@ public class Client {
 
 		try {
 			String[] params = { "adad", "dafaff", "dfadfad" };
+			jobBean.addJob(1L, 1, "asadfadfa",
+					new ArrayList<String>(Arrays.asList(params)));
+		} catch (NotEnoughCPUsAvailableException e) {
+			System.out.println("OHOH, not enough CPUs :( : " + e.getError());
+		}
+		try {
+			String[] params = { "adad", "dafaff", "dfadfad" };
 			jobBean.addJob(1L, 10, "asadfadfa",
 					new ArrayList<String>(Arrays.asList(params)));
 		} catch (NotEnoughCPUsAvailableException e) {
@@ -128,7 +140,7 @@ public class Client {
 			System.out.println("OHOH, not enough CPUs :( : " + e.getError());
 		}
 
-		System.out.println("User tried to assign jobs, hopefully failed");
+		System.out.println("User tried to add some jobs, one one should have failed");
 
 		jobBean.clearJobList(1L);
 
@@ -138,6 +150,7 @@ public class Client {
 				+ jobBean.getJobList(2L));
 
 		System.out.println("cleared Joblist for grid: " + 1L);
+		System.out.println("let's see the count again");
 
 		System.out.println("This are the number of listed jobs for Grid 1: "
 				+ jobBean.getJobList(1L));
@@ -152,11 +165,7 @@ public class Client {
 			System.out.println("OHOH : " + e1.getError());
 		}
 
-		System.out.println("removed jobs, now it hopefully worked.");
-		scan.nextLine();
-
 		// ï¿½ Wait for some time so that your jobs are finished.
-
 		System.out
 				.println("Will now sleep for 1 Minute, to finish jobs. Stretch your feet");
 		try {

@@ -43,11 +43,7 @@ public class TestBean implements TestBeanRemote {
 		// Environments
 		Environment env1 = new Environment("abcd", new LinkedList<String>(
 				Arrays.asList("abc", "cde")));
-		Environment env2 = new Environment("efghi", new LinkedList<String>(
-				Arrays.asList("efg", "hij")));
-
 		em.persist(env1);
-		em.persist(env2);
 
 		MessageDigest md = null;
 
