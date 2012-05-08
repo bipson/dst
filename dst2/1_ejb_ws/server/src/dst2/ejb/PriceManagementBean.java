@@ -12,7 +12,7 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import dst2.model.PriceStep;
 
@@ -25,14 +25,14 @@ public class PriceManagementBean {
 
 	private ArrayList<PriceStep> priceStepCache = new ArrayList<PriceStep>();
 
-	@SuppressWarnings("unchecked")
 	@PostConstruct
 	void init() {
-		Query query = em.createQuery("SELECT p FROM PriceStep p");
-		Collection<? extends PriceStep> col = (Collection<PriceStep>) query
-				.getResultList();
+		TypedQuery<PriceStep> query = em.createQuery(
+				"SELECT p FROM PriceStep p", PriceStep.class);
+		Collection<PriceStep> col = query.getResultList();
 		if (!(col.isEmpty()))
 			priceStepCache.addAll(col);
+		Collections.sort(priceStepCache);
 	}
 
 	@Lock(LockType.WRITE)
@@ -40,6 +40,7 @@ public class PriceManagementBean {
 		priceStepCache.add(priceStep);
 		Collections.sort(priceStepCache);
 		em.persist(priceStep);
+		em.flush();
 	}
 
 	@Lock(LockType.READ)

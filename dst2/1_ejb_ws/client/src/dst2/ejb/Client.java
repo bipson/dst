@@ -46,13 +46,14 @@ public class Client {
 
 		testBean.InsertTestEntities();
 
-		System.out.println("Inserted Test-Entities, press Enter to continue...");
+		System.out
+				.println("Inserted Test-Entities, press Enter to continue...");
 		scan.nextLine();
 
 		manageBean.setPrice(100, new BigDecimal(30));
 		manageBean.setPrice(1000, new BigDecimal(15));
 		manageBean.setPrice(5000, new BigDecimal(10));
-		
+
 		System.out.println("Inserted PriceSteps, press Enter to continue...");
 		scan.nextLine();
 
@@ -60,55 +61,66 @@ public class Client {
 		// with invalid values, then login successfully, add some valid job
 		// assignments, request the current assigned amount of jobs and finally
 		// successfully submit your temporary job list.
-		
+
 		jobBean.loginUser("gacksi", "notapassword");
-		
+
 		jobBean.loginUser("gacksi", "foo1");
-		
+
 		try {
-			String[] params = {"ad","daf","dfad"};
-			jobBean.addJob(1L, 1, "asdfa", new ArrayList<String>(Arrays.asList(params)));
-			String[] params2 = {"aadfd","ddfaaf","dfadfad"};
-			jobBean.addJob(2L, 3, "dfaga", new ArrayList<String>(Arrays.asList(params2)));
-			String[] params3 = {"adfd","ddfaf"};
-			jobBean.addJob(3L, 3, "dfaga", new ArrayList<String>(Arrays.asList(params3)));
+			String[] params = { "ad", "daf", "dfad" };
+			jobBean.addJob(1L, 1, "asdfa",
+					new ArrayList<String>(Arrays.asList(params)));
+			String[] params2 = { "aadfd", "ddfaaf", "dfadfad" };
+			jobBean.addJob(2L, 3, "dfaga",
+					new ArrayList<String>(Arrays.asList(params2)));
 		} catch (NotEnoughCPUsAvailableException e) {
 			System.out.println("OHOH, not enough CPUs :(");
 			e.printStackTrace();
 		}
-		
+
 		try {
 			jobBean.checkout();
 		} catch (NotLoggedInException e) {
-			System.out.println("User not logged in! "+e.getError());
+			System.out.println("User not logged in! " + e.getError());
 		} catch (ResourceNotAvailableException e) {
-			System.out.println("Upsie :"+e.getError());
+			System.out.println("Upsie :" + e.getError());
 		}
-		
-		System.out.println("User assigned jobs, hopefully succeeded, press Enter to continue...");
+
+		System.out
+				.println("User assigned jobs, hopefully succeeded, press Enter to continue...");
 		scan.nextLine();
-		
+
+		// ¥ Replay the last step with a different user, but this time try to
+		// assign more jobs for a grid than there are free computers. Delete the
+		// job assignments for a grid, request the assigned amount of jobs and
+		// finally successfully submit your temporary job list.
+
+		jobBean.loginUser("quacksi", "foo2");
+
 		try {
-			String[] params = {"ad","daf","dfad"};
-			jobBean.addJob(1L, 1, "asdfa", new ArrayList<String>(Arrays.asList(params)));
-			String[] params2 = {"aadfd","ddfaaf","dfadfad"};
-			jobBean.addJob(2L, 3, "dfaga", new ArrayList<String>(Arrays.asList(params2)));
-			String[] params3 = {"adfd","ddfaf"};
-			jobBean.addJob(3L, 3, "dfaga", new ArrayList<String>(Arrays.asList(params3)));
+			String[] params = { "ad", "daf", "dfad" };
+			jobBean.addJob(1L, 1, "asdfa",
+					new ArrayList<String>(Arrays.asList(params)));
+			String[] params2 = { "aadfd", "ddfaaf", "dfadfad" };
+			jobBean.addJob(2L, 3, "dfaga",
+					new ArrayList<String>(Arrays.asList(params2)));
+			String[] params3 = { "adfd", "ddfaf" };
+			jobBean.addJob(3L, 3, "dfaga",
+					new ArrayList<String>(Arrays.asList(params3)));
 		} catch (NotEnoughCPUsAvailableException e) {
 			System.out.println("OHOH, not enough CPUs :(");
-			e.printStackTrace();
 		}
-		
+
 		try {
 			jobBean.checkout();
 		} catch (NotLoggedInException e) {
-			System.out.println("User not logged in! "+e.getError());
+			System.out.println("User not logged in! " + e.getError());
 		} catch (ResourceNotAvailableException e) {
-			System.out.println("Upsie :"+e.getError());
+			System.out.println("Upsie :" + e.getError());
 		}
-		
-		System.out.println("User tried to assign jobs, hopefully failed, press Enter to continue...");
+
+		System.out
+				.println("User tried to assign jobs, hopefully failed, press Enter to continue...");
 		scan.nextLine();
 
 		// ï¿½ Wait for some time so that your jobs are finished.
@@ -117,5 +129,4 @@ public class Client {
 		// ï¿½ Finally get all saved audits from the Audit-Interceptor.
 
 	}
-
 }

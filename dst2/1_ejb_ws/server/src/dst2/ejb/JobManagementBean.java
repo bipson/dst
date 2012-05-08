@@ -11,16 +11,17 @@ import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Resource;
+import javax.ejb.EJBContext;
 import javax.ejb.Remove;
-import javax.ejb.SessionContext;
 import javax.ejb.Stateful;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.transaction.UserTransaction;
+import javax.persistence.TypedQuery;
 
 import dst2.exception.NotEnoughCPUsAvailableException;
 import dst2.exception.NotLoggedInException;
@@ -30,7 +31,6 @@ import dst2.model.Cluster;
 import dst2.model.Computer;
 import dst2.model.Environment;
 import dst2.model.Execution;
-import dst2.model.FunctionParam;
 import dst2.model.Grid;
 import dst2.model.Job;
 import dst2.model.JobStatus;
@@ -43,17 +43,15 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	EntityManager em;
 
 	@Resource
-	private SessionContext context;
+	EJBContext context;
 
 	private User user;
 	private List<Job> jobList = new ArrayList<Job>();
 	private List<Computer> assignedComputers = new ArrayList<Computer>();
-	private HashMap<Long, Integer> gridJobCount;
+	private HashMap<Long, Integer> gridJobCount = new HashMap<Long, Integer>();
 
 	@Override
 	public void loginUser(String username, String password) {
-
-		// EntityManager em = emf.createEntityManager();
 
 		MessageDigest md = null;
 		byte[] hash = null;
@@ -64,18 +62,20 @@ public class JobManagementBean implements JobManagementBeanRemote {
 			e.printStackTrace();
 		}
 		// TODO: security! white-list-regex for username?
-		Query query = em.createQuery(
-				"SELECT u FROM User u WHERE u.username LIKE :name")
+		TypedQuery<User> query = em.createQuery(
+				"SELECT u FROM User u WHERE u.username = :name", User.class)
 				.setParameter("name", username);
-		User tempUser = (User) query.getSingleResult();
-		try {
-			hash = md.digest(password.getBytes("UTF8"));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if (hash == user.getPassword()) {
-			user = tempUser;
+		User tempUser = query.getSingleResult();
+
+		if (user != null) {
+			try {
+				if (MessageDigest.isEqual(md.digest(password.getBytes("UTF8")),
+						user.getPassword())) {
+					user = tempUser;
+				}
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -83,12 +83,15 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	public void addJob(Long grid_id, Integer numCPUs, String workflow,
 			List<String> params) throws NotEnoughCPUsAvailableException {
 
-		// EntityManager em = emf.createEntityManager();
-
 		// TODO maybe make a query of this?
 		Integer availCPUs = 0;
 
 		Grid grid = em.find(Grid.class, grid_id);
+
+		if (grid == null) {
+			throw new NotEnoughCPUsAvailableException("Grid with grid_id "
+					+ grid_id + " does not exist :(");
+		}
 
 		Set<Cluster> clusterList = grid.getClusterList();
 
@@ -141,7 +144,6 @@ public class JobManagementBean implements JobManagementBeanRemote {
 
 			jobList.add(job);
 		}
-		// em.close();
 	}
 
 	// TODO: check transaction management
@@ -150,64 +152,45 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	public void checkout() throws NotLoggedInException,
 			ResourceNotAvailableException {
 
-		UserTransaction utx = context.getUserTransaction();
-
 		if (user == null) {
 			throw new NotLoggedInException();
 		}
 
-		// EntityManager em = emf.createEntityManager();
+		for (Job job : jobList) {
+			Execution exec = job.getExecution();
+			exec.setStart(new Date());
+			exec.setStatus(JobStatus.SCHEDULED);
 
-		try {
-			utx.begin();
-			for (Job job : jobList) {
-				Execution exec = job.getExecution();
-				exec.setStart(new Date());
-				exec.setStatus(JobStatus.SCHEDULED);
+			job.setUser(user);
+			user.getJobList().add(job);
 
-				job.setUser(user);
-				user.getJobList().add(job);
-
-				for (Computer computer : exec.getComputerList()) {
-					Computer compInDb = em.find(Computer.class,
-							computer.getId(), LockModeType.WRITE);
-					if (compInDb == null) {
-						utx.rollback();
-						throw new ResourceNotAvailableException(
-								"Computer not in DB anymore");
-					}
-					for (Execution tempExec : computer.getExecutionList()) {
-						if (tempExec.getEnd() != null) {
-							utx.rollback();
-							throw new ResourceNotAvailableException("Computer "
-									+ compInDb.toString()
-									+ " is no longer avaiable");
-						}
+			for (Computer computer : exec.getComputerList()) {
+				Computer compInDb = em.find(Computer.class, computer.getId(),
+						LockModeType.WRITE);
+				if (compInDb == null) {
+					context.setRollbackOnly();
+					throw new ResourceNotAvailableException(
+							"Computer not in DB anymore");
+				}
+				for (Execution tempExec : computer.getExecutionList()) {
+					if (tempExec.getEnd() != null) {
+						context.setRollbackOnly();
+						throw new ResourceNotAvailableException("Computer "
+								+ compInDb.toString()
+								+ " is no longer avaiable");
 					}
 				}
+			}
 
-				em.persist(job);
-				em.persist(exec);
-				em.merge(user);
-				for (Computer computer : exec.getComputerList()) {
-					computer.getExecutionList().add(exec);
-					em.merge(computer);
-				}
+			em.persist(job);
+			em.persist(exec);
+			em.merge(user);
+			for (Computer computer : exec.getComputerList()) {
+				computer.getExecutionList().add(exec);
+				em.merge(computer);
 			}
-			utx.commit();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			try {
-				utx.rollback();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-			} finally {
-				e.printStackTrace();
-			}
-		} finally {
-			// em.close();
+			em.flush();
 		}
-
 	}
 
 	@Override
@@ -217,8 +200,6 @@ public class JobManagementBean implements JobManagementBeanRemote {
 
 	@Override
 	public void clearJobList(Long grid_id) {
-		// EntityManager em = emf.createEntityManager();
-
 		// TODO check if easier way
 		for (Job job : jobList) {
 			for (Computer comp : job.getExecution().getComputerList()) {
@@ -232,33 +213,34 @@ public class JobManagementBean implements JobManagementBeanRemote {
 			gridJobCount.put(grid_id, 0);
 		}
 
-		// em.close();
 	}
 
 	@AroundInvoke
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public Object jobManagementAuditInterceptor(InvocationContext ctx)
 			throws Exception {
-		// EntityManager em = emf.createEntityManager();
-		UserTransaction utx = context.getUserTransaction();
-		utx.begin();
-
 		int i = 0;
 		AuditLog auditLog = new AuditLog();
-
-		auditLog.setMethodName(ctx.getMethod().getName());
-		auditLog.setDate(new Date());
-		for (Object o : ctx.getParameters()) {
-			FunctionParam param = new FunctionParam();
-			param.setClassName(o.getClass().getName());
-			param.setIndex(i++);
-			param.setValue(o.toString());
-			auditLog.getParams().add(param);
-		}
-
-		em.persist(auditLog);
-		utx.commit();
-
-		// em.close();
+		//
+		// auditLog.setMethodName(ctx.getMethod().getName());
+		// auditLog.setDate(new Date());
+		// for (Object o : ctx.getParameters()) {
+		// FunctionParam param = new FunctionParam();
+		// if (o == null) {
+		// param.setClassName("null");
+		// param.setIndex(i++);
+		// param.setValue("null");
+		// } else {
+		// param.setClassName(o.getClass().getName());
+		// param.setIndex(i++);
+		// param.setValue("null");
+		// param.setValue(o.toString());
+		// }
+		// System.out.println(o);
+		// auditLog.getParams().add(param);
+		// }
+		//
+		// em.persist(auditLog);
 
 		return ctx.proceed();
 	}
