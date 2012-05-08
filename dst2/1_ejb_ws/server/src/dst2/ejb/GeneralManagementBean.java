@@ -141,10 +141,10 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 			for (CostsPerJob cpj : costsPerJob) {
 
-				bill.concat("Job on " + cpj.computerCount + " computers\n");
-				bill.concat("Setup costs: " + cpj.setupCosts + "\n");
-				bill.concat("Execution costs: " + cpj.executionCosts + "\n");
-				bill.concat("Costs for this Job : "
+				bill += ("Job on " + cpj.computerCount + " computers\n");
+				bill += ("Setup costs: " + cpj.setupCosts + "\n");
+				bill += ("Execution costs: " + cpj.executionCosts + "\n");
+				bill += ("Costs for this Job : "
 						+ cpj.setupCosts.add(cpj.executionCosts) + "\n");
 
 				executionCosts.add(cpj.executionCosts);
@@ -152,10 +152,10 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 				totalCosts.add(cpj.executionCosts.add(cpj.setupCosts));
 			}
 
-			bill.concat("Your Sum - - - - - - - -\n");
-			bill.concat("Setup Costs overall: " + setupCosts + "\n");
-			bill.concat("Execution Costs overall: " + executionCosts + "\n");
-			bill.concat("Overall Costs: --> " + totalCosts + " <--\n");
+			bill += ("Your Sum - - - - - - - -\n");
+			bill += ("Setup Costs overall: " + setupCosts + "\n");
+			bill += ("Execution Costs overall: " + executionCosts + "\n");
+			bill += ("Overall Costs: --> " + totalCosts + " <--\n");
 
 		}
 
