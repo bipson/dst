@@ -8,10 +8,9 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import dst2.model.Execution;
-import dst2.model.Job;
 import dst2.model.JobStatus;
 
 @Startup
@@ -21,20 +20,18 @@ public class TimerService {
 	@PersistenceContext
 	EntityManager em;
 
-	@Schedule(minute = "*")
+	@Schedule(second = "42", minute = "*/1", hour = "*")
 	public void executeJobs() {
 		// TODO improve query - go over executions?
-		Query query = em
-				.createQuery("SELECT j FROM Job j JOIN FETCH j.execution");
-		@SuppressWarnings("unchecked")
-		Collection<Job> col = (Collection<Job>) query.getResultList();
-		if (!(col.isEmpty())) {
-			for (Job job : col) {
-				Execution exec = job.getExecution();
+		TypedQuery<Execution> query = em.createQuery(
+				"SELECT e FROM Execution e", Execution.class);
+		Collection<Execution> col = query.getResultList();
+		for (Execution exec : col) {
+			if (exec != null) {
 				if (exec.getStart() != null && exec.getEnd() == null) {
 					exec.setEnd(new Date());
 					exec.setStatus(JobStatus.FINISHED);
-					em.persist(em);
+					em.merge(exec);
 					em.flush();
 				}
 			}

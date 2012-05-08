@@ -209,25 +209,17 @@ public class TestBean implements TestBeanRemote {
 
 		// Don't like the look of this, shouldn't this be defined through
 		// grid-memberships?
-		Set<Computer> user1GridComp = new HashSet<Computer>();
-		user1GridComp.add(computer1);
-		user1GridComp.add(computer2);
-		user1GridComp.add(computer3);
-		user1GridComp.add(computer4);
-		user1GridComp.add(computer5);
+		Set<Computer> jobComp = new HashSet<Computer>();
+		jobComp.add(computer1);
 
-		exec1.setComputerList(user1GridComp);
+		exec1.setComputerList(jobComp);
 
 		job1.setExecution(exec1);
 
-		// em.persist(user1);
-		// em.persist(user2);
+		em.merge(user1);
+		em.merge(user2);
 
 		computer1.getExecutionList().add(exec1);
-		computer2.getExecutionList().add(exec1);
-		computer3.getExecutionList().add(exec1);
-		computer4.getExecutionList().add(exec1);
-		computer5.getExecutionList().add(exec1);
 
 		em.flush();
 

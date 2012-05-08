@@ -37,8 +37,6 @@ public class Client {
 					.lookup("java:global/dst2_1/TestBean");
 			manageBean = (GeneralManagementBeanRemote) ctx
 					.lookup("java:global/dst2_1/GeneralManagementBean");
-			jobBean = (JobManagementBeanRemote) ctx
-					.lookup("java:global/dst2_1/JobManagementBean");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -61,6 +59,14 @@ public class Client {
 		// with invalid values, then login successfully, add some valid job
 		// assignments, request the current assigned amount of jobs and finally
 		// successfully submit your temporary job list.
+
+		try {
+			jobBean = (JobManagementBeanRemote) ctx
+					.lookup("java:global/dst2_1/JobManagementBean");
+		} catch (NamingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		jobBean.loginUser("gacksi", "notapassword");
 
@@ -95,18 +101,22 @@ public class Client {
 		// job assignments for a grid, request the assigned amount of jobs and
 		// finally successfully submit your temporary job list.
 
+		try {
+			jobBean = (JobManagementBeanRemote) ctx
+					.lookup("java:global/dst2_1/JobManagementBean");
+		} catch (NamingException e1) {
+			e1.printStackTrace();
+		}
+
 		jobBean.loginUser("quacksi", "foo2");
 
 		try {
-			String[] params = { "ad", "daf", "dfad" };
-			jobBean.addJob(1L, 1, "asdfa",
+			String[] params = { "adad", "dafaff", "dfadfad" };
+			jobBean.addJob(1L, 1, "asadfadfa",
 					new ArrayList<String>(Arrays.asList(params)));
-			String[] params2 = { "aadfd", "ddfaaf", "dfadfad" };
-			jobBean.addJob(2L, 3, "dfaga",
+			String[] params2 = { "aadfadfd", "ddffdaaaf", "dfadsdffad" };
+			jobBean.addJob(2L, 3, "dfafadfga",
 					new ArrayList<String>(Arrays.asList(params2)));
-			String[] params3 = { "adfd", "ddfaf" };
-			jobBean.addJob(3L, 3, "dfaga",
-					new ArrayList<String>(Arrays.asList(params3)));
 		} catch (NotEnoughCPUsAvailableException e) {
 			System.out.println("OHOH, not enough CPUs :(");
 		}

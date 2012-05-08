@@ -20,6 +20,7 @@ import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -54,7 +55,6 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	public void loginUser(String username, String password) {
 
 		MessageDigest md = null;
-		byte[] hash = null;
 		try {
 			md = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
@@ -65,17 +65,21 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		TypedQuery<User> query = em.createQuery(
 				"SELECT u FROM User u WHERE u.username = :name", User.class)
 				.setParameter("name", username);
-		User tempUser = query.getSingleResult();
+		User tempUser;
 
-		if (user != null) {
-			try {
-				if (MessageDigest.isEqual(md.digest(password.getBytes("UTF8")),
-						user.getPassword())) {
-					user = tempUser;
-				}
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+		try {
+			tempUser = query.getSingleResult();
+		} catch (NoResultException e) {
+			return;
+		}
+
+		try {
+			if (MessageDigest.isEqual(md.digest(password.getBytes("UTF8")),
+					tempUser.getPassword())) {
+				user = tempUser;
 			}
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -84,6 +88,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 			List<String> params) throws NotEnoughCPUsAvailableException {
 
 		// TODO maybe make a query of this?
+		// TODO simplify this process ASAP
 		Integer availCPUs = 0;
 
 		Grid grid = em.find(Grid.class, grid_id);
@@ -96,10 +101,14 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		Set<Cluster> clusterList = grid.getClusterList();
 
 		for (Cluster cluster : clusterList) {
-			Set<Computer> computerList = cluster.getComputerList();
-			for (Computer computer : computerList) {
-				// TODO: check if necessary
-				em.detach(computer);
+			computerLoop: for (Computer computer : cluster.getComputerList()) {
+
+				for (Execution execToCheck : computer.getExecutionList()) {
+					if (execToCheck.getEnd() == null) {
+						continue computerLoop;
+					}
+				}
+
 				availCPUs += computer.getCpus();
 			}
 		}
@@ -119,24 +128,33 @@ public class JobManagementBean implements JobManagementBeanRemote {
 			Set<Computer> execComputerList = new HashSet<Computer>();
 
 			overAll: for (Cluster cluster : clusterList) {
-				Set<Computer> computerList = cluster.getComputerList();
-				for (Computer computer : computerList) {
+				checkComputer: for (Computer computer : cluster
+						.getComputerList()) {
 					if (assignedComputers.contains(computer))
-						break;
+						continue;
+
 					for (Execution tempExec : computer.getExecutionList()) {
-						if (tempExec.getEnd() != null)
-							break;
-						execComputerList.add(computer);
-						assignedComputers.add(computer);
-						if (gridJobCount.containsKey(grid_id)) {
-							gridJobCount.put(grid_id,
-									gridJobCount.get(grid_id) + 1);
-						} else
-							gridJobCount.put(grid_id, 1);
-						numCPUs -= computer.getCpus();
-						if (numCPUs <= 0)
-							break overAll;
+						if (tempExec.getEnd() == null)
+							continue checkComputer;
 					}
+
+					// TODO: check if necessary
+					assignedComputers.add(computer);
+					em.detach(computer);
+					execComputerList.add(computer);
+					computer.getExecutionList().add(exec);
+
+					if (gridJobCount.containsKey(grid_id)) {
+						gridJobCount
+								.put(grid_id, gridJobCount.get(grid_id) + 1);
+					} else {
+						gridJobCount.put(grid_id, 1);
+					}
+
+					numCPUs -= computer.getCpus();
+					if (numCPUs <= 0)
+						break overAll;
+
 				}
 			}
 
@@ -166,7 +184,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 
 			for (Computer computer : exec.getComputerList()) {
 				Computer compInDb = em.find(Computer.class, computer.getId(),
-						LockModeType.WRITE);
+						LockModeType.PESSIMISTIC_WRITE);
 				if (compInDb == null) {
 					context.setRollbackOnly();
 					throw new ResourceNotAvailableException(
