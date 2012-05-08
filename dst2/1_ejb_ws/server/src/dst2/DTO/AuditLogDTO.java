@@ -1,10 +1,13 @@
 package dst2.DTO;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AuditLogDTO implements Comparable<AuditLogDTO> {
+public class AuditLogDTO implements Serializable, Comparable<AuditLogDTO> {
+
+	private static final long serialVersionUID = 840031001158435089L;
 
 	private Date date;
 	private String methodName;

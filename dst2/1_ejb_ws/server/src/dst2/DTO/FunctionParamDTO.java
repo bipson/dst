@@ -1,6 +1,10 @@
 package dst2.DTO;
 
-public class FunctionParamDTO {
+import java.io.Serializable;
+
+public class FunctionParamDTO implements Serializable {
+	private static final long serialVersionUID = -2494967463970661369L;
+
 	private int index_nr;
 	private String className;
 	private String value;

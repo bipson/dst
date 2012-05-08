@@ -1,6 +1,7 @@
 package dst2.ejb;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -76,25 +77,15 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 				// Add execution costs
 				for (Computer comp : job.getExecution().getComputerList()) {
 
-					if (comp.getCluster() == null) {
-						return new AsyncResult<String>("Cluster null!\n");
-					}
-
-					if (comp.getCluster().getGrid() == null) {
-						return new AsyncResult<String>("Grid null!\n");
-					}
-
 					BigDecimal costsPerMinute = comp.getCluster().getGrid()
 							.getCostsPerCPUMinute();
 
-					Integer numCPUs = comp.getCpus();
-
 					// TODO simplify
-					tempCPJ.executionCosts = tempCPJ.executionCosts
-							.add(costsPerMinute.multiply(
-									new BigDecimal(numCPUs)).multiply(
-									new BigDecimal(job.getExecutionTime()
-											/ Timer.ONE_MINUTE)));
+					tempCPJ.executionCosts = tempCPJ.executionCosts.add(
+							costsPerMinute.multiply(new BigDecimal(comp
+									.getCpus() * job.getExecutionTime())))
+							.divide(new BigDecimal(Timer.ONE_MINUTE),
+									RoundingMode.HALF_UP);
 
 					for (Membership membership : user.getMembershipList()) {
 
@@ -166,8 +157,8 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 	public List<AuditLogDTO> getAuditLog() {
 		List<AuditLogDTO> logList = new ArrayList<AuditLogDTO>();
 
-		TypedQuery<AuditLog> query = em.createQuery(
-				"SELECT a FROM AuditLog a JOIN FETCH a.params", AuditLog.class);
+		TypedQuery<AuditLog> query = em.createQuery("SELECT a FROM AuditLog a",
+				AuditLog.class);
 
 		for (AuditLog audit : query.getResultList()) {
 			logList.add(audit.getDTO());

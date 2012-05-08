@@ -1,5 +1,7 @@
 package dst2.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +14,9 @@ import dst2.DTO.FunctionParamDTO;
 
 @Entity
 @Table(name = "function_params")
-public class FunctionParam {
+public class FunctionParam implements Serializable {
+	private static final long serialVersionUID = -2730087107726506600L;
+
 	private Long id;
 	private int index_nr;
 	private String className;

@@ -1,5 +1,6 @@
 package dst2.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +24,9 @@ import dst2.DTO.FunctionParamDTO;
 
 @Entity
 @Table(name = "audits")
-public class AuditLog {
+public class AuditLog implements Serializable {
+	private static final long serialVersionUID = 4997548067293786676L;
+
 	private Long id;
 	private Date date;
 	private String methodName;

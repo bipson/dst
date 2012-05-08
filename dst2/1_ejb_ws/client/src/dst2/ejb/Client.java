@@ -85,7 +85,7 @@ public class Client {
 		}
 		try {
 			String[] params2 = { "aadfd", "ddfaaf", "dfadfad" };
-			jobBean.addJob(1L, 2, "dfaga",
+			jobBean.addJob(2L, 1, "dfaga",
 					new ArrayList<String>(Arrays.asList(params2)));
 		} catch (NotEnoughCPUsAvailableException e) {
 			System.out.println("OHOH, not enough CPUs :(");
@@ -140,15 +140,14 @@ public class Client {
 			System.out.println("OHOH, not enough CPUs :( : " + e.getError());
 		}
 
-		System.out.println("User tried to add some jobs, one one should have failed");
-
-		jobBean.clearJobList(1L);
+		System.out.println("User tried to add some jobs, one should have failed");
 
 		System.out.println("This are the number of listed jobs for Grid 1: "
 				+ jobBean.getJobList(1L));
 		System.out.println("This are the number of listed jobs for Grid 2: "
 				+ jobBean.getJobList(2L));
 
+		jobBean.clearJobList(1L);
 		System.out.println("cleared Joblist for grid: " + 1L);
 		System.out.println("let's see the count again");
 
@@ -167,7 +166,7 @@ public class Client {
 
 		// � Wait for some time so that your jobs are finished.
 		System.out
-				.println("Will now sleep for 1 Minute, to finish jobs. Stretch your feet");
+				.println("Will now sleep for 1 Minute to finish jobs. Stretch your feet");
 		try {
 			Thread.sleep(60000);
 			System.out

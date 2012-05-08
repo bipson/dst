@@ -32,6 +32,7 @@ import dst2.model.Cluster;
 import dst2.model.Computer;
 import dst2.model.Environment;
 import dst2.model.Execution;
+import dst2.model.FunctionParam;
 import dst2.model.Grid;
 import dst2.model.Job;
 import dst2.model.JobStatus;
@@ -240,27 +241,38 @@ public class JobManagementBean implements JobManagementBeanRemote {
 			throws Exception {
 		int i = 0;
 		AuditLog auditLog = new AuditLog();
-		//
-		// auditLog.setMethodName(ctx.getMethod().getName());
-		// auditLog.setDate(new Date());
-		// for (Object o : ctx.getParameters()) {
-		// FunctionParam param = new FunctionParam();
-		// if (o == null) {
-		// param.setClassName("null");
-		// param.setIndex(i++);
-		// param.setValue("null");
-		// } else {
-		// param.setClassName(o.getClass().getName());
-		// param.setIndex(i++);
-		// param.setValue("null");
-		// param.setValue(o.toString());
-		// }
-		// System.out.println(o);
-		// auditLog.getParams().add(param);
-		// }
-		//
-		em.persist(auditLog);
+		auditLog.setMethodName(ctx.getMethod().getName());
+		auditLog.setDate(new Date());
+		if (ctx.getParameters() != null) {
+			for (Object o : ctx.getParameters()) {
+				FunctionParam param = new FunctionParam();
+				// if (o == null) {
+				// param.setClassName("null");
+				// param.setIndex(i++);
+				// param.setValue("null");
+				// } else {
+				param.setClassName(o.getClass().getName());
+				param.setIndex(i++);
+				param.setValue(o.toString());
+				// }
+				auditLog.getParams().add(param);
+			}
+		}
 
-		return ctx.proceed();
+		try {
+			Object result = ctx.proceed();
+			if (result != null) {
+				auditLog.setResult(result.toString());
+			} else {
+				auditLog.setResult(null);
+			}
+			return result;
+		} catch (Exception e) {
+			auditLog.setResult(e.toString());
+			throw e;
+		} finally {
+			em.persist(auditLog);
+			em.flush();
+		}
 	}
 }

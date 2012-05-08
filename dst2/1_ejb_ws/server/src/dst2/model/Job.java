@@ -82,7 +82,7 @@ public class Job {
 	@Transient
 	public Integer getExecutionTime() {
 
-		return (int) (execution.getStart().getTime() - execution.getEnd()
+		return (int) (execution.getEnd().getTime() - execution.getStart()
 				.getTime());
 	}
 

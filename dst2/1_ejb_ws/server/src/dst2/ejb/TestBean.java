@@ -6,9 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 import javax.ejb.Remove;
 import javax.ejb.Stateless;
@@ -77,14 +75,14 @@ public class TestBean implements TestBeanRemote {
 		em.persist(user2);
 
 		// Grids ( + Memberships)
-		Grid grid1 = new Grid("grid1", "cellar1", BigDecimal.valueOf(300));
-		Grid grid2 = new Grid("grid2", "cellar2", BigDecimal.valueOf(800));
+		Grid grid1 = new Grid("grid1", "cellar1", BigDecimal.valueOf(31482));
+		Grid grid2 = new Grid("grid2", "cellar2", BigDecimal.valueOf(32554));
 
 		em.persist(grid1);
 		em.persist(grid2);
 
 		Membership membership1 = new Membership(new Date(),
-				(Double.valueOf(123)));
+				(Double.valueOf(23)));
 
 		membership1.setGrid(grid1);
 		membership1.setUser(user1);
@@ -94,7 +92,7 @@ public class TestBean implements TestBeanRemote {
 
 		Membership membership2 = new Membership(new Date(
 				System.currentTimeMillis() - (5L * Timer.ONE_WEEK)),
-				(Double.valueOf(456)));
+				(Double.valueOf(36)));
 
 		membership2.setGrid(grid2);
 		membership2.setUser(user2);
@@ -160,9 +158,9 @@ public class TestBean implements TestBeanRemote {
 				new Date());
 		Computer computer2 = new Computer("comp2", 6, "AUT-VIE", new Date(),
 				new Date());
-		Computer computer3 = new Computer("comp3", 2, "cellar2", new Date(),
+		Computer computer3 = new Computer("comp3", 2, "AUT-VIE", new Date(),
 				new Date());
-		Computer computer4 = new Computer("comp4", 1, "AUT-VIE", new Date(),
+		Computer computer4 = new Computer("comp4", 2, "AUT-VIE", new Date(),
 				new Date());
 		Computer computer5 = new Computer("comp5", 1, "AUT-VIE", new Date(),
 				new Date());
@@ -171,7 +169,7 @@ public class TestBean implements TestBeanRemote {
 		computer2.setCluster(cluster1);
 		computer3.setCluster(cluster2);
 		computer4.setCluster(cluster2);
-		computer5.setCluster(cluster2);
+		computer5.setCluster(cluster1);
 
 		em.persist(computer1);
 		em.persist(computer2);
@@ -183,7 +181,7 @@ public class TestBean implements TestBeanRemote {
 		cluster1.getComputerList().add(computer2);
 		cluster2.getComputerList().add(computer3);
 		cluster2.getComputerList().add(computer4);
-		cluster2.getComputerList().add(computer5);
+		cluster1.getComputerList().add(computer5);
 
 		// Jobs
 		Job job1 = new Job(true);
@@ -200,22 +198,17 @@ public class TestBean implements TestBeanRemote {
 				- (30L * Timer.ONE_MINUTE)), null, JobStatus.RUNNING);
 
 		exec1.setJob(job1);
+		exec1.getComputerList().add(computer1);
 
 		em.persist(exec1);
 
-		// Don't like the look of this, shouldn't this be defined through
-		// grid-memberships?
-		Set<Computer> jobComp = new HashSet<Computer>();
-		jobComp.add(computer1);
-
-		exec1.setComputerList(jobComp);
-
 		job1.setExecution(exec1);
-
-		em.merge(user1);
-		em.merge(user2);
-
 		computer1.getExecutionList().add(exec1);
+
+		// TODO redundant?
+		em.merge(job1);
+		em.merge(user1);
+		em.merge(computer1);
 
 		em.flush();
 
