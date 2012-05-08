@@ -113,7 +113,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 			}
 		}
 
-		if (availCPUs <= numCPUs) {
+		if (availCPUs < numCPUs) {
 			throw new NotEnoughCPUsAvailableException("needed: "
 					+ numCPUs.toString() + ", have: " + availCPUs);
 		} else {
@@ -154,7 +154,6 @@ public class JobManagementBean implements JobManagementBeanRemote {
 					numCPUs -= computer.getCpus();
 					if (numCPUs <= 0)
 						break overAll;
-
 				}
 			}
 
@@ -212,8 +211,11 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	}
 
 	@Override
-	public HashMap<Long, Integer> getJobList() {
-		return this.gridJobCount;
+	public Integer getJobList(Long grid_id) {
+		if (gridJobCount.containsKey(grid_id))
+			return gridJobCount.get(grid_id);
+		else
+			return 0;
 	}
 
 	@Override
@@ -228,9 +230,8 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		}
 
 		if (gridJobCount.containsKey(grid_id)) {
-			gridJobCount.put(grid_id, 0);
+			gridJobCount.remove(grid_id);
 		}
-
 	}
 
 	@AroundInvoke
@@ -258,7 +259,7 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		// auditLog.getParams().add(param);
 		// }
 		//
-		// em.persist(auditLog);
+		em.persist(auditLog);
 
 		return ctx.proceed();
 	}

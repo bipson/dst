@@ -43,7 +43,7 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 	@Asynchronous
 	public Future<String> getBill(String username) {
 
-		String bill = "Nothing to bill :)";
+		String bill = "Nothing to bill :)\n";
 
 		List<CostsPerJob> costsPerJob = new ArrayList<CostsPerJob>();
 		Integer numberOfJobs = 0;
@@ -58,7 +58,7 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 		try {
 			user = query.getSingleResult();
 		} catch (RuntimeException e) {
-			return new AsyncResult<String>("Upsie");
+			return new AsyncResult<String>("Not a known user\n");
 		}
 
 		for (Job job : user.getJobList()) {
@@ -69,12 +69,25 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 		for (Job job : user.getJobList()) {
 			if (job.getExecution().getStatus() == JobStatus.FINISHED
-					&& job.isPaid() == false) {
+					&& !job.isPaid()) {
 
 				CostsPerJob tempCPJ = new CostsPerJob();
 
+				// TODO Debug
+				if (job.getExecution() == null) {
+					return new AsyncResult<String>("Execution null!\n");
+				}
+
 				// Add execution costs
 				for (Computer comp : job.getExecution().getComputerList()) {
+
+					if (comp.getCluster() == null) {
+						return new AsyncResult<String>("Cluster null!\n");
+					}
+
+					if (comp.getCluster().getGrid() == null) {
+						return new AsyncResult<String>("Grid null!\n");
+					}
 
 					BigDecimal costsPerMinute = comp.getCluster().getGrid()
 							.getCostsPerCPUMinute();
@@ -87,6 +100,13 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 									/ Timer.ONE_MINUTE)));
 
 					for (Membership membership : user.getMembershipList()) {
+
+						// TODO: Debug
+						if (membership.getGrid() == null) {
+							return new AsyncResult<String>(
+									"Grid from membership null!\n");
+						}
+
 						if (comp.getCluster().getGrid()
 								.equals(membership.getGrid())) {
 							tempCPJ.executionCosts.subtract(new BigDecimal(
@@ -104,9 +124,9 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 				job.setPaid(true);
 				em.merge(job);
-				em.flush();
+				numberOfJobs++;
 			}
-
+			em.flush();
 		}
 
 		if (!costsPerJob.isEmpty()) {

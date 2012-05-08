@@ -50,7 +50,7 @@ public class PriceManagementBean {
 		if (priceStepCache.get(priceStepCache.size() - 1)
 				.getNumberOfHistoricalJobs() < numberOfJobs)
 			return priceStepCache.get(priceStepCache.size() - 1).getPrice();
-		if (priceStepCache.get(0).getNumberOfHistoricalJobs() < numberOfJobs)
+		if (priceStepCache.get(0).getNumberOfHistoricalJobs() > numberOfJobs)
 			return priceStepCache.get(0).getPrice();
 
 		// Binary Search for biggest element where numberofJobs <=

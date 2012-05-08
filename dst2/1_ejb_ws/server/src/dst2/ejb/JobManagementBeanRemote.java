@@ -1,6 +1,5 @@
 package dst2.ejb;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.ejb.Remote;
@@ -22,5 +21,5 @@ public interface JobManagementBeanRemote {
 
 	public void clearJobList(Long grid_id);
 
-	public HashMap<Long, Integer> getJobList();
+	public Integer getJobList(Long grid_id);
 }

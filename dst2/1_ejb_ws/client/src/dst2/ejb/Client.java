@@ -115,33 +115,34 @@ public class Client {
 
 		try {
 			String[] params = { "adad", "dafaff", "dfadfad" };
-			jobBean.addJob(1L, 1, "asadfadfa",
+			jobBean.addJob(1L, 10, "asadfadfa",
 					new ArrayList<String>(Arrays.asList(params)));
+		} catch (NotEnoughCPUsAvailableException e) {
+			System.out.println("OHOH, not enough CPUs :( : " + e.getError());
+		}
+		try {
 			String[] params2 = { "aadfadfd", "ddffdaaaf", "dfadsdffad" };
-			jobBean.addJob(2L, 3, "dfafadfga",
+			jobBean.addJob(2L, 1, "dfafadfga",
 					new ArrayList<String>(Arrays.asList(params2)));
 		} catch (NotEnoughCPUsAvailableException e) {
-			System.out.println("OHOH, not enough CPUs :(");
-		}
-
-		try {
-			jobBean.checkout();
-		} catch (NotLoggedInException e) {
-			System.out.println("User not logged in! " + e.getError());
-		} catch (ResourceNotAvailableException e) {
-			System.out.println("Upsie :" + e.getError());
+			System.out.println("OHOH, not enough CPUs :( : " + e.getError());
 		}
 
 		System.out.println("User tried to assign jobs, hopefully failed");
 
 		jobBean.clearJobList(1L);
 
+		System.out.println("This are the number of listed jobs for Grid 1: "
+				+ jobBean.getJobList(1L));
+		System.out.println("This are the number of listed jobs for Grid 2: "
+				+ jobBean.getJobList(2L));
+
 		System.out.println("cleared Joblist for grid: " + 1L);
 
-		System.out.println("This are the listed jobs for Grid 1: "
-				+ jobBean.getJobList().get(1L));
-		System.out.println("This are the listed jobs for Grid 2: "
-				+ jobBean.getJobList().get(2L));
+		System.out.println("This are the number of listed jobs for Grid 1: "
+				+ jobBean.getJobList(1L));
+		System.out.println("This are the number of listed jobs for Grid 2: "
+				+ jobBean.getJobList(2L));
 
 		try {
 			jobBean.checkout();
@@ -151,13 +152,13 @@ public class Client {
 			System.out.println("OHOH : " + e1.getError());
 		}
 
-		System.out.println("User tried to assign jobs, hopefully failed");
-
+		System.out.println("removed jobs, now it hopefully worked.");
 		scan.nextLine();
 
 		// � Wait for some time so that your jobs are finished.
 
-		System.out.println("Will now sleep for 1 Minute, stretch your feet");
+		System.out
+				.println("Will now sleep for 1 Minute, to finish jobs. Stretch your feet");
 		try {
 			Thread.sleep(60000);
 			System.out
@@ -171,7 +172,7 @@ public class Client {
 
 		// � Use the GeneralManagementBean to get the bill for all finished
 		// jobs.
-		Future<String> result = manageBean.getBill("quacksi");
+		Future<String> result = manageBean.getBill("gacksi");
 
 		System.out.println("Waiting for result, please be patient...");
 
