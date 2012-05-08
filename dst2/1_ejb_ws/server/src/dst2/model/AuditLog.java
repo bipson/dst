@@ -16,6 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+
+import dst2.DTO.AuditLogDTO;
+import dst2.DTO.FunctionParamDTO;
 
 @Entity
 @Table(name = "audits")
@@ -79,4 +83,17 @@ public class AuditLog {
 		this.params = params;
 	}
 
+	@Transient
+	public AuditLogDTO getDTO() {
+		Set<FunctionParamDTO> fdtoSet = new HashSet<FunctionParamDTO>();
+
+		for (FunctionParam param : params) {
+			fdtoSet.add(param.getDTO());
+		}
+
+		AuditLogDTO dto = new AuditLogDTO(this.date, this.methodName, fdtoSet,
+				this.result);
+
+		return dto;
+	}
 }

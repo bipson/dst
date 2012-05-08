@@ -47,6 +47,8 @@
             	<include name="dst2/ejb/TestBeanRemote.class" />
             	<include name="dst2/ejb/GeneralManagementBeanRemote.class" />
             	<include name="dst2/ejb/JobManagementBeanRemote.class"/>
+            	<include name="dst2/DTO/AuditLogDTO.class" />
+            	<include name="dst2/DTO/FunctionParamDTO.class" />
             	<!-- the Exceptions -->
             	<include name="dst2/exception/NotEnoughCPUsAvailableException.class"/>
             	<include name="dst2/exception/NotLoggedInException.class"/>

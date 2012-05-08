@@ -2,6 +2,7 @@ package dst2.ejb;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Future;
 
@@ -12,8 +13,10 @@ import javax.ejb.Stateless;
 import javax.management.timer.Timer;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import dst2.DTO.AuditLogDTO;
+import dst2.model.AuditLog;
 import dst2.model.Computer;
 import dst2.model.Job;
 import dst2.model.JobStatus;
@@ -45,11 +48,18 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 		List<CostsPerJob> costsPerJob = new ArrayList<CostsPerJob>();
 		Integer numberOfJobs = 0;
 
-		Query query = em
+		TypedQuery<User> query = em
 				.createQuery(
-						"SELECT u FROM User u JOIN FETCH u.jobList WHERE u.username LIKE :username")
-				.setParameter("username", username);
-		User user = (User) query.getSingleResult();
+						"SELECT u FROM User u WHERE u.username = :username",
+						User.class).setParameter("username", username);
+
+		User user;
+
+		try {
+			user = query.getSingleResult();
+		} catch (RuntimeException e) {
+			return new AsyncResult<String>("Upsie");
+		}
 
 		for (Job job : user.getJobList()) {
 			if (job.getExecution().getStatus() == JobStatus.FINISHED
@@ -92,10 +102,11 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 				costsPerJob.add(tempCPJ);
 
+				job.setPaid(true);
+				em.merge(job);
+				em.flush();
 			}
-			job.setPaid(true);
-			em.merge(job);
-			em.flush();
+
 		}
 
 		if (!costsPerJob.isEmpty()) {
@@ -137,4 +148,19 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 		Integer computerCount = 0;
 	}
 
+	@Override
+	public List<AuditLogDTO> getAuditLog() {
+		List<AuditLogDTO> logList = new ArrayList<AuditLogDTO>();
+
+		TypedQuery<AuditLog> query = em.createQuery(
+				"SELECT a FROM AuditLog a JOIN FETCH a.params", AuditLog.class);
+
+		for (AuditLog audit : query.getResultList()) {
+			logList.add(audit.getDTO());
+		}
+
+		Collections.sort(logList);
+
+		return logList;
+	}
 }

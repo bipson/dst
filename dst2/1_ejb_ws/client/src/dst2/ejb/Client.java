@@ -4,11 +4,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import dst2.DTO.AuditLogDTO;
 import dst2.exception.NotEnoughCPUsAvailableException;
 import dst2.exception.NotLoggedInException;
 import dst2.exception.ResourceNotAvailableException;
@@ -77,7 +80,7 @@ public class Client {
 			jobBean.addJob(1L, 1, "asdfa",
 					new ArrayList<String>(Arrays.asList(params)));
 			String[] params2 = { "aadfd", "ddfaaf", "dfadfad" };
-			jobBean.addJob(2L, 3, "dfaga",
+			jobBean.addJob(2L, 2, "dfaga",
 					new ArrayList<String>(Arrays.asList(params2)));
 		} catch (NotEnoughCPUsAvailableException e) {
 			System.out.println("OHOH, not enough CPUs :(");
@@ -129,14 +132,67 @@ public class Client {
 			System.out.println("Upsie :" + e.getError());
 		}
 
-		System.out
-				.println("User tried to assign jobs, hopefully failed, press Enter to continue...");
+		System.out.println("User tried to assign jobs, hopefully failed");
+
+		jobBean.clearJobList(1L);
+
+		System.out.println("cleared Joblist for grid: " + 1L);
+
+		System.out.println("This are the listed jobs for Grid 1: "
+				+ jobBean.getJobList().get(1L));
+		System.out.println("This are the listed jobs for Grid 2: "
+				+ jobBean.getJobList().get(2L));
+
+		try {
+			jobBean.checkout();
+		} catch (NotLoggedInException e1) {
+			System.out.println("Not logged in : " + e1.getError());
+		} catch (ResourceNotAvailableException e1) {
+			System.out.println("OHOH : " + e1.getError());
+		}
+
+		System.out.println("User tried to assign jobs, hopefully failed");
+
 		scan.nextLine();
 
 		// � Wait for some time so that your jobs are finished.
+
+		System.out.println("Will now sleep for 1 Minute, stretch your feet");
+		try {
+			Thread.sleep(60000);
+			System.out
+					.println("You may now check the database, press Enter to continue...");
+			scan.nextLine();
+		} catch (InterruptedException e) {
+			System.out.println("Who dares to interrupt a princess's sleep?!");
+		}
+
+		System.out.println("Will now generate your bill...");
+
 		// � Use the GeneralManagementBean to get the bill for all finished
 		// jobs.
-		// � Finally get all saved audits from the Audit-Interceptor.
+		Future<String> result = manageBean.getBill("quacksi");
 
+		System.out.println("Waiting for result, please be patient...");
+
+		try {
+			System.out.println(result.get());
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// � Finally get all saved audits from the Audit-Interceptor.
+		System.out
+				.println("Almost done, for the audit-log please press Enter...");
+		scan.nextLine();
+
+		for (AuditLogDTO log : manageBean.getAuditLog())
+			System.out.println(log);
+
+		System.out.println("End of 1");
 	}
 }

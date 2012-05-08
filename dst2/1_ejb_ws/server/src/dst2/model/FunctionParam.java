@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import dst2.DTO.FunctionParamDTO;
 
 @Entity
 @Table(name = "function_params")
@@ -55,5 +58,10 @@ public class FunctionParam {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	@Transient
+	public FunctionParamDTO getDTO() {
+		return new FunctionParamDTO(this.index_nr, this.className, this.value);
 	}
 }
