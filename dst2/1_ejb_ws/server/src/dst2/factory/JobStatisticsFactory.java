@@ -42,6 +42,8 @@ public class JobStatisticsFactory {
 
 			}
 			execDTO.setNumCPUs(cpuSum);
+
+			jobStatDTO.getExecDTO().add(execDTO);
 		}
 
 		return jobStatDTO;

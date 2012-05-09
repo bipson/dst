@@ -35,4 +35,9 @@ public class ExecutionDTO implements Serializable {
 		this.numCPUs = numCPUs;
 	}
 
+	@Override
+	public String toString() {
+		return "Execution:\n" + "[start = " + start + "\n" + "end = " + end
+				+ "\n" + "numCPUs = " + numCPUs + "\n";
+	}
 }

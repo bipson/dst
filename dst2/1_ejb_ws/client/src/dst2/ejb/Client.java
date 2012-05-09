@@ -10,8 +10,12 @@ import java.util.concurrent.Future;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.xml.ws.WebServiceRef;
 
 import dst2.DTO.AuditLogDTO;
+import dst2.ejb.generated.JobStatisticsDTO;
+import dst2.ejb.generated.Service;
+import dst2.ejb.generated.UnknownGridFault_Exception;
 import dst2.ejb.interfaces.GeneralManagementBeanRemote;
 import dst2.ejb.interfaces.JobManagementBeanRemote;
 import dst2.ejb.interfaces.TestBeanRemote;
@@ -20,6 +24,9 @@ import dst2.exception.NotLoggedInException;
 import dst2.exception.ResourceNotAvailableException;
 
 public class Client {
+	
+	@WebServiceRef(wsdlLocation="http://localhost:8080/JobStatistics/service?wsdl")
+	static Service service;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -206,6 +213,18 @@ public class Client {
 		for (AuditLogDTO log : manageBean.getAuditLog())
 			System.out.println(log);
 
-		System.out.println("End of 1");
+		System.out.println("End of Part 1");
+		
+		System.out.println("Output of Part 2:");
+
+		JobStatisticsDTO jobDTO = null;
+		
+		try {
+			jobDTO = service.getStatistics("grid1");
+		} catch (UnknownGridFault_Exception e) {
+			System.out.println("Grid rejected by Service : "+e.getMessage());
+		}
+		
+		System.out.println(jobDTO);
 	}
 }

@@ -1,0 +1,15 @@
+build
+build-ejb-client
+build-ejb-server
+build-injection-projects
+check
+clean
+deploy-ejb
+redeploy-ejb
+run-ejb-client
+run-inj
+run-inj-with-agent
+setup
+undeploy-ejb
+ws-import-client
+zip
