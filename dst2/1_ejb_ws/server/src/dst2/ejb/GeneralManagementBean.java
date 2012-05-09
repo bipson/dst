@@ -17,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import dst2.DTO.AuditLogDTO;
+import dst2.ejb.interfaces.GeneralManagementBeanRemote;
 import dst2.model.AuditLog;
 import dst2.model.Computer;
 import dst2.model.Job;

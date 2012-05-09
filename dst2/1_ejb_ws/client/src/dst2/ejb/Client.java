@@ -12,6 +12,9 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 import dst2.DTO.AuditLogDTO;
+import dst2.ejb.interfaces.GeneralManagementBeanRemote;
+import dst2.ejb.interfaces.JobManagementBeanRemote;
+import dst2.ejb.interfaces.TestBeanRemote;
 import dst2.exception.NotEnoughCPUsAvailableException;
 import dst2.exception.NotLoggedInException;
 import dst2.exception.ResourceNotAvailableException;
@@ -140,7 +143,8 @@ public class Client {
 			System.out.println("OHOH, not enough CPUs :( : " + e.getError());
 		}
 
-		System.out.println("User tried to add some jobs, one should have failed");
+		System.out
+				.println("User tried to add some jobs, one should have failed");
 
 		System.out.println("This are the number of listed jobs for Grid 1: "
 				+ jobBean.getJobList(1L));

@@ -14,6 +14,7 @@ import javax.management.timer.Timer;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import dst2.ejb.interfaces.TestBeanRemote;
 import dst2.model.Address;
 import dst2.model.Admin;
 import dst2.model.Cluster;
