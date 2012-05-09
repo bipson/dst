@@ -50,9 +50,9 @@ public class JobStatistics
      * @return
      *     returns Service
      */
-    @WebEndpoint(name = "servicePort")
-    public dst2.ejb.generated.Service getServicePort() {
-        return super.getPort(new QName("http://webservice.dst2/", "servicePort"), Service.class);
+    @WebEndpoint(name = "JobPort")
+    public dst2.ejb.generated.Service getJobPort() {
+        return super.getPort(new QName("http://webservice.dst2/", "JobPort"), Service.class);
     }
 
     /**
@@ -62,9 +62,9 @@ public class JobStatistics
      * @return
      *     returns Service
      */
-    @WebEndpoint(name = "servicePort")
-    public dst2.ejb.generated.Service getServicePort(WebServiceFeature... features) {
-        return super.getPort(new QName("http://webservice.dst2/", "servicePort"), Service.class, features);
+    @WebEndpoint(name = "JobPort")
+    public dst2.ejb.generated.Service getJobPort(WebServiceFeature... features) {
+        return super.getPort(new QName("http://webservice.dst2/", "JobPort"), Service.class, features);
     }
 
 }

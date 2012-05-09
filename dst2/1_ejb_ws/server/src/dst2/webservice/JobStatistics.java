@@ -19,11 +19,14 @@ import dst2.webservice.exception.UnknownGridFault;
 
 @Stateless
 @Addressing(required = true)
-@WebService(endpointInterface = "dst2.webservice.JobStatistics", name = "service", serviceName = "JobStatistics")
-public class JobStatistics implements JobStatisticsInterface {
+@WebService(name = "service", serviceName = "JobStatistics", portName = "JobPort")
+public class JobStatistics {
 
 	@EJB
 	JobStatisticsBean jobStatsBean;
+
+	public JobStatistics() {
+	}
 
 	@WebMethod
 	@Action(input = "localhost:8080/JobStatistics/service/input", output = "localhost:8080/JobStatistics/service/output", fault = { @FaultAction(className = UnknownGridFault.class, value = "localhost:8080/JobStatistics/service/fault") })
