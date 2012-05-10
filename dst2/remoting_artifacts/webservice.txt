@@ -1,0 +1,2865 @@
+No.     Time        Source                Destination           Protocol Length Info
+   1537 392.299555  127.0.0.1             127.0.0.1             TCP      68     50817 > http-alt [SYN] Seq=0 Win=65535 Len=0 MSS=16344 WS=2 TSval=113194972 TSecr=0 SACK_PERM=1
+
+Frame 1537: 68 bytes on wire (544 bits), 68 bytes captured (544 bits)
+    Arrival Time: May 10, 2012 12:54:44.280739000 CEST
+    Epoch Time: 1336647284.280739000 seconds
+    [Time delta from previous captured frame: 2.052353000 seconds]
+    [Time delta from previous displayed frame: 0.000000000 seconds]
+    [Time since reference or first frame: 392.299555000 seconds]
+    Frame Number: 1537
+    Frame Length: 68 bytes (544 bits)
+    Capture Length: 68 bytes (544 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 64
+    Identification: 0x692d (26925)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xd388 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 0, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 0    (relative sequence number)
+    Header length: 44 bytes
+    Flags: 0x002 (SYN)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...0 .... = Acknowledgement: Not set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..1. = Syn: Set
+            [Expert Info (Chat/Sequence): Connection establish request (SYN): server port http-alt]
+                [Message: Connection establish request (SYN): server port http-alt]
+                [Severity level: Chat]
+                [Group: Sequence]
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 65535]
+    Checksum: 0xfe34 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (24 bytes)
+        Maximum segment size: 16344 bytes
+        No-Operation (NOP)
+        Window scale: 1 (multiply by 2)
+            Kind: Window Scale (3)
+            Length: 3
+            Shift count: 1
+            [Multiplier: 2]
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194972, TSecr 0
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194972
+            Timestamp echo reply: 0
+        TCP SACK Permitted Option: True
+        End of Option List (EOL)
+
+No.     Time        Source                Destination           Protocol Length Info
+   1538 392.299643  127.0.0.1             127.0.0.1             TCP      68     http-alt > 50817 [SYN, ACK] Seq=0 Ack=1 Win=65535 Len=0 MSS=16344 WS=4 TSval=113194972 TSecr=113194972 SACK_PERM=1
+
+Frame 1538: 68 bytes on wire (544 bits), 68 bytes captured (544 bits)
+    Arrival Time: May 10, 2012 12:54:44.280827000 CEST
+    Epoch Time: 1336647284.280827000 seconds
+    [Time delta from previous captured frame: 0.000088000 seconds]
+    [Time delta from previous displayed frame: 0.000088000 seconds]
+    [Time since reference or first frame: 392.299643000 seconds]
+    Frame Number: 1538
+    Frame Length: 68 bytes (544 bits)
+    Capture Length: 68 bytes (544 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 64
+    Identification: 0x1068 (4200)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x2c4e (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 0, Ack: 1, Len: 0
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 0    (relative sequence number)
+    Acknowledgement number: 1    (relative ack number)
+    Header length: 44 bytes
+    Flags: 0x012 (SYN, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..1. = Syn: Set
+            [Expert Info (Chat/Sequence): Connection establish acknowledge (SYN+ACK): server port http-alt]
+                [Message: Connection establish acknowledge (SYN+ACK): server port http-alt]
+                [Severity level: Chat]
+                [Group: Sequence]
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 65535]
+    Checksum: 0xfe34 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (24 bytes)
+        Maximum segment size: 16344 bytes
+        No-Operation (NOP)
+        Window scale: 2 (multiply by 4)
+            Kind: Window Scale (3)
+            Length: 3
+            Shift count: 2
+            [Multiplier: 4]
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194972, TSecr 113194972
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194972
+            Timestamp echo reply: 113194972
+        TCP SACK Permitted Option: True
+        End of Option List (EOL)
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1537]
+        [The RTT to ACK the segment was: 0.000088000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1539 392.299655  127.0.0.1             127.0.0.1             TCP      56     50817 > http-alt [ACK] Seq=1 Ack=1 Win=81660 Len=0 TSval=113194972 TSecr=113194972
+
+Frame 1539: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:44.280839000 CEST
+    Epoch Time: 1336647284.280839000 seconds
+    [Time delta from previous captured frame: 0.000012000 seconds]
+    [Time delta from previous displayed frame: 0.000012000 seconds]
+    [Time since reference or first frame: 392.299655000 seconds]
+    Frame Number: 1539
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x194b (6475)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x2377 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 1, Ack: 1, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 1    (relative sequence number)
+    Acknowledgement number: 1    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194972, TSecr 113194972
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194972
+            Timestamp echo reply: 113194972
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1538]
+        [The RTT to ACK the segment was: 0.000012000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1540 392.299667  127.0.0.1             127.0.0.1             TCP      56     [TCP Dup ACK 1538#1] http-alt > 50817 [ACK] Seq=1 Ack=1 Win=262140 Len=0 TSval=113194972 TSecr=113194972
+
+Frame 1540: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:44.280851000 CEST
+    Epoch Time: 1336647284.280851000 seconds
+    [Time delta from previous captured frame: 0.000012000 seconds]
+    [Time delta from previous displayed frame: 0.000012000 seconds]
+    [Time since reference or first frame: 392.299667000 seconds]
+    Frame Number: 1540
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Bad TCP]
+    [Coloring Rule String: tcp.analysis.flags]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x5b51 (23377)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xe170 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 1, Ack: 1, Len: 0
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 1    (relative sequence number)
+    Acknowledgement number: 1    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194972, TSecr 113194972
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194972
+            Timestamp echo reply: 113194972
+    [SEQ/ACK analysis]
+        [TCP Analysis Flags]
+            [This is a TCP duplicate ack]
+        [Duplicate ACK #: 1]
+        [Duplicate to the ACK in frame: 1538]
+            [Expert Info (Note/Sequence): Duplicate ACK (#1)]
+                [Message: Duplicate ACK (#1)]
+                [Severity level: Note]
+                [Group: Sequence]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1541 392.302634  127.0.0.1             127.0.0.1             HTTP     235    GET /JobStatistics/service?wsdl HTTP/1.1 
+
+Frame 1541: 235 bytes on wire (1880 bits), 235 bytes captured (1880 bits)
+    Arrival Time: May 10, 2012 12:54:44.283818000 CEST
+    Epoch Time: 1336647284.283818000 seconds
+    [Time delta from previous captured frame: 0.002967000 seconds]
+    [Time delta from previous displayed frame: 0.002967000 seconds]
+    [Time since reference or first frame: 392.302634000 seconds]
+    Frame Number: 1541
+    Frame Length: 235 bytes (1880 bits)
+    Capture Length: 235 bytes (1880 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp:http]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 231
+    Identification: 0x9a1c (39452)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xa1f2 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 1, Ack: 1, Len: 179
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 1    (relative sequence number)
+    [Next sequence number: 180    (relative sequence number)]
+    Acknowledgement number: 1    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x018 (PSH, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 1... = Push: Set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0xfedb [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194974, TSecr 113194972
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194974
+            Timestamp echo reply: 113194972
+    [SEQ/ACK analysis]
+        [Bytes in flight: 179]
+Hypertext Transfer Protocol
+    GET /JobStatistics/service?wsdl HTTP/1.1\r\n
+        [Expert Info (Chat/Sequence): GET /JobStatistics/service?wsdl HTTP/1.1\r\n]
+            [Message: GET /JobStatistics/service?wsdl HTTP/1.1\r\n]
+            [Severity level: Chat]
+            [Group: Sequence]
+        Request Method: GET
+        Request URI: /JobStatistics/service?wsdl
+        Request Version: HTTP/1.1
+    User-Agent: Java/1.6.0_31\r\n
+    Host: localhost:8080\r\n
+    Accept: text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2\r\n
+    Connection: keep-alive\r\n
+    \r\n
+    [Full request URI: http://localhost:8080/JobStatistics/service?wsdl]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1542 392.302697  127.0.0.1             127.0.0.1             TCP      56     http-alt > 50817 [ACK] Seq=1 Ack=180 Win=262140 Len=0 TSval=113194974 TSecr=113194974
+
+Frame 1542: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:44.283881000 CEST
+    Epoch Time: 1336647284.283881000 seconds
+    [Time delta from previous captured frame: 0.000063000 seconds]
+    [Time delta from previous displayed frame: 0.000063000 seconds]
+    [Time since reference or first frame: 392.302697000 seconds]
+    Frame Number: 1542
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0xa820 (43040)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x94a1 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 1, Ack: 180, Len: 0
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 1    (relative sequence number)
+    Acknowledgement number: 180    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194974, TSecr 113194974
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194974
+            Timestamp echo reply: 113194974
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1541]
+        [The RTT to ACK the segment was: 0.000063000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1543 392.309929  127.0.0.1             127.0.0.1             TCP      3704   [TCP segment of a reassembled PDU]
+
+Frame 1543: 3704 bytes on wire (29632 bits), 3704 bytes captured (29632 bits)
+    Arrival Time: May 10, 2012 12:54:44.291113000 CEST
+    Epoch Time: 1336647284.291113000 seconds
+    [Time delta from previous captured frame: 0.007232000 seconds]
+    [Time delta from previous displayed frame: 0.007232000 seconds]
+    [Time since reference or first frame: 392.309929000 seconds]
+    Frame Number: 1543
+    Frame Length: 3704 bytes (29632 bits)
+    Capture Length: 3704 bytes (29632 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 3700
+    Identification: 0x9266 (37478)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x9c1b (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 1, Ack: 180, Len: 3648
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 1    (relative sequence number)
+    [Next sequence number: 3649    (relative sequence number)]
+    Acknowledgement number: 180    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x018 (PSH, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 1... = Push: Set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0x0c69 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194981, TSecr 113194974
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194981
+            Timestamp echo reply: 113194974
+    [SEQ/ACK analysis]
+        [Bytes in flight: 3648]
+    TCP segment data (3648 bytes)
+
+No.     Time        Source                Destination           Protocol Length Info
+   1544 392.309959  127.0.0.1             127.0.0.1             TCP      56     50817 > http-alt [ACK] Seq=180 Ack=3649 Win=78012 Len=0 TSval=113194981 TSecr=113194981
+
+Frame 1544: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:44.291143000 CEST
+    Epoch Time: 1336647284.291143000 seconds
+    [Time delta from previous captured frame: 0.000030000 seconds]
+    [Time delta from previous displayed frame: 0.000030000 seconds]
+    [Time since reference or first frame: 392.309959000 seconds]
+    Frame Number: 1544
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x9518 (38168)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xa7a9 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 180, Ack: 3649, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 180    (relative sequence number)
+    Acknowledgement number: 3649    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 39006
+    [Calculated window size: 78012]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194981, TSecr 113194981
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194981
+            Timestamp echo reply: 113194981
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1543]
+        [The RTT to ACK the segment was: 0.000030000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1545 392.309973  127.0.0.1             127.0.0.1             HTTP/XML 61     HTTP/1.1 200 OK 
+
+Frame 1545: 61 bytes on wire (488 bits), 61 bytes captured (488 bits)
+    Arrival Time: May 10, 2012 12:54:44.291157000 CEST
+    Epoch Time: 1336647284.291157000 seconds
+    [Time delta from previous captured frame: 0.000014000 seconds]
+    [Time delta from previous displayed frame: 0.000014000 seconds]
+    [Time since reference or first frame: 392.309973000 seconds]
+    Frame Number: 1545
+    Frame Length: 61 bytes (488 bits)
+    Capture Length: 61 bytes (488 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp:http:data:data:xml]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 57
+    Identification: 0x5653 (22099)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xe669 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 3649, Ack: 180, Len: 5
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 3649    (relative sequence number)
+    [Next sequence number: 3654    (relative sequence number)]
+    Acknowledgement number: 180    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x018 (PSH, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 1... = Push: Set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe2d [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194981, TSecr 113194981
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194981
+            Timestamp echo reply: 113194981
+    [SEQ/ACK analysis]
+        [Bytes in flight: 5]
+    TCP segment data (5 bytes)
+[2 Reassembled TCP Segments (3653 bytes): #1543(3648), #1545(5)]
+    [Frame: 1543, payload: 0-3647 (3648 bytes)]
+    [Frame: 1545, payload: 3648-3652 (5 bytes)]
+    [Segment count: 2]
+    [Reassembled TCP length: 3653]
+Hypertext Transfer Protocol
+    HTTP/1.1 200 OK\r\n
+        [Expert Info (Chat/Sequence): HTTP/1.1 200 OK\r\n]
+            [Message: HTTP/1.1 200 OK\r\n]
+            [Severity level: Chat]
+            [Group: Sequence]
+        Request Version: HTTP/1.1
+        Status Code: 200
+        Response Phrase: OK
+    server: grizzly/1.9.18\r\n
+    Content-Type: text/xml;charset=utf-8\r\n
+    Transfer-Encoding: chunked\r\n
+    Date: Thu, 10 May 2012 10:54:44 GMT\r\n
+    \r\n
+    HTTP chunked response
+        Data chunk (3495 octets)
+            Chunk size: 3495 octets
+            Data (3495 bytes)
+
+0000  3c 3f 78 6d 6c 20 76 65 72 73 69 6f 6e 3d 27 31   <?xml version='1
+0010  2e 30 27 20 65 6e 63 6f 64 69 6e 67 3d 27 55 54   .0' encoding='UT
+0020  46 2d 38 27 3f 3e 3c 21 2d 2d 20 50 75 62 6c 69   F-8'?><!-- Publi
+0030  73 68 65 64 20 62 79 20 4a 41 58 2d 57 53 20 52   shed by JAX-WS R
+0040  49 20 61 74 20 68 74 74 70 3a 2f 2f 6a 61 78 2d   I at http://jax-
+0050  77 73 2e 64 65 76 2e 6a 61 76 61 2e 6e 65 74 2e   ws.dev.java.net.
+0060  20 52 49 27 73 20 76 65 72 73 69 6f 6e 20 69 73    RI's version is
+0070  20 4a 41 58 2d 57 53 20 52 49 20 32 2e 32 2d 68    JAX-WS RI 2.2-h
+0080  75 64 73 6f 6e 2d 37 35 32 2d 2e 20 2d 2d 3e 3c   udson-752-. --><
+0090  21 2d 2d 20 47 65 6e 65 72 61 74 65 64 20 62 79   !-- Generated by
+00a0  20 4a 41 58 2d 57 53 20 52 49 20 61 74 20 68 74    JAX-WS RI at ht
+00b0  74 70 3a 2f 2f 6a 61 78 2d 77 73 2e 64 65 76 2e   tp://jax-ws.dev.
+00c0  6a 61 76 61 2e 6e 65 74 2e 20 52 49 27 73 20 76   java.net. RI's v
+00d0  65 72 73 69 6f 6e 20 69 73 20 4a 41 58 2d 57 53   ersion is JAX-WS
+00e0  20 52 49 20 32 2e 32 2d 68 75 64 73 6f 6e 2d 37    RI 2.2-hudson-7
+00f0  35 32 2d 2e 20 2d 2d 3e 3c 64 65 66 69 6e 69 74   52-. --><definit
+0100  69 6f 6e 73 20 78 6d 6c 6e 73 3a 77 73 75 3d 22   ions xmlns:wsu="
+0110  68 74 74 70 3a 2f 2f 64 6f 63 73 2e 6f 61 73 69   http://docs.oasi
+0120  73 2d 6f 70 65 6e 2e 6f 72 67 2f 77 73 73 2f 32   s-open.org/wss/2
+0130  30 30 34 2f 30 31 2f 6f 61 73 69 73 2d 32 30 30   004/01/oasis-200
+0140  34 30 31 2d 77 73 73 2d 77 73 73 65 63 75 72 69   401-wss-wssecuri
+0150  74 79 2d 75 74 69 6c 69 74 79 2d 31 2e 30 2e 78   ty-utility-1.0.x
+0160  73 64 22 20 78 6d 6c 6e 73 3a 77 73 70 3d 22 68   sd" xmlns:wsp="h
+0170  74 74 70 3a 2f 2f 77 77 77 2e 77 33 2e 6f 72 67   ttp://www.w3.org
+0180  2f 6e 73 2f 77 73 2d 70 6f 6c 69 63 79 22 20 78   /ns/ws-policy" x
+0190  6d 6c 6e 73 3a 77 73 70 31 5f 32 3d 22 68 74 74   mlns:wsp1_2="htt
+01a0  70 3a 2f 2f 73 63 68 65 6d 61 73 2e 78 6d 6c 73   p://schemas.xmls
+01b0  6f 61 70 2e 6f 72 67 2f 77 73 2f 32 30 30 34 2f   oap.org/ws/2004/
+01c0  30 39 2f 70 6f 6c 69 63 79 22 20 78 6d 6c 6e 73   09/policy" xmlns
+01d0  3a 77 73 61 6d 3d 22 68 74 74 70 3a 2f 2f 77 77   :wsam="http://ww
+01e0  77 2e 77 33 2e 6f 72 67 2f 32 30 30 37 2f 30 35   w.w3.org/2007/05
+01f0  2f 61 64 64 72 65 73 73 69 6e 67 2f 6d 65 74 61   /addressing/meta
+0200  64 61 74 61 22 20 78 6d 6c 6e 73 3a 77 73 61 77   data" xmlns:wsaw
+0210  3d 22 68 74 74 70 3a 2f 2f 77 77 77 2e 77 33 2e   ="http://www.w3.
+0220  6f 72 67 2f 32 30 30 36 2f 30 35 2f 61 64 64 72   org/2006/05/addr
+0230  65 73 73 69 6e 67 2f 77 73 64 6c 22 20 78 6d 6c   essing/wsdl" xml
+0240  6e 73 3a 73 6f 61 70 3d 22 68 74 74 70 3a 2f 2f   ns:soap="http://
+0250  73 63 68 65 6d 61 73 2e 78 6d 6c 73 6f 61 70 2e   schemas.xmlsoap.
+0260  6f 72 67 2f 77 73 64 6c 2f 73 6f 61 70 2f 22 20   org/wsdl/soap/" 
+0270  78 6d 6c 6e 73 3a 74 6e 73 3d 22 68 74 74 70 3a   xmlns:tns="http:
+0280  2f 2f 77 65 62 73 65 72 76 69 63 65 2e 64 73 74   //webservice.dst
+0290  32 2f 22 20 78 6d 6c 6e 73 3a 78 73 64 3d 22 68   2/" xmlns:xsd="h
+02a0  74 74 70 3a 2f 2f 77 77 77 2e 77 33 2e 6f 72 67   ttp://www.w3.org
+02b0  2f 32 30 30 31 2f 58 4d 4c 53 63 68 65 6d 61 22   /2001/XMLSchema"
+02c0  20 78 6d 6c 6e 73 3d 22 68 74 74 70 3a 2f 2f 73    xmlns="http://s
+02d0  63 68 65 6d 61 73 2e 78 6d 6c 73 6f 61 70 2e 6f   chemas.xmlsoap.o
+02e0  72 67 2f 77 73 64 6c 2f 22 20 74 61 72 67 65 74   rg/wsdl/" target
+02f0  4e 61 6d 65 73 70 61 63 65 3d 22 68 74 74 70 3a   Namespace="http:
+0300  2f 2f 77 65 62 73 65 72 76 69 63 65 2e 64 73 74   //webservice.dst
+0310  32 2f 22 20 6e 61 6d 65 3d 22 4a 6f 62 53 74 61   2/" name="JobSta
+0320  74 69 73 74 69 63 73 22 3e 0a 3c 77 73 70 3a 50   tistics">.<wsp:P
+0330  6f 6c 69 63 79 20 78 6d 6c 6e 73 3a 77 73 61 70   olicy xmlns:wsap
+0340  77 33 63 3d 22 68 74 74 70 3a 2f 2f 77 77 77 2e   w3c="http://www.
+0350  77 33 2e 6f 72 67 2f 32 30 30 36 2f 30 35 2f 61   w3.org/2006/05/a
+0360  64 64 72 65 73 73 69 6e 67 2f 77 73 64 6c 22 20   ddressing/wsdl" 
+0370  77 73 75 3a 49 64 3d 22 4a 6f 62 50 6f 72 74 42   wsu:Id="JobPortB
+0380  69 6e 64 69 6e 67 5f 57 73 61 77 5f 41 64 64 72   inding_Wsaw_Addr
+0390  65 73 73 69 6e 67 5f 50 6f 6c 69 63 79 2d 4a 6f   essing_Policy-Jo
+03a0  62 50 6f 72 74 42 69 6e 64 69 6e 67 5f 57 53 41   bPortBinding_WSA
+03b0  4d 5f 41 64 64 72 65 73 73 69 6e 67 5f 50 6f 6c   M_Addressing_Pol
+03c0  69 63 79 2d 4a 6f 62 50 6f 72 74 42 69 6e 64 69   icy-JobPortBindi
+03d0  6e 67 5f 57 53 41 4d 5f 41 64 64 72 65 73 73 69   ng_WSAM_Addressi
+03e0  6e 67 5f 50 6f 6c 69 63 79 22 3e 0a 3c 77 73 61   ng_Policy">.<wsa
+03f0  70 77 33 63 3a 55 73 69 6e 67 41 64 64 72 65 73   pw3c:UsingAddres
+0400  73 69 6e 67 20 2f 3e 0a 3c 77 73 61 6d 3a 41 64   sing />.<wsam:Ad
+0410  64 72 65 73 73 69 6e 67 3e 0a 3c 77 73 70 3a 50   dressing>.<wsp:P
+0420  6f 6c 69 63 79 20 2f 3e 0a 3c 2f 77 73 61 6d 3a   olicy />.</wsam:
+0430  41 64 64 72 65 73 73 69 6e 67 3e 0a 3c 2f 77 73   Addressing>.</ws
+0440  70 3a 50 6f 6c 69 63 79 3e 0a 3c 77 73 70 3a 50   p:Policy>.<wsp:P
+0450  6f 6c 69 63 79 20 78 6d 6c 6e 73 3a 77 73 61 74   olicy xmlns:wsat
+0460  3d 22 68 74 74 70 3a 2f 2f 73 63 68 65 6d 61 73   ="http://schemas
+0470  2e 78 6d 6c 73 6f 61 70 2e 6f 72 67 2f 77 73 2f   .xmlsoap.org/ws/
+0480  32 30 30 34 2f 31 30 2f 77 73 61 74 22 20 77 73   2004/10/wsat" ws
+0490  75 3a 49 64 3d 22 4a 6f 62 50 6f 72 74 42 69 6e   u:Id="JobPortBin
+04a0  64 69 6e 67 5f 67 65 74 53 74 61 74 69 73 74 69   ding_getStatisti
+04b0  63 73 5f 57 53 41 54 5f 50 6f 6c 69 63 79 22 3e   cs_WSAT_Policy">
+04c0  0a 3c 77 73 61 74 3a 41 54 41 6c 77 61 79 73 43   .<wsat:ATAlwaysC
+04d0  61 70 61 62 69 6c 69 74 79 20 2f 3e 0a 3c 77 73   apability />.<ws
+04e0  61 74 3a 41 54 41 73 73 65 72 74 69 6f 6e 20 78   at:ATAssertion x
+04f0  6d 6c 6e 73 3a 6e 73 31 3d 22 68 74 74 70 3a 2f   mlns:ns1="http:/
+0500  2f 73 63 68 65 6d 61 73 2e 78 6d 6c 73 6f 61 70   /schemas.xmlsoap
+0510  2e 6f 72 67 2f 77 73 2f 32 30 30 32 2f 31 32 2f   .org/ws/2002/12/
+0520  70 6f 6c 69 63 79 22 20 77 73 70 3a 4f 70 74 69   policy" wsp:Opti
+0530  6f 6e 61 6c 3d 22 74 72 75 65 22 20 6e 73 31 3a   onal="true" ns1:
+0540  4f 70 74 69 6f 6e 61 6c 3d 22 74 72 75 65 22 20   Optional="true" 
+0550  2f 3e 0a 3c 2f 77 73 70 3a 50 6f 6c 69 63 79 3e   />.</wsp:Policy>
+0560  0a 3c 74 79 70 65 73 3e 0a 3c 78 73 64 3a 73 63   .<types>.<xsd:sc
+0570  68 65 6d 61 3e 0a 3c 78 73 64 3a 69 6d 70 6f 72   hema>.<xsd:impor
+0580  74 20 6e 61 6d 65 73 70 61 63 65 3d 22 68 74 74   t namespace="htt
+0590  70 3a 2f 2f 77 65 62 73 65 72 76 69 63 65 2e 64   p://webservice.d
+05a0  73 74 32 2f 22 20 73 63 68 65 6d 61 4c 6f 63 61   st2/" schemaLoca
+05b0  74 69 6f 6e 3d 22 68 74 74 70 3a 2f 2f 6c 6f 63   tion="http://loc
+05c0  61 6c 68 6f 73 74 3a 38 30 38 30 2f 4a 6f 62 53   alhost:8080/JobS
+05d0  74 61 74 69 73 74 69 63 73 2f 73 65 72 76 69 63   tatistics/servic
+05e0  65 3f 78 73 64 3d 31 22 20 2f 3e 0a 3c 2f 78 73   e?xsd=1" />.</xs
+05f0  64 3a 73 63 68 65 6d 61 3e 0a 3c 2f 74 79 70 65   d:schema>.</type
+0600  73 3e 0a 3c 6d 65 73 73 61 67 65 20 6e 61 6d 65   s>.<message name
+0610  3d 22 67 65 74 53 74 61 74 69 73 74 69 63 73 22   ="getStatistics"
+0620  3e 0a 3c 70 61 72 74 20 6e 61 6d 65 3d 22 67 72   >.<part name="gr
+0630  69 64 6e 61 6d 65 22 20 65 6c 65 6d 65 6e 74 3d   idname" element=
+0640  22 74 6e 73 3a 67 72 69 64 6e 61 6d 65 22 20 2f   "tns:gridname" /
+0650  3e 0a 3c 2f 6d 65 73 73 61 67 65 3e 0a 3c 6d 65   >.</message>.<me
+0660  73 73 61 67 65 20 6e 61 6d 65 3d 22 67 65 74 53   ssage name="getS
+0670  74 61 74 69 73 74 69 63 73 52 65 73 70 6f 6e 73   tatisticsRespons
+0680  65 22 3e 0a 3c 70 61 72 74 20 6e 61 6d 65 3d 22   e">.<part name="
+0690  67 65 74 53 74 61 74 69 73 74 69 63 73 52 65 73   getStatisticsRes
+06a0  70 6f 6e 73 65 22 20 65 6c 65 6d 65 6e 74 3d 22   ponse" element="
+06b0  74 6e 73 3a 67 65 74 53 74 61 74 69 73 74 69 63   tns:getStatistic
+06c0  73 52 65 73 70 6f 6e 73 65 22 20 2f 3e 0a 3c 2f   sResponse" />.</
+06d0  6d 65 73 73 61 67 65 3e 0a 3c 6d 65 73 73 61 67   message>.<messag
+06e0  65 20 6e 61 6d 65 3d 22 55 6e 6b 6e 6f 77 6e 47   e name="UnknownG
+06f0  72 69 64 46 61 75 6c 74 22 3e 0a 3c 70 61 72 74   ridFault">.<part
+0700  20 6e 61 6d 65 3d 22 66 61 75 6c 74 22 20 65 6c    name="fault" el
+0710  65 6d 65 6e 74 3d 22 74 6e 73 3a 55 6e 6b 6e 6f   ement="tns:Unkno
+0720  77 6e 47 72 69 64 46 61 75 6c 74 22 20 2f 3e 0a   wnGridFault" />.
+0730  3c 2f 6d 65 73 73 61 67 65 3e 0a 3c 70 6f 72 74   </message>.<port
+0740  54 79 70 65 20 6e 61 6d 65 3d 22 73 65 72 76 69   Type name="servi
+0750  63 65 22 3e 0a 3c 6f 70 65 72 61 74 69 6f 6e 20   ce">.<operation 
+0760  6e 61 6d 65 3d 22 67 65 74 53 74 61 74 69 73 74   name="getStatist
+0770  69 63 73 22 3e 0a 3c 69 6e 70 75 74 20 77 73 61   ics">.<input wsa
+0780  77 3a 41 63 74 69 6f 6e 3d 22 6c 6f 63 61 6c 68   w:Action="localh
+0790  6f 73 74 3a 38 30 38 30 2f 4a 6f 62 53 74 61 74   ost:8080/JobStat
+07a0  69 73 74 69 63 73 2f 73 65 72 76 69 63 65 2f 69   istics/service/i
+07b0  6e 70 75 74 22 20 77 73 61 6d 3a 41 63 74 69 6f   nput" wsam:Actio
+07c0  6e 3d 22 6c 6f 63 61 6c 68 6f 73 74 3a 38 30 38   n="localhost:808
+07d0  30 2f 4a 6f 62 53 74 61 74 69 73 74 69 63 73 2f   0/JobStatistics/
+07e0  73 65 72 76 69 63 65 2f 69 6e 70 75 74 22 20 6d   service/input" m
+07f0  65 73 73 61 67 65 3d 22 74 6e 73 3a 67 65 74 53   essage="tns:getS
+0800  74 61 74 69 73 74 69 63 73 22 20 2f 3e 0a 3c 6f   tatistics" />.<o
+0810  75 74 70 75 74 20 77 73 61 77 3a 41 63 74 69 6f   utput wsaw:Actio
+0820  6e 3d 22 6c 6f 63 61 6c 68 6f 73 74 3a 38 30 38   n="localhost:808
+0830  30 2f 4a 6f 62 53 74 61 74 69 73 74 69 63 73 2f   0/JobStatistics/
+0840  73 65 72 76 69 63 65 2f 6f 75 74 70 75 74 22 20   service/output" 
+0850  77 73 61 6d 3a 41 63 74 69 6f 6e 3d 22 6c 6f 63   wsam:Action="loc
+0860  61 6c 68 6f 73 74 3a 38 30 38 30 2f 4a 6f 62 53   alhost:8080/JobS
+0870  74 61 74 69 73 74 69 63 73 2f 73 65 72 76 69 63   tatistics/servic
+0880  65 2f 6f 75 74 70 75 74 22 20 6d 65 73 73 61 67   e/output" messag
+0890  65 3d 22 74 6e 73 3a 67 65 74 53 74 61 74 69 73   e="tns:getStatis
+08a0  74 69 63 73 52 65 73 70 6f 6e 73 65 22 20 2f 3e   ticsResponse" />
+08b0  0a 3c 66 61 75 6c 74 20 6d 65 73 73 61 67 65 3d   .<fault message=
+08c0  22 74 6e 73 3a 55 6e 6b 6e 6f 77 6e 47 72 69 64   "tns:UnknownGrid
+08d0  46 61 75 6c 74 22 20 6e 61 6d 65 3d 22 55 6e 6b   Fault" name="Unk
+08e0  6e 6f 77 6e 47 72 69 64 46 61 75 6c 74 22 20 77   nownGridFault" w
+08f0  73 61 77 3a 41 63 74 69 6f 6e 3d 22 6c 6f 63 61   saw:Action="loca
+0900  6c 68 6f 73 74 3a 38 30 38 30 2f 4a 6f 62 53 74   lhost:8080/JobSt
+0910  61 74 69 73 74 69 63 73 2f 73 65 72 76 69 63 65   atistics/service
+0920  2f 66 61 75 6c 74 22 20 77 73 61 6d 3a 41 63 74   /fault" wsam:Act
+0930  69 6f 6e 3d 22 6c 6f 63 61 6c 68 6f 73 74 3a 38   ion="localhost:8
+0940  30 38 30 2f 4a 6f 62 53 74 61 74 69 73 74 69 63   080/JobStatistic
+0950  73 2f 73 65 72 76 69 63 65 2f 66 61 75 6c 74 22   s/service/fault"
+0960  20 2f 3e 0a 3c 2f 6f 70 65 72 61 74 69 6f 6e 3e    />.</operation>
+0970  0a 3c 2f 70 6f 72 74 54 79 70 65 3e 0a 3c 62 69   .</portType>.<bi
+0980  6e 64 69 6e 67 20 6e 61 6d 65 3d 22 4a 6f 62 50   nding name="JobP
+0990  6f 72 74 42 69 6e 64 69 6e 67 22 20 74 79 70 65   ortBinding" type
+09a0  3d 22 74 6e 73 3a 73 65 72 76 69 63 65 22 3e 0a   ="tns:service">.
+09b0  3c 77 73 61 77 3a 55 73 69 6e 67 41 64 64 72 65   <wsaw:UsingAddre
+09c0  73 73 69 6e 67 20 2f 3e 0a 3c 77 73 70 3a 50 6f   ssing />.<wsp:Po
+09d0  6c 69 63 79 52 65 66 65 72 65 6e 63 65 20 55 52   licyReference UR
+09e0  49 3d 22 23 4a 6f 62 50 6f 72 74 42 69 6e 64 69   I="#JobPortBindi
+09f0  6e 67 5f 57 73 61 77 5f 41 64 64 72 65 73 73 69   ng_Wsaw_Addressi
+0a00  6e 67 5f 50 6f 6c 69 63 79 2d 4a 6f 62 50 6f 72   ng_Policy-JobPor
+0a10  74 42 69 6e 64 69 6e 67 5f 57 53 41 4d 5f 41 64   tBinding_WSAM_Ad
+0a20  64 72 65 73 73 69 6e 67 5f 50 6f 6c 69 63 79 2d   dressing_Policy-
+0a30  4a 6f 62 50 6f 72 74 42 69 6e 64 69 6e 67 5f 57   JobPortBinding_W
+0a40  53 41 4d 5f 41 64 64 72 65 73 73 69 6e 67 5f 50   SAM_Addressing_P
+0a50  6f 6c 69 63 79 22 20 2f 3e 0a 3c 73 6f 61 70 3a   olicy" />.<soap:
+0a60  62 69 6e 64 69 6e 67 20 74 72 61 6e 73 70 6f 72   binding transpor
+0a70  74 3d 22 68 74 74 70 3a 2f 2f 73 63 68 65 6d 61   t="http://schema
+0a80  73 2e 78 6d 6c 73 6f 61 70 2e 6f 72 67 2f 73 6f   s.xmlsoap.org/so
+0a90  61 70 2f 68 74 74 70 22 20 73 74 79 6c 65 3d 22   ap/http" style="
+0aa0  64 6f 63 75 6d 65 6e 74 22 20 2f 3e 0a 3c 6f 70   document" />.<op
+0ab0  65 72 61 74 69 6f 6e 20 6e 61 6d 65 3d 22 67 65   eration name="ge
+0ac0  74 53 74 61 74 69 73 74 69 63 73 22 3e 0a 3c 77   tStatistics">.<w
+0ad0  73 70 3a 50 6f 6c 69 63 79 52 65 66 65 72 65 6e   sp:PolicyReferen
+0ae0  63 65 20 55 52 49 3d 22 23 4a 6f 62 50 6f 72 74   ce URI="#JobPort
+0af0  42 69 6e 64 69 6e 67 5f 67 65 74 53 74 61 74 69   Binding_getStati
+0b00  73 74 69 63 73 5f 57 53 41 54 5f 50 6f 6c 69 63   stics_WSAT_Polic
+0b10  79 22 20 2f 3e 0a 3c 73 6f 61 70 3a 6f 70 65 72   y" />.<soap:oper
+0b20  61 74 69 6f 6e 20 73 6f 61 70 41 63 74 69 6f 6e   ation soapAction
+0b30  3d 22 22 20 2f 3e 0a 3c 69 6e 70 75 74 3e 0a 3c   ="" />.<input>.<
+0b40  77 73 70 3a 50 6f 6c 69 63 79 52 65 66 65 72 65   wsp:PolicyRefere
+0b50  6e 63 65 20 55 52 49 3d 22 23 4a 6f 62 50 6f 72   nce URI="#JobPor
+0b60  74 42 69 6e 64 69 6e 67 5f 67 65 74 53 74 61 74   tBinding_getStat
+0b70  69 73 74 69 63 73 5f 57 53 41 54 5f 50 6f 6c 69   istics_WSAT_Poli
+0b80  63 79 22 20 2f 3e 0a 3c 73 6f 61 70 3a 62 6f 64   cy" />.<soap:bod
+0b90  79 20 75 73 65 3d 22 6c 69 74 65 72 61 6c 22 20   y use="literal" 
+0ba0  70 61 72 74 73 3d 22 22 20 2f 3e 0a 3c 73 6f 61   parts="" />.<soa
+0bb0  70 3a 68 65 61 64 65 72 20 6d 65 73 73 61 67 65   p:header message
+0bc0  3d 22 74 6e 73 3a 67 65 74 53 74 61 74 69 73 74   ="tns:getStatist
+0bd0  69 63 73 22 20 70 61 72 74 3d 22 67 72 69 64 6e   ics" part="gridn
+0be0  61 6d 65 22 20 75 73 65 3d 22 6c 69 74 65 72 61   ame" use="litera
+0bf0  6c 22 20 2f 3e 0a 3c 2f 69 6e 70 75 74 3e 0a 3c   l" />.</input>.<
+0c00  6f 75 74 70 75 74 3e 0a 3c 77 73 70 3a 50 6f 6c   output>.<wsp:Pol
+0c10  69 63 79 52 65 66 65 72 65 6e 63 65 20 55 52 49   icyReference URI
+0c20  3d 22 23 4a 6f 62 50 6f 72 74 42 69 6e 64 69 6e   ="#JobPortBindin
+0c30  67 5f 67 65 74 53 74 61 74 69 73 74 69 63 73 5f   g_getStatistics_
+0c40  57 53 41 54 5f 50 6f 6c 69 63 79 22 20 2f 3e 0a   WSAT_Policy" />.
+0c50  3c 73 6f 61 70 3a 62 6f 64 79 20 75 73 65 3d 22   <soap:body use="
+0c60  6c 69 74 65 72 61 6c 22 20 2f 3e 0a 3c 2f 6f 75   literal" />.</ou
+0c70  74 70 75 74 3e 0a 3c 66 61 75 6c 74 20 6e 61 6d   tput>.<fault nam
+0c80  65 3d 22 55 6e 6b 6e 6f 77 6e 47 72 69 64 46 61   e="UnknownGridFa
+0c90  75 6c 74 22 3e 0a 3c 73 6f 61 70 3a 66 61 75 6c   ult">.<soap:faul
+0ca0  74 20 6e 61 6d 65 3d 22 55 6e 6b 6e 6f 77 6e 47   t name="UnknownG
+0cb0  72 69 64 46 61 75 6c 74 22 20 75 73 65 3d 22 6c   ridFault" use="l
+0cc0  69 74 65 72 61 6c 22 20 2f 3e 0a 3c 2f 66 61 75   iteral" />.</fau
+0cd0  6c 74 3e 0a 3c 2f 6f 70 65 72 61 74 69 6f 6e 3e   lt>.</operation>
+0ce0  0a 3c 2f 62 69 6e 64 69 6e 67 3e 0a 3c 73 65 72   .</binding>.<ser
+0cf0  76 69 63 65 20 6e 61 6d 65 3d 22 4a 6f 62 53 74   vice name="JobSt
+0d00  61 74 69 73 74 69 63 73 22 3e 0a 3c 70 6f 72 74   atistics">.<port
+0d10  20 6e 61 6d 65 3d 22 4a 6f 62 50 6f 72 74 22 20    name="JobPort" 
+0d20  62 69 6e 64 69 6e 67 3d 22 74 6e 73 3a 4a 6f 62   binding="tns:Job
+0d30  50 6f 72 74 42 69 6e 64 69 6e 67 22 3e 0a 3c 73   PortBinding">.<s
+0d40  6f 61 70 3a 61 64 64 72 65 73 73 20 6c 6f 63 61   oap:address loca
+0d50  74 69 6f 6e 3d 22 68 74 74 70 3a 2f 2f 6c 6f 63   tion="http://loc
+0d60  61 6c 68 6f 73 74 3a 38 30 38 30 2f 4a 6f 62 53   alhost:8080/JobS
+0d70  74 61 74 69 73 74 69 63 73 2f 73 65 72 76 69 63   tatistics/servic
+0d80  65 22 20 2f 3e 0a 3c 2f 70 6f 72 74 3e 0a 3c 2f   e" />.</port>.</
+0d90  73 65 72 76 69 63 65 3e 0a 3c 2f 64 65 66 69 6e   service>.</defin
+0da0  69 74 69 6f 6e 73 3e                              itions>
+                Data: 3c3f786d6c2076657273696f6e3d27312e302720656e636f...
+                [Length: 3495]
+            Chunk boundary
+        End of chunked encoding
+            Chunk size: 0 octets
+            Chunk boundary
+eXtensible Markup Language
+    <?xml
+        version='1.0'
+        encoding='UTF-8'
+        ?>
+    <!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-752-. -->
+    <!-- Generated by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is JAX-WS RI 2.2-hudson-752-. -->
+    <definitions
+        xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+        xmlns:wsp="http://www.w3.org/ns/ws-policy"
+        xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy"
+        xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+        xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+        xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:tns="http://webservice.dst2/"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns="http://schemas.xmlsoap.org/wsdl/"
+        targetNamespace="http://webservice.dst2/"
+        name="JobStatistics">
+        <wsp:Policy
+            xmlns:wsapw3c="http://www.w3.org/2006/05/addressing/wsdl"
+            wsu:Id="JobPortBinding_Wsaw_Addressing_Policy-JobPortBinding_WSAM_Addressing_Policy-JobPortBinding_WSAM_Addressing_Policy">
+            <wsapw3c:UsingAddressing/>
+            <wsam:Addressing>
+                <wsp:Policy/>
+                </wsam:Addressing>
+            </wsp:Policy>
+        <wsp:Policy
+            xmlns:wsat="http://schemas.xmlsoap.org/ws/2004/10/wsat"
+            wsu:Id="JobPortBinding_getStatistics_WSAT_Policy">
+            <wsat:ATAlwaysCapability/>
+            <wsat:ATAssertion
+                xmlns:ns1="http://schemas.xmlsoap.org/ws/2002/12/policy"
+                wsp:Optional="true"
+                ns1:Optional="true"/>
+            </wsp:Policy>
+        <types>
+            <xsd:schema>
+                <xsd:import
+                    namespace="http://webservice.dst2/"
+                    schemaLocation="http://localhost:8080/JobStatistics/service?xsd=1"/>
+                </xsd:schema>
+            </types>
+        <message
+            name="getStatistics">
+            <part
+                name="gridname"
+                element="tns:gridname"/>
+            </message>
+        <message
+            name="getStatisticsResponse">
+            <part
+                name="getStatisticsResponse"
+                element="tns:getStatisticsResponse"/>
+            </message>
+        <message
+            name="UnknownGridFault">
+            <part
+                name="fault"
+                element="tns:UnknownGridFault"/>
+            </message>
+        <portType
+            name="service">
+            <operation
+                name="getStatistics">
+                <input
+                    wsaw:Action="localhost:8080/JobStatistics/service/input"
+                    wsam:Action="localhost:8080/JobStatistics/service/input"
+                    message="tns:getStatistics"/>
+                <output
+                    wsaw:Action="localhost:8080/JobStatistics/service/output"
+                    wsam:Action="localhost:8080/JobStatistics/service/output"
+                    message="tns:getStatisticsResponse"/>
+                <fault
+                    message="tns:UnknownGridFault"
+                    name="UnknownGridFault"
+                    wsaw:Action="localhost:8080/JobStatistics/service/fault"
+                    wsam:Action="localhost:8080/JobStatistics/service/fault"/>
+                </operation>
+            </portType>
+        <binding
+            name="JobPortBinding"
+            type="tns:service">
+            <wsaw:UsingAddressing/>
+            <wsp:PolicyReference
+                URI="#JobPortBinding_Wsaw_Addressing_Policy-JobPortBinding_WSAM_Addressing_Policy-JobPortBinding_WSAM_Addressing_Policy"/>
+            <soap:binding
+                transport="http://schemas.xmlsoap.org/soap/http"
+                style="document"/>
+            <operation
+                name="getStatistics">
+                <wsp:PolicyReference
+                    URI="#JobPortBinding_getStatistics_WSAT_Policy"/>
+                <soap:operation
+                    soapAction=""/>
+                <input>
+                    <wsp:PolicyReference
+                        URI="#JobPortBinding_getStatistics_WSAT_Policy"/>
+                    <soap:body
+                        use="literal"
+                        parts=""/>
+                    <soap:header
+                        message="tns:getStatistics"
+                        part="gridname"
+                        use="literal"/>
+                    </input>
+                <output>
+                    <wsp:PolicyReference
+                        URI="#JobPortBinding_getStatistics_WSAT_Policy"/>
+                    <soap:body
+                        use="literal"/>
+                    </output>
+                <fault
+                    name="UnknownGridFault">
+                    <soap:fault
+                        name="UnknownGridFault"
+                        use="literal"/>
+                    </fault>
+                </operation>
+            </binding>
+        <service
+            name="JobStatistics">
+            <port
+                name="JobPort"
+                binding="tns:JobPortBinding">
+                <soap:address
+                    location="http://localhost:8080/JobStatistics/service"/>
+                </port>
+            </service>
+        </definitions>
+
+No.     Time        Source                Destination           Protocol Length Info
+   1546 392.309989  127.0.0.1             127.0.0.1             TCP      56     50817 > http-alt [ACK] Seq=180 Ack=3654 Win=81654 Len=0 TSval=113194981 TSecr=113194981
+
+Frame 1546: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:44.291173000 CEST
+    Epoch Time: 1336647284.291173000 seconds
+    [Time delta from previous captured frame: 0.000016000 seconds]
+    [Time delta from previous displayed frame: 0.000016000 seconds]
+    [Time since reference or first frame: 392.309989000 seconds]
+    Frame Number: 1546
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0xb77e (46974)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x8543 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 180, Ack: 3654, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 180    (relative sequence number)
+    Acknowledgement number: 3654    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40827
+    [Calculated window size: 81654]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113194981, TSecr 113194981
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113194981
+            Timestamp echo reply: 113194981
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1545]
+        [The RTT to ACK the segment was: 0.000016000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1547 393.601714  127.0.0.1             127.0.0.1             TCP      335    [TCP segment of a reassembled PDU]
+
+Frame 1547: 335 bytes on wire (2680 bits), 335 bytes captured (2680 bits)
+    Arrival Time: May 10, 2012 12:54:45.582898000 CEST
+    Epoch Time: 1336647285.582898000 seconds
+    [Time delta from previous captured frame: 1.291725000 seconds]
+    [Time delta from previous displayed frame: 1.291725000 seconds]
+    [Time since reference or first frame: 393.601714000 seconds]
+    Frame Number: 1547
+    Frame Length: 335 bytes (2680 bits)
+    Capture Length: 335 bytes (2680 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 331
+    Identification: 0x9813 (38931)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xa397 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 180, Ack: 3654, Len: 279
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 180    (relative sequence number)
+    [Next sequence number: 459    (relative sequence number)]
+    Acknowledgement number: 3654    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x018 (PSH, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 1... = Push: Set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0xff3f [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196266, TSecr 113194981
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196266
+            Timestamp echo reply: 113194981
+    [SEQ/ACK analysis]
+        [Bytes in flight: 279]
+    TCP segment data (279 bytes)
+
+No.     Time        Source                Destination           Protocol Length Info
+   1548 393.601741  127.0.0.1             127.0.0.1             HTTP/XML 717    POST /JobStatistics/service HTTP/1.1 
+
+Frame 1548: 717 bytes on wire (5736 bits), 717 bytes captured (5736 bits)
+    Arrival Time: May 10, 2012 12:54:45.582925000 CEST
+    Epoch Time: 1336647285.582925000 seconds
+    [Time delta from previous captured frame: 0.000027000 seconds]
+    [Time delta from previous displayed frame: 0.000027000 seconds]
+    [Time since reference or first frame: 393.601741000 seconds]
+    Frame Number: 1548
+    Frame Length: 717 bytes (5736 bits)
+    Capture Length: 717 bytes (5736 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp:http:xml]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 713
+    Identification: 0xbb5e (47966)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x7ece (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 459, Ack: 3654, Len: 661
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 459    (relative sequence number)
+    [Next sequence number: 1120    (relative sequence number)]
+    Acknowledgement number: 3654    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x018 (PSH, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 1... = Push: Set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0x00be [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196266, TSecr 113194981
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196266
+            Timestamp echo reply: 113194981
+    [SEQ/ACK analysis]
+        [Bytes in flight: 940]
+    TCP segment data (661 bytes)
+[2 Reassembled TCP Segments (940 bytes): #1547(279), #1548(661)]
+    [Frame: 1547, payload: 0-278 (279 bytes)]
+    [Frame: 1548, payload: 279-939 (661 bytes)]
+    [Segment count: 2]
+    [Reassembled TCP length: 940]
+Hypertext Transfer Protocol
+    POST /JobStatistics/service HTTP/1.1\r\n
+        [Expert Info (Chat/Sequence): POST /JobStatistics/service HTTP/1.1\r\n]
+            [Message: POST /JobStatistics/service HTTP/1.1\r\n]
+            [Severity level: Chat]
+            [Group: Sequence]
+        Request Method: POST
+        Request URI: /JobStatistics/service
+        Request Version: HTTP/1.1
+    Content-type: text/xml;charset=utf-8\r\n
+    Soapaction: "localhost:8080/JobStatistics/service/input"\r\n
+    Accept: text/xml, multipart/related\r\n
+    User-Agent: JAX-WS RI 2.2-hudson-752-\r\n
+    Host: localhost:8080\r\n
+    Connection: keep-alive\r\n
+    Content-Length: 661\r\n
+        [Content length: 661]
+    \r\n
+    [Full request URI: http://localhost:8080/JobStatistics/service]
+eXtensible Markup Language
+    <?xml
+        version='1.0'
+        encoding='UTF-8'
+        ?>
+    <S:Envelope
+        xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+        <S:Header>
+            <ns2:gridname
+                xmlns:ns2="http://webservice.dst2/">
+                grid1
+                </ns2:gridname>
+            <To
+                xmlns="http://www.w3.org/2005/08/addressing">
+                http://localhost:8080/JobStatistics/service
+                </To>
+            <Action
+                xmlns="http://www.w3.org/2005/08/addressing">
+                localhost:8080/JobStatistics/service/input
+                </Action>
+            <ReplyTo
+                xmlns="http://www.w3.org/2005/08/addressing">
+                <Address>
+                    http://www.w3.org/2005/08/addressing/anonymous
+                    </Address>
+                </ReplyTo>
+            <MessageID
+                xmlns="http://www.w3.org/2005/08/addressing">
+                uuid:870a2b7a-256c-492d-81d1-be314c9e0082
+                </MessageID>
+            </S:Header>
+        <S:Body/>
+        </S:Envelope>
+
+No.     Time        Source                Destination           Protocol Length Info
+   1549 393.601768  127.0.0.1             127.0.0.1             TCP      56     http-alt > 50817 [ACK] Seq=3654 Ack=459 Win=262140 Len=0 TSval=113196266 TSecr=113196266
+
+Frame 1549: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.582952000 CEST
+    Epoch Time: 1336647285.582952000 seconds
+    [Time delta from previous captured frame: 0.000027000 seconds]
+    [Time delta from previous displayed frame: 0.000027000 seconds]
+    [Time since reference or first frame: 393.601768000 seconds]
+    Frame Number: 1549
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x710b (28939)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xcbb6 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 3654, Ack: 459, Len: 0
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 3654    (relative sequence number)
+    Acknowledgement number: 459    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196266, TSecr 113196266
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196266
+            Timestamp echo reply: 113196266
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1547]
+        [The RTT to ACK the segment was: 0.000054000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1550 393.601776  127.0.0.1             127.0.0.1             TCP      56     http-alt > 50817 [ACK] Seq=3654 Ack=1120 Win=262140 Len=0 TSval=113196266 TSecr=113196266
+
+Frame 1550: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.582960000 CEST
+    Epoch Time: 1336647285.582960000 seconds
+    [Time delta from previous captured frame: 0.000008000 seconds]
+    [Time delta from previous displayed frame: 0.000008000 seconds]
+    [Time since reference or first frame: 393.601776000 seconds]
+    Frame Number: 1550
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x0e2d (3629)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x2e95 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 3654, Ack: 1120, Len: 0
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 3654    (relative sequence number)
+    Acknowledgement number: 1120    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196266, TSecr 113196266
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196266
+            Timestamp echo reply: 113196266
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1548]
+        [The RTT to ACK the segment was: 0.000035000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1559 393.649298  127.0.0.1             127.0.0.1             TCP      763    [TCP segment of a reassembled PDU]
+
+Frame 1559: 763 bytes on wire (6104 bits), 763 bytes captured (6104 bits)
+    Arrival Time: May 10, 2012 12:54:45.630482000 CEST
+    Epoch Time: 1336647285.630482000 seconds
+    [Time delta from previous captured frame: 0.004906000 seconds]
+    [Time delta from previous displayed frame: 0.047522000 seconds]
+    [Time since reference or first frame: 393.649298000 seconds]
+    Frame Number: 1559
+    Frame Length: 763 bytes (6104 bits)
+    Capture Length: 763 bytes (6104 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 759
+    Identification: 0xd34a (54090)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x66b4 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 3654, Ack: 1120, Len: 707
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 3654    (relative sequence number)
+    [Next sequence number: 4361    (relative sequence number)]
+    Acknowledgement number: 1120    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x018 (PSH, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 1... = Push: Set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0x00ec [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196312, TSecr 113196266
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196312
+            Timestamp echo reply: 113196266
+    [SEQ/ACK analysis]
+        [Bytes in flight: 707]
+    TCP segment data (707 bytes)
+
+No.     Time        Source                Destination           Protocol Length Info
+   1560 393.649373  127.0.0.1             127.0.0.1             TCP      56     50817 > http-alt [ACK] Seq=1120 Ack=4361 Win=80952 Len=0 TSval=113196312 TSecr=113196312
+
+Frame 1560: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.630557000 CEST
+    Epoch Time: 1336647285.630557000 seconds
+    [Time delta from previous captured frame: 0.000075000 seconds]
+    [Time delta from previous displayed frame: 0.000075000 seconds]
+    [Time since reference or first frame: 393.649373000 seconds]
+    Frame Number: 1560
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x2054 (8276)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x1c6e (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 1120, Ack: 4361, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 1120    (relative sequence number)
+    Acknowledgement number: 4361    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40476
+    [Calculated window size: 80952]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196312, TSecr 113196312
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196312
+            Timestamp echo reply: 113196312
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1559]
+        [The RTT to ACK the segment was: 0.000075000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1561 393.650028  127.0.0.1             127.0.0.1             TCP      448    [TCP segment of a reassembled PDU]
+
+Frame 1561: 448 bytes on wire (3584 bits), 448 bytes captured (3584 bits)
+    Arrival Time: May 10, 2012 12:54:45.631212000 CEST
+    Epoch Time: 1336647285.631212000 seconds
+    [Time delta from previous captured frame: 0.000655000 seconds]
+    [Time delta from previous displayed frame: 0.000655000 seconds]
+    [Time since reference or first frame: 393.650028000 seconds]
+    Frame Number: 1561
+    Frame Length: 448 bytes (3584 bits)
+    Capture Length: 448 bytes (3584 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 444
+    Identification: 0x2c05 (11269)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x0f35 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 4361, Ack: 1120, Len: 392
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 4361    (relative sequence number)
+    [Next sequence number: 4753    (relative sequence number)]
+    Acknowledgement number: 1120    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x018 (PSH, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 1... = Push: Set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xffb0 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196312, TSecr 113196312
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196312
+            Timestamp echo reply: 113196312
+    [SEQ/ACK analysis]
+        [Bytes in flight: 392]
+    [Reassembled PDU in frame: 1563]
+    TCP segment data (392 bytes)
+
+No.     Time        Source                Destination           Protocol Length Info
+   1562 393.650088  127.0.0.1             127.0.0.1             TCP      56     50817 > http-alt [ACK] Seq=1120 Ack=4753 Win=81268 Len=0 TSval=113196312 TSecr=113196312
+
+Frame 1562: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.631272000 CEST
+    Epoch Time: 1336647285.631272000 seconds
+    [Time delta from previous captured frame: 0.000060000 seconds]
+    [Time delta from previous displayed frame: 0.000060000 seconds]
+    [Time since reference or first frame: 393.650088000 seconds]
+    Frame Number: 1562
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x7044 (28740)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xcc7d (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 1120, Ack: 4753, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 1120    (relative sequence number)
+    Acknowledgement number: 4753    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40634
+    [Calculated window size: 81268]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196312, TSecr 113196312
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196312
+            Timestamp echo reply: 113196312
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1561]
+        [The RTT to ACK the segment was: 0.000060000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1563 393.650136  127.0.0.1             127.0.0.1             HTTP/XML 61     HTTP/1.1 200 OK 
+
+Frame 1563: 61 bytes on wire (488 bits), 61 bytes captured (488 bits)
+    Arrival Time: May 10, 2012 12:54:45.631320000 CEST
+    Epoch Time: 1336647285.631320000 seconds
+    [Time delta from previous captured frame: 0.000048000 seconds]
+    [Time delta from previous displayed frame: 0.000048000 seconds]
+    [Time since reference or first frame: 393.650136000 seconds]
+    Frame Number: 1563
+    Frame Length: 61 bytes (488 bits)
+    Capture Length: 61 bytes (488 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp:http:data:data:data:xml]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 57
+    Identification: 0x1e55 (7765)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x1e68 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 4753, Ack: 1120, Len: 5
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 4753    (relative sequence number)
+    [Next sequence number: 4758    (relative sequence number)]
+    Acknowledgement number: 1120    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x018 (PSH, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 1... = Push: Set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe2d [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196312, TSecr 113196312
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196312
+            Timestamp echo reply: 113196312
+    [SEQ/ACK analysis]
+        [Bytes in flight: 5]
+    TCP segment data (5 bytes)
+[3 Reassembled TCP Segments (1104 bytes): #1559(707), #1561(392), #1563(5)]
+    [Frame: 1559, payload: 0-706 (707 bytes)]
+    [Frame: 1561, payload: 707-1098 (392 bytes)]
+    [Frame: 1563, payload: 1099-1103 (5 bytes)]
+    [Segment count: 3]
+    [Reassembled TCP length: 1104]
+Hypertext Transfer Protocol
+    HTTP/1.1 200 OK\r\n
+        [Expert Info (Chat/Sequence): HTTP/1.1 200 OK\r\n]
+            [Message: HTTP/1.1 200 OK\r\n]
+            [Severity level: Chat]
+            [Group: Sequence]
+        Request Version: HTTP/1.1
+        Status Code: 200
+        Response Phrase: OK
+    server: grizzly/1.9.18\r\n
+    Content-Type: text/xml;charset=utf-8\r\n
+    Transfer-Encoding: chunked\r\n
+    Date: Thu, 10 May 2012 10:54:45 GMT\r\n
+    \r\n
+    HTTP chunked response
+        Data chunk (554 octets)
+            Chunk size: 554 octets
+            Data (554 bytes)
+
+0000  3c 3f 78 6d 6c 20 76 65 72 73 69 6f 6e 3d 27 31   <?xml version='1
+0010  2e 30 27 20 65 6e 63 6f 64 69 6e 67 3d 27 55 54   .0' encoding='UT
+0020  46 2d 38 27 3f 3e 3c 53 3a 45 6e 76 65 6c 6f 70   F-8'?><S:Envelop
+0030  65 20 78 6d 6c 6e 73 3a 53 3d 22 68 74 74 70 3a   e xmlns:S="http:
+0040  2f 2f 73 63 68 65 6d 61 73 2e 78 6d 6c 73 6f 61   //schemas.xmlsoa
+0050  70 2e 6f 72 67 2f 73 6f 61 70 2f 65 6e 76 65 6c   p.org/soap/envel
+0060  6f 70 65 2f 22 3e 3c 53 3a 48 65 61 64 65 72 3e   ope/"><S:Header>
+0070  3c 54 6f 20 78 6d 6c 6e 73 3d 22 68 74 74 70 3a   <To xmlns="http:
+0080  2f 2f 77 77 77 2e 77 33 2e 6f 72 67 2f 32 30 30   //www.w3.org/200
+0090  35 2f 30 38 2f 61 64 64 72 65 73 73 69 6e 67 22   5/08/addressing"
+00a0  3e 68 74 74 70 3a 2f 2f 77 77 77 2e 77 33 2e 6f   >http://www.w3.o
+00b0  72 67 2f 32 30 30 35 2f 30 38 2f 61 64 64 72 65   rg/2005/08/addre
+00c0  73 73 69 6e 67 2f 61 6e 6f 6e 79 6d 6f 75 73 3c   ssing/anonymous<
+00d0  2f 54 6f 3e 3c 41 63 74 69 6f 6e 20 78 6d 6c 6e   /To><Action xmln
+00e0  73 3d 22 68 74 74 70 3a 2f 2f 77 77 77 2e 77 33   s="http://www.w3
+00f0  2e 6f 72 67 2f 32 30 30 35 2f 30 38 2f 61 64 64   .org/2005/08/add
+0100  72 65 73 73 69 6e 67 22 3e 6c 6f 63 61 6c 68 6f   ressing">localho
+0110  73 74 3a 38 30 38 30 2f 4a 6f 62 53 74 61 74 69   st:8080/JobStati
+0120  73 74 69 63 73 2f 73 65 72 76 69 63 65 2f 6f 75   stics/service/ou
+0130  74 70 75 74 3c 2f 41 63 74 69 6f 6e 3e 3c 4d 65   tput</Action><Me
+0140  73 73 61 67 65 49 44 20 78 6d 6c 6e 73 3d 22 68   ssageID xmlns="h
+0150  74 74 70 3a 2f 2f 77 77 77 2e 77 33 2e 6f 72 67   ttp://www.w3.org
+0160  2f 32 30 30 35 2f 30 38 2f 61 64 64 72 65 73 73   /2005/08/address
+0170  69 6e 67 22 3e 75 75 69 64 3a 38 65 36 65 33 32   ing">uuid:8e6e32
+0180  30 35 2d 36 36 61 39 2d 34 33 33 37 2d 38 62 31   05-66a9-4337-8b1
+0190  39 2d 63 34 38 36 61 66 36 30 62 39 65 61 3c 2f   9-c486af60b9ea</
+01a0  4d 65 73 73 61 67 65 49 44 3e 3c 52 65 6c 61 74   MessageID><Relat
+01b0  65 73 54 6f 20 78 6d 6c 6e 73 3d 22 68 74 74 70   esTo xmlns="http
+01c0  3a 2f 2f 77 77 77 2e 77 33 2e 6f 72 67 2f 32 30   ://www.w3.org/20
+01d0  30 35 2f 30 38 2f 61 64 64 72 65 73 73 69 6e 67   05/08/addressing
+01e0  22 3e 75 75 69 64 3a 38 37 30 61 32 62 37 61 2d   ">uuid:870a2b7a-
+01f0  32 35 36 63 2d 34 39 32 64 2d 38 31 64 31 2d 62   256c-492d-81d1-b
+0200  65 33 31 34 63 39 65 30 30 38 32 3c 2f 52 65 6c   e314c9e0082</Rel
+0210  61 74 65 73 54 6f 3e 3c 2f 53 3a 48 65 61 64 65   atesTo></S:Heade
+0220  72 3e 3c 53 3a 42 6f 64 79 3e                     r><S:Body>
+                Data: 3c3f786d6c2076657273696f6e3d27312e302720656e636f...
+                [Length: 554]
+            Chunk boundary
+        Data chunk (385 octets)
+            Chunk size: 385 octets
+            Data (385 bytes)
+
+0000  3c 6e 73 32 3a 67 65 74 53 74 61 74 69 73 74 69   <ns2:getStatisti
+0010  63 73 52 65 73 70 6f 6e 73 65 20 78 6d 6c 6e 73   csResponse xmlns
+0020  3a 6e 73 32 3d 22 68 74 74 70 3a 2f 2f 77 65 62   :ns2="http://web
+0030  73 65 72 76 69 63 65 2e 64 73 74 32 2f 22 3e 3c   service.dst2/"><
+0040  65 78 65 63 44 54 4f 3e 3c 65 6e 64 3e 32 30 31   execDTO><end>201
+0050  32 2d 30 35 2d 31 30 54 31 32 3a 34 39 3a 34 32   2-05-10T12:49:42
+0060  2e 30 30 34 2b 30 32 3a 30 30 3c 2f 65 6e 64 3e   .004+02:00</end>
+0070  3c 6e 75 6d 43 50 55 73 3e 36 3c 2f 6e 75 6d 43   <numCPUs>6</numC
+0080  50 55 73 3e 3c 73 74 61 72 74 3e 32 30 31 32 2d   PUs><start>2012-
+0090  30 35 2d 31 30 54 31 32 3a 31 38 3a 35 31 2e 35   05-10T12:18:51.5
+00a0  35 32 2b 30 32 3a 30 30 3c 2f 73 74 61 72 74 3e   52+02:00</start>
+00b0  3c 2f 65 78 65 63 44 54 4f 3e 3c 65 78 65 63 44   </execDTO><execD
+00c0  54 4f 3e 3c 65 6e 64 3e 32 30 31 32 2d 30 35 2d   TO><end>2012-05-
+00d0  31 30 54 31 32 3a 35 31 3a 34 32 2e 30 30 36 2b   10T12:51:42.006+
+00e0  30 32 3a 30 30 3c 2f 65 6e 64 3e 3c 6e 75 6d 43   02:00</end><numC
+00f0  50 55 73 3e 36 3c 2f 6e 75 6d 43 50 55 73 3e 3c   PUs>6</numCPUs><
+0100  73 74 61 72 74 3e 32 30 31 32 2d 30 35 2d 31 30   start>2012-05-10
+0110  54 31 32 3a 35 31 3a 33 36 2e 36 35 33 2b 30 32   T12:51:36.653+02
+0120  3a 30 30 3c 2f 73 74 61 72 74 3e 3c 2f 65 78 65   :00</start></exe
+0130  63 44 54 4f 3e 3c 67 72 69 64 6e 61 6d 65 3e 67   cDTO><gridname>g
+0140  72 69 64 31 3c 2f 67 72 69 64 6e 61 6d 65 3e 3c   rid1</gridname><
+0150  2f 6e 73 32 3a 67 65 74 53 74 61 74 69 73 74 69   /ns2:getStatisti
+0160  63 73 52 65 73 70 6f 6e 73 65 3e 3c 2f 53 3a 42   csResponse></S:B
+0170  6f 64 79 3e 3c 2f 53 3a 45 6e 76 65 6c 6f 70 65   ody></S:Envelope
+0180  3e                                                >
+                Data: 3c6e73323a67657453746174697374696373526573706f6e...
+                [Length: 385]
+            Chunk boundary
+        End of chunked encoding
+            Chunk size: 0 octets
+            Chunk boundary
+eXtensible Markup Language
+    <?xml
+        version='1.0'
+        encoding='UTF-8'
+        ?>
+    <S:Envelope
+        xmlns:S="http://schemas.xmlsoap.org/soap/envelope/">
+        <S:Header>
+            <To
+                xmlns="http://www.w3.org/2005/08/addressing">
+                http://www.w3.org/2005/08/addressing/anonymous
+                </To>
+            <Action
+                xmlns="http://www.w3.org/2005/08/addressing">
+                localhost:8080/JobStatistics/service/output
+                </Action>
+            <MessageID
+                xmlns="http://www.w3.org/2005/08/addressing">
+                uuid:8e6e3205-66a9-4337-8b19-c486af60b9ea
+                </MessageID>
+            <RelatesTo
+                xmlns="http://www.w3.org/2005/08/addressing">
+                uuid:870a2b7a-256c-492d-81d1-be314c9e0082
+                </RelatesTo>
+            </S:Header>
+        <S:Body>
+            <ns2:getStatisticsResponse
+                xmlns:ns2="http://webservice.dst2/">
+                <execDTO>
+                    <end>
+                        2012-05-10T12:49:42.004+02:00
+                        </end>
+                    <numCPUs>
+                        6
+                        </numCPUs>
+                    <start>
+                        2012-05-10T12:18:51.552+02:00
+                        </start>
+                    </execDTO>
+                <execDTO>
+                    <end>
+                        2012-05-10T12:51:42.006+02:00
+                        </end>
+                    <numCPUs>
+                        6
+                        </numCPUs>
+                    <start>
+                        2012-05-10T12:51:36.653+02:00
+                        </start>
+                    </execDTO>
+                <gridname>
+                    grid1
+                    </gridname>
+                </ns2:getStatisticsResponse>
+            </S:Body>
+        </S:Envelope>
+
+No.     Time        Source                Destination           Protocol Length Info
+   1564 393.650198  127.0.0.1             127.0.0.1             TCP      56     50817 > http-alt [ACK] Seq=1120 Ack=4758 Win=81262 Len=0 TSval=113196312 TSecr=113196312
+
+Frame 1564: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.631382000 CEST
+    Epoch Time: 1336647285.631382000 seconds
+    [Time delta from previous captured frame: 0.000062000 seconds]
+    [Time delta from previous displayed frame: 0.000062000 seconds]
+    [Time since reference or first frame: 393.650198000 seconds]
+    Frame Number: 1564
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x005b (91)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x3c67 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 1120, Ack: 4758, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 1120    (relative sequence number)
+    Acknowledgement number: 4758    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40631
+    [Calculated window size: 81262]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196312, TSecr 113196312
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196312
+            Timestamp echo reply: 113196312
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1563]
+        [The RTT to ACK the segment was: 0.000062000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1565 394.014500  127.0.0.1             127.0.0.1             TCP      56     50817 > http-alt [FIN, ACK] Seq=1120 Ack=4758 Win=81660 Len=0 TSval=113196674 TSecr=113196312
+
+Frame 1565: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.995684000 CEST
+    Epoch Time: 1336647285.995684000 seconds
+    [Time delta from previous captured frame: 0.364302000 seconds]
+    [Time delta from previous displayed frame: 0.364302000 seconds]
+    [Time since reference or first frame: 394.014500000 seconds]
+    Frame Number: 1565
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x334f (13135)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x0973 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 1120, Ack: 4758, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 1120    (relative sequence number)
+    Acknowledgement number: 4758    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x011 (FIN, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...1 = Fin: Set
+            [Expert Info (Chat/Sequence): Connection finish (FIN)]
+                [Message: Connection finish (FIN)]
+                [Severity level: Chat]
+                [Group: Sequence]
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196674, TSecr 113196312
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196674
+            Timestamp echo reply: 113196312
+
+No.     Time        Source                Destination           Protocol Length Info
+   1567 394.014554  127.0.0.1             127.0.0.1             TCP      56     http-alt > 50817 [ACK] Seq=4758 Ack=1121 Win=262140 Len=0 TSval=113196674 TSecr=113196674
+
+Frame 1567: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.995738000 CEST
+    Epoch Time: 1336647285.995738000 seconds
+    [Time delta from previous captured frame: 0.000007000 seconds]
+    [Time delta from previous displayed frame: 0.000054000 seconds]
+    [Time since reference or first frame: 394.014554000 seconds]
+    Frame Number: 1567
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0xa73b (42811)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x9586 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 4758, Ack: 1121, Len: 0
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 4758    (relative sequence number)
+    Acknowledgement number: 1121    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196674, TSecr 113196674
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196674
+            Timestamp echo reply: 113196674
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1565]
+        [The RTT to ACK the segment was: 0.000054000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1568 394.014570  127.0.0.1             127.0.0.1             TCP      56     50795 > lrs-paging [FIN, ACK] Seq=309 Ack=731 Win=81660 Len=0 TSval=113196674 TSecr=112842215
+
+Frame 1568: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.995754000 CEST
+    Epoch Time: 1336647285.995754000 seconds
+    [Time delta from previous captured frame: 0.000016000 seconds]
+    [Time delta from previous displayed frame: 0.000016000 seconds]
+    [Time since reference or first frame: 394.014570000 seconds]
+    Frame Number: 1568
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x7f66 (32614)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xbd5b (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50795 (50795), Dst Port: lrs-paging (3700), Seq: 309, Ack: 731, Len: 0
+    Source port: 50795 (50795)
+    Destination port: lrs-paging (3700)
+    [Stream index: 9]
+    Sequence number: 309    (relative sequence number)
+    Acknowledgement number: 731    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x011 (FIN, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...1 = Fin: Set
+            [Expert Info (Chat/Sequence): Connection finish (FIN)]
+                [Message: Connection finish (FIN)]
+                [Severity level: Chat]
+                [Group: Sequence]
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196674, TSecr 112842215
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196674
+            Timestamp echo reply: 112842215
+
+No.     Time        Source                Destination           Protocol Length Info
+   1570 394.014594  127.0.0.1             127.0.0.1             TCP      56     [TCP Dup ACK 1565#1] 50817 > http-alt [ACK] Seq=1121 Ack=4758 Win=81660 Len=0 TSval=113196674 TSecr=113196674
+
+Frame 1570: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.995778000 CEST
+    Epoch Time: 1336647285.995778000 seconds
+    [Time delta from previous captured frame: 0.000012000 seconds]
+    [Time delta from previous displayed frame: 0.000024000 seconds]
+    [Time since reference or first frame: 394.014594000 seconds]
+    Frame Number: 1570
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Bad TCP]
+    [Coloring Rule String: tcp.analysis.flags]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0xef5d (61277)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x4d64 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 1121, Ack: 4758, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 1121    (relative sequence number)
+    Acknowledgement number: 4758    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196674, TSecr 113196674
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196674
+            Timestamp echo reply: 113196674
+    [SEQ/ACK analysis]
+        [TCP Analysis Flags]
+            [This is a TCP duplicate ack]
+        [Duplicate ACK #: 1]
+        [Duplicate to the ACK in frame: 1565]
+            [Expert Info (Note/Sequence): Duplicate ACK (#1)]
+                [Message: Duplicate ACK (#1)]
+                [Severity level: Note]
+                [Group: Sequence]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1571 394.014601  127.0.0.1             127.0.0.1             TCP      56     lrs-paging > 50795 [ACK] Seq=731 Ack=310 Win=262140 Len=0 TSval=113196674 TSecr=113196674
+
+Frame 1571: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.995785000 CEST
+    Epoch Time: 1336647285.995785000 seconds
+    [Time delta from previous captured frame: 0.000007000 seconds]
+    [Time delta from previous displayed frame: 0.000007000 seconds]
+    [Time since reference or first frame: 394.014601000 seconds]
+    Frame Number: 1571
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x8c22 (35874)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0xb09f (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: lrs-paging (3700), Dst Port: 50795 (50795), Seq: 731, Ack: 310, Len: 0
+    Source port: lrs-paging (3700)
+    Destination port: 50795 (50795)
+    [Stream index: 9]
+    Sequence number: 731    (relative sequence number)
+    Acknowledgement number: 310    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196674, TSecr 113196674
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196674
+            Timestamp echo reply: 113196674
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1568]
+        [The RTT to ACK the segment was: 0.000031000 seconds]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1573 394.014621  127.0.0.1             127.0.0.1             TCP      56     [TCP Dup ACK 1568#1] 50795 > lrs-paging [ACK] Seq=310 Ack=731 Win=81660 Len=0 TSval=113196674 TSecr=113196674
+
+Frame 1573: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.995805000 CEST
+    Epoch Time: 1336647285.995805000 seconds
+    [Time delta from previous captured frame: 0.000015000 seconds]
+    [Time delta from previous displayed frame: 0.000020000 seconds]
+    [Time since reference or first frame: 394.014621000 seconds]
+    Frame Number: 1573
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Bad TCP]
+    [Coloring Rule String: tcp.analysis.flags]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0xb06b (45163)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x8c56 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50795 (50795), Dst Port: lrs-paging (3700), Seq: 310, Ack: 731, Len: 0
+    Source port: 50795 (50795)
+    Destination port: lrs-paging (3700)
+    [Stream index: 9]
+    Sequence number: 310    (relative sequence number)
+    Acknowledgement number: 731    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196674, TSecr 113196674
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196674
+            Timestamp echo reply: 113196674
+    [SEQ/ACK analysis]
+        [TCP Analysis Flags]
+            [This is a TCP duplicate ack]
+        [Duplicate ACK #: 1]
+        [Duplicate to the ACK in frame: 1568]
+            [Expert Info (Note/Sequence): Duplicate ACK (#1)]
+                [Message: Duplicate ACK (#1)]
+                [Severity level: Note]
+                [Group: Sequence]
+
+No.     Time        Source                Destination           Protocol Length Info
+   1574 394.014847  127.0.0.1             127.0.0.1             TCP      56     http-alt > 50817 [FIN, ACK] Seq=4758 Ack=1121 Win=262140 Len=0 TSval=113196674 TSecr=113196674
+
+Frame 1574: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.996031000 CEST
+    Epoch Time: 1336647285.996031000 seconds
+    [Time delta from previous captured frame: 0.000226000 seconds]
+    [Time delta from previous displayed frame: 0.000226000 seconds]
+    [Time since reference or first frame: 394.014847000 seconds]
+    Frame Number: 1574
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0xdd6b (56683)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x5f56 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: http-alt (8080), Dst Port: 50817 (50817), Seq: 4758, Ack: 1121, Len: 0
+    Source port: http-alt (8080)
+    Destination port: 50817 (50817)
+    [Stream index: 16]
+    Sequence number: 4758    (relative sequence number)
+    Acknowledgement number: 1121    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x011 (FIN, ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...1 = Fin: Set
+            [Expert Info (Chat/Sequence): Connection finish (FIN)]
+                [Message: Connection finish (FIN)]
+                [Severity level: Chat]
+                [Group: Sequence]
+    Window size value: 65535
+    [Calculated window size: 262140]
+    [Window size scaling factor: 4]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196674, TSecr 113196674
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196674
+            Timestamp echo reply: 113196674
+
+No.     Time        Source                Destination           Protocol Length Info
+   1575 394.014864  127.0.0.1             127.0.0.1             TCP      56     50817 > http-alt [ACK] Seq=1121 Ack=4759 Win=81660 Len=0 TSval=113196674 TSecr=113196674
+
+Frame 1575: 56 bytes on wire (448 bits), 56 bytes captured (448 bits)
+    Arrival Time: May 10, 2012 12:54:45.996048000 CEST
+    Epoch Time: 1336647285.996048000 seconds
+    [Time delta from previous captured frame: 0.000017000 seconds]
+    [Time delta from previous displayed frame: 0.000017000 seconds]
+    [Time since reference or first frame: 394.014864000 seconds]
+    Frame Number: 1575
+    Frame Length: 56 bytes (448 bits)
+    Capture Length: 56 bytes (448 bits)
+    [Frame is marked: False]
+    [Frame is ignored: False]
+    [Protocols in frame: null:ip:tcp]
+    [Coloring Rule Name: Checksum Errors]
+    [Coloring Rule String: cdp.checksum_bad==1 || edp.checksum_bad==1 || ip.checksum_bad==1 || tcp.checksum_bad==1 || udp.checksum_bad==1 || sctp.checksum_bad==1 || mstp.checksum_bad==1]
+Null/Loopback
+    Family: IP (2)
+Internet Protocol Version 4, Src: 127.0.0.1 (127.0.0.1), Dst: 127.0.0.1 (127.0.0.1)
+    Version: 4
+    Header length: 20 bytes
+    Differentiated Services Field: 0x00 (DSCP 0x00: Default; ECN: 0x00: Not-ECT (Not ECN-Capable Transport))
+        0000 00.. = Differentiated Services Codepoint: Default (0x00)
+        .... ..00 = Explicit Congestion Notification: Not-ECT (Not ECN-Capable Transport) (0x00)
+    Total Length: 52
+    Identification: 0x2b79 (11129)
+    Flags: 0x02 (Don't Fragment)
+        0... .... = Reserved bit: Not set
+        .1.. .... = Don't fragment: Set
+        ..0. .... = More fragments: Not set
+    Fragment offset: 0
+    Time to live: 64
+    Protocol: TCP (6)
+    Header checksum: 0x0000 [incorrect, should be 0x1149 (maybe caused by "IP checksum offload"?)]
+        [Good: False]
+        [Bad: True]
+            [Expert Info (Error/Checksum): Bad checksum]
+                [Message: Bad checksum]
+                [Severity level: Error]
+                [Group: Checksum]
+    Source: 127.0.0.1 (127.0.0.1)
+    Destination: 127.0.0.1 (127.0.0.1)
+Transmission Control Protocol, Src Port: 50817 (50817), Dst Port: http-alt (8080), Seq: 1121, Ack: 4759, Len: 0
+    Source port: 50817 (50817)
+    Destination port: http-alt (8080)
+    [Stream index: 16]
+    Sequence number: 1121    (relative sequence number)
+    Acknowledgement number: 4759    (relative ack number)
+    Header length: 32 bytes
+    Flags: 0x010 (ACK)
+        000. .... .... = Reserved: Not set
+        ...0 .... .... = Nonce: Not set
+        .... 0... .... = Congestion Window Reduced (CWR): Not set
+        .... .0.. .... = ECN-Echo: Not set
+        .... ..0. .... = Urgent: Not set
+        .... ...1 .... = Acknowledgement: Set
+        .... .... 0... = Push: Not set
+        .... .... .0.. = Reset: Not set
+        .... .... ..0. = Syn: Not set
+        .... .... ...0 = Fin: Not set
+    Window size value: 40830
+    [Calculated window size: 81660]
+    [Window size scaling factor: 2]
+    Checksum: 0xfe28 [validation disabled]
+        [Good Checksum: False]
+        [Bad Checksum: False]
+    Options: (12 bytes)
+        No-Operation (NOP)
+        No-Operation (NOP)
+        Timestamps: TSval 113196674, TSecr 113196674
+            Kind: Timestamp (8)
+            Length: 10
+            Timestamp value: 113196674
+            Timestamp echo reply: 113196674
+    [SEQ/ACK analysis]
+        [This is an ACK to the segment in frame: 1574]
+        [The RTT to ACK the segment was: 0.000017000 seconds]

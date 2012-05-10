@@ -46,18 +46,28 @@ public class Client {
 		try {
 			testBean = (TestBeanRemote) ctx
 					.lookup("java:global/dst2_1/TestBean");
-			manageBean = (GeneralManagementBeanRemote) ctx
-					.lookup("java:global/dst2_1/GeneralManagementBean");
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		System.out
+				.println("Will now insert Test-Entities, press Enter to continue...");
+		scan.nextLine();
 
 		testBean.InsertTestEntities();
 
 		System.out
 				.println("Inserted Test-Entities, press Enter to continue...");
 		scan.nextLine();
+
+		try {
+			manageBean = (GeneralManagementBeanRemote) ctx
+					.lookup("java:global/dst2_1/GeneralManagementBean");
+		} catch (NamingException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
 
 		manageBean.setPrice(100, new BigDecimal(30));
 		manageBean.setPrice(1000, new BigDecimal(15));
