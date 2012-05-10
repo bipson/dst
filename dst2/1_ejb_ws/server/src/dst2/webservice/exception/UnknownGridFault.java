@@ -4,23 +4,15 @@ public class UnknownGridFault extends Exception {
 
 	private static final long serialVersionUID = -3029387359433125018L;
 
-	private String code;
-
 	public UnknownGridFault() {
-		super();
-		this.code = "unknown";
+		super("unknown");
 	}
 
-	public UnknownGridFault(String code) {
-		super();
-		this.code = code;
+	public UnknownGridFault(String message) {
+		super(message);
 	}
 
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
+	public UnknownGridFault(String message, Throwable cause) {
+		super(message, cause);
 	}
 }

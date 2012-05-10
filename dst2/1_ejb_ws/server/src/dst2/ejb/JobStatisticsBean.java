@@ -27,7 +27,7 @@ public class JobStatisticsBean {
 			query.getSingleResult();
 		} catch (RuntimeException e) {
 			throw new UnknownGridFault("Grid with name - " + gridname
-					+ " - was not found : " + e.getMessage());
+					+ " - was not found : " + e.getMessage(), e);
 		}
 
 		TypedQuery<Execution> query2 = em

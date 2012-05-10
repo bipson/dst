@@ -29,12 +29,10 @@ import dst2.exception.NotEnoughCPUsAvailableException;
 import dst2.exception.NotLoggedInException;
 import dst2.exception.ResourceNotAvailableException;
 import dst2.model.AuditLog;
-import dst2.model.Cluster;
 import dst2.model.Computer;
 import dst2.model.Environment;
 import dst2.model.Execution;
 import dst2.model.FunctionParam;
-import dst2.model.Grid;
 import dst2.model.Job;
 import dst2.model.JobStatus;
 import dst2.model.User;
@@ -89,30 +87,25 @@ public class JobManagementBean implements JobManagementBeanRemote {
 	public void addJob(Long grid_id, Integer numCPUs, String workflow,
 			List<String> params) throws NotEnoughCPUsAvailableException {
 
-		// TODO maybe make a query of this?
 		// TODO simplify this process ASAP
 		Integer availCPUs = 0;
+		List<Computer> freeComputers = new ArrayList<Computer>();
 
-		Grid grid = em.find(Grid.class, grid_id);
+		TypedQuery<Computer> computersOnGridQuery = em
+				.createQuery(
+						"SELECT c FROM Computer c JOIN c.cluster clust JOIN clust.grid g WHERE g.id = ?1",
+						Computer.class).setParameter(1, grid_id);
 
-		if (grid == null) {
-			throw new NotEnoughCPUsAvailableException("Grid with grid_id "
-					+ grid_id + " does not exist :(");
-		}
-
-		Set<Cluster> clusterList = grid.getClusterList();
-
-		for (Cluster cluster : clusterList) {
-			computerLoop: for (Computer computer : cluster.getComputerList()) {
-
-				for (Execution execToCheck : computer.getExecutionList()) {
-					if (execToCheck.getEnd() == null) {
-						continue computerLoop;
-					}
-				}
-
-				availCPUs += computer.getCpus();
+		// Check if Computer free (exclude already assigned Computers)
+		computerLoop: for (Computer comp : computersOnGridQuery.getResultList()) {
+			if (assignedComputers.contains(comp))
+				continue;
+			for (Execution exec : comp.getExecutionList()) {
+				if (exec.getEnd() == null)
+					continue computerLoop;
 			}
+			availCPUs += comp.getCpus();
+			freeComputers.add(comp);
 		}
 
 		if (availCPUs < numCPUs) {
@@ -129,34 +122,23 @@ public class JobManagementBean implements JobManagementBeanRemote {
 
 			Set<Computer> execComputerList = new HashSet<Computer>();
 
-			overAll: for (Cluster cluster : clusterList) {
-				checkComputer: for (Computer computer : cluster
-						.getComputerList()) {
-					if (assignedComputers.contains(computer))
-						continue;
+			for (Computer computer : freeComputers) {
 
-					for (Execution tempExec : computer.getExecutionList()) {
-						if (tempExec.getEnd() == null)
-							continue checkComputer;
-					}
+				assignedComputers.add(computer);
+				// TODO: check if necessary
+				em.detach(computer);
+				execComputerList.add(computer);
+				computer.getExecutionList().add(exec);
 
-					// TODO: check if necessary
-					assignedComputers.add(computer);
-					em.detach(computer);
-					execComputerList.add(computer);
-					computer.getExecutionList().add(exec);
-
-					if (gridJobCount.containsKey(grid_id)) {
-						gridJobCount
-								.put(grid_id, gridJobCount.get(grid_id) + 1);
-					} else {
-						gridJobCount.put(grid_id, 1);
-					}
-
-					numCPUs -= computer.getCpus();
-					if (numCPUs <= 0)
-						break overAll;
+				if (gridJobCount.containsKey(grid_id)) {
+					gridJobCount.put(grid_id, gridJobCount.get(grid_id) + 1);
+				} else {
+					gridJobCount.put(grid_id, 1);
 				}
+
+				numCPUs -= computer.getCpus();
+				if (numCPUs <= 0)
+					break;
 			}
 
 			exec.setComputerList(execComputerList);
@@ -191,8 +173,8 @@ public class JobManagementBean implements JobManagementBeanRemote {
 					throw new ResourceNotAvailableException(
 							"Computer not in DB anymore");
 				}
-				for (Execution tempExec : computer.getExecutionList()) {
-					if (tempExec.getEnd() != null) {
+				for (Execution tempExec : compInDb.getExecutionList()) {
+					if (tempExec.getEnd() == null) {
 						context.setRollbackOnly();
 						throw new ResourceNotAvailableException("Computer "
 								+ compInDb.toString()

@@ -44,6 +44,8 @@ public class TestBean implements TestBeanRemote {
 				Arrays.asList("abc", "cde")));
 		em.persist(env1);
 
+		em.flush();
+
 		MessageDigest md = null;
 
 		try {
@@ -73,14 +75,20 @@ public class TestBean implements TestBeanRemote {
 		user2.setAddress(new Address("quacksiStreet", "quacksiCity", "1234590"));
 
 		em.persist(user1);
+		em.flush();
+
 		em.persist(user2);
+		em.flush();
 
 		// Grids ( + Memberships)
 		Grid grid1 = new Grid("grid1", "cellar1", BigDecimal.valueOf(31482));
 		Grid grid2 = new Grid("grid2", "cellar2", BigDecimal.valueOf(32554));
 
 		em.persist(grid1);
+		em.flush();
+
 		em.persist(grid2);
+		em.flush();
 
 		Membership membership1 = new Membership(new Date(),
 				(Double.valueOf(23)));
@@ -120,7 +128,10 @@ public class TestBean implements TestBeanRemote {
 		admin2.setAddress(address4);
 
 		em.persist(admin1);
+		em.flush();
+
 		em.persist(admin2);
+		em.flush();
 
 		// Clusters
 		Cluster cluster1 = null, cluster2 = null;
@@ -135,6 +146,9 @@ public class TestBean implements TestBeanRemote {
 		grid1.getClusterList().add(cluster1);
 		admin1.getClusterList().add(cluster1);
 
+		em.persist(cluster1);
+		em.flush();
+
 		cluster2 = new Cluster("Clust2", new Date(System.currentTimeMillis()
 				- (6L * 52L * Timer.ONE_WEEK)), new Date(
 				System.currentTimeMillis() + (5L * 52L * Timer.ONE_WEEK)));
@@ -145,14 +159,8 @@ public class TestBean implements TestBeanRemote {
 		grid2.getClusterList().add(cluster2);
 		admin2.getClusterList().add(cluster2);
 
-		em.persist(cluster1);
 		em.persist(cluster2);
-
-		// Cluster Children
-		cluster1.getClusterChildren().add(cluster2);
-
-		em.persist(cluster1);
-		em.persist(cluster2);
+		em.flush();
 
 		// Computers
 		Computer computer1 = new Computer("comp1", 6, "AUT-VIE", new Date(),
@@ -173,16 +181,28 @@ public class TestBean implements TestBeanRemote {
 		computer5.setCluster(cluster1);
 
 		em.persist(computer1);
+		em.flush();
+
 		em.persist(computer2);
+		em.flush();
+
 		em.persist(computer3);
+		em.flush();
+
 		em.persist(computer4);
+		em.flush();
+
 		em.persist(computer5);
+		em.flush();
 
 		cluster1.getComputerList().add(computer1);
 		cluster1.getComputerList().add(computer2);
 		cluster2.getComputerList().add(computer3);
 		cluster2.getComputerList().add(computer4);
 		cluster1.getComputerList().add(computer5);
+
+		em.merge(cluster1);
+		em.merge(cluster2);
 
 		// Jobs
 		Job job1 = new Job(true);
@@ -202,6 +222,7 @@ public class TestBean implements TestBeanRemote {
 		exec1.getComputerList().add(computer1);
 
 		em.persist(exec1);
+		em.flush();
 
 		job1.setExecution(exec1);
 		computer1.getExecutionList().add(exec1);
