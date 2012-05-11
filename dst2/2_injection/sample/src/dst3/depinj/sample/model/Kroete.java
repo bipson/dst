@@ -12,10 +12,15 @@ public class Kroete {
 	public static void runA() {
 		InjectionController controller = InjectionController.getController();
 
-		KroeteMitInject kmi = new KroeteMitInject();
+		Kroete kmi = new Kroete();
 
 		controller.initialize(kmi);
 
 		kmi.sayHello();
+	}
+
+	private void sayHello() {
+		System.out.println("Kroete hallo");
+
 	}
 }

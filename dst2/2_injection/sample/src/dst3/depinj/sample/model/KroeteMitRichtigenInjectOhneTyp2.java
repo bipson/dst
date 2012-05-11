@@ -6,22 +6,22 @@ import dst3.depinj.annotation.ComponentId;
 import dst3.depinj.annotation.Inject;
 
 @Component()
-public class KroeteMitInject {
+public class KroeteMitRichtigenInjectOhneTyp2 {
 
 	@ComponentId
 	private Long id;
 
-	@Inject
-	private Integer si;
+	@Inject(required = true)
+	private String si;
 
 	public void sayHello() {
-		System.out.println("KroeteMitInject Hello");
+		System.out.println("KroeteMitRichtigenId Hello");
 	}
 
 	public static void runA() {
 		InjectionController controller = InjectionController.getController();
 
-		KroeteMitInject kmi = new KroeteMitInject();
+		KroeteMitRichtigenInjectOhneTyp2 kmi = new KroeteMitRichtigenInjectOhneTyp2();
 
 		controller.initialize(kmi);
 

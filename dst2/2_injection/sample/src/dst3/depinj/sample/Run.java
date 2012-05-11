@@ -6,6 +6,7 @@ import dst3.depinj.sample.model.KroeteMitId;
 import dst3.depinj.sample.model.KroeteMitInject;
 import dst3.depinj.sample.model.KroeteMitInjectKind;
 import dst3.depinj.sample.model.KroeteMitRichtigenInjectOhneTyp;
+import dst3.depinj.sample.model.KroeteMitRichtigenInjectOhneTyp2;
 import dst3.depinj.sample.model.KroeteOhneId;
 import dst3.depinj.sample.model.KroetenKind;
 
@@ -51,6 +52,14 @@ public class Run {
 					+ e.getMessage());
 		}
 
-		KroeteMitRichtigenInjectOhneTyp.runA();
+		try {
+			KroeteMitRichtigenInjectOhneTyp.runA();
+		} catch (RuntimeException e) {
+			System.out
+					.println("Trying to inject a primitive type failed, great : "
+							+ e.getMessage());
+		}
+
+		KroeteMitRichtigenInjectOhneTyp2.runA();
 	}
 }

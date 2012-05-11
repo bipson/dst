@@ -12,10 +12,15 @@ public class KroeteOhneId {
 	public static void runA() {
 		InjectionController controller = InjectionController.getController();
 
-		KroeteMitInject kmi = new KroeteMitInject();
+		KroeteOhneId kmi = new KroeteOhneId();
 
 		controller.initialize(kmi);
 
 		kmi.sayHello();
+	}
+
+	private void sayHello() {
+		System.out.println("KroeteOhneId hello");
+
 	}
 }

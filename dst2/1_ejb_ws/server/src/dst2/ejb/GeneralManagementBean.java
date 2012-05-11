@@ -52,7 +52,7 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 		TypedQuery<User> query = em
 				.createQuery(
-						"SELECT u FROM User u WHERE u.username = :username",
+						"SELECT u FROM User JOIN FETCH u.jobList.execution u WHERE u.username = :username",
 						User.class).setParameter("username", username);
 
 		User user;

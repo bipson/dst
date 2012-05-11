@@ -229,15 +229,9 @@ public class JobManagementBean implements JobManagementBeanRemote {
 		if (ctx.getParameters() != null) {
 			for (Object o : ctx.getParameters()) {
 				FunctionParam param = new FunctionParam();
-				// if (o == null) {
-				// param.setClassName("null");
-				// param.setIndex(i++);
-				// param.setValue("null");
-				// } else {
 				param.setClassName(o.getClass().getName());
 				param.setIndex(i++);
 				param.setValue(o.toString());
-				// }
 				auditLog.getParams().add(param);
 			}
 		}

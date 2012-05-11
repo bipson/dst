@@ -15,7 +15,7 @@ public class KroeteMitInjectKind extends KroeteMitId {
 	private Integer si;
 
 	public void sayHello() {
-		System.out.println("Hello Kroete");
+		System.out.println("KroeteMitInjectKind");
 	}
 
 	public static void runA() {

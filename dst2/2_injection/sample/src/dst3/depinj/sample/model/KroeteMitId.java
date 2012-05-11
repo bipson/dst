@@ -13,8 +13,8 @@ public class KroeteMitId {
 
 	private Integer si;
 
-	public void sayHello() {
-		System.out.println("Hello Kroete");
+	private void sayHello() {
+		System.out.println("KroetemitID Hello");
 	}
 
 	public static void runA() {

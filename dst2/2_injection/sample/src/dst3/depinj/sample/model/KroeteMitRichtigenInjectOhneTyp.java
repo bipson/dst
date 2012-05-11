@@ -15,7 +15,7 @@ public class KroeteMitRichtigenInjectOhneTyp {
 	private Integer si;
 
 	public void sayHello() {
-		System.out.println("Hello Kroete");
+		System.out.println("KroeteMitRichtigenId Hello");
 	}
 
 	public static void runA() {

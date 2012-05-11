@@ -90,15 +90,7 @@ public class InjectionController implements IInjectionController {
 						Class<?> type = injectAnno.specificType();
 
 						try {
-							if (type == Object.class) {
-								field.setAccessible(true);
-								type = field.getType();
-								System.out.println(field.getType());
-								field.set(obj, type.newInstance());
-							} else {
-								field.setAccessible(true);
-								field.set(obj, type.newInstance());
-							}
+							instantiate(obj, field, type);
 						} catch (Exception e) {
 							if (injectAnno.required())
 								throw new InjectionException(
@@ -118,6 +110,34 @@ public class InjectionController implements IInjectionController {
 		if (!hasValidComponentId)
 			throw new InjectionException(
 					"Not a valid ID field of type Long found");
+	}
+
+	private void instantiate(Object obj, Field field, Class<?> type) {
+		try {
+			field.setAccessible(true);
+		} catch (SecurityException e) {
+			throw new InjectionException(
+					"This field cannot be set accessible : " + e.getMessage());
+		}
+
+		try {
+			if (type == Object.class) {
+				type = field.getType();
+				field.set(obj, type.newInstance());
+			} else {
+				field.set(obj, type.newInstance());
+			}
+		} catch (IllegalArgumentException e) {
+			throw new InjectionException("Cannot Inject Field : "
+					+ e.getMessage());
+		} catch (IllegalAccessException e) {
+			throw new InjectionException("Cannot Inject Field : "
+					+ e.getMessage());
+		} catch (InstantiationException e) {
+			throw new InjectionException(
+					"Cannot Inject Field of this type (check if not a primitive type, or default constructor available : "
+							+ e.getMessage());
+		}
 	}
 
 	@SuppressWarnings("unchecked")

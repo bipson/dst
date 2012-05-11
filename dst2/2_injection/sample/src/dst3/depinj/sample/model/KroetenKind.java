@@ -4,7 +4,7 @@ import dst3.depinj.InjectionController;
 import dst3.depinj.annotation.Component;
 
 @Component
-public class KroetenKind {
+public class KroetenKind extends KroeteMitId {
 	private String foo;
 
 	private Integer si;
@@ -12,10 +12,14 @@ public class KroetenKind {
 	public static void runA() {
 		InjectionController controller = InjectionController.getController();
 
-		KroeteMitInject kmi = new KroeteMitInject();
+		KroetenKind kmi = new KroetenKind();
 
 		controller.initialize(kmi);
 
 		kmi.sayHello();
+	}
+
+	private void sayHello() {
+		System.out.println("Kroetenkind hallo");
 	}
 }
