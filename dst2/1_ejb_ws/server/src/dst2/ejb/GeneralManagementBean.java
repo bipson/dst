@@ -52,7 +52,7 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 
 		TypedQuery<User> query = em
 				.createQuery(
-						"SELECT u FROM User JOIN FETCH u.jobList.execution u WHERE u.username = :username",
+						"SELECT u FROM User u JOIN u.jobList j JOIN FETCH u.jobList JOIN FETCH j.execution WHERE u.username = :username",
 						User.class).setParameter("username", username);
 
 		User user;
@@ -158,8 +158,8 @@ public class GeneralManagementBean implements GeneralManagementBeanRemote {
 	public List<AuditLogDTO> getAuditLog() {
 		List<AuditLogDTO> logList = new ArrayList<AuditLogDTO>();
 
-		TypedQuery<AuditLog> query = em.createQuery("SELECT a FROM AuditLog a",
-				AuditLog.class);
+		TypedQuery<AuditLog> query = em.createQuery(
+				"SELECT a FROM AuditLog a JOIN FETCH a.params", AuditLog.class);
 
 		for (AuditLog audit : query.getResultList()) {
 			logList.add(audit.getDTO());

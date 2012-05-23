@@ -36,11 +36,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link UnknownGridFault }
+     * Create an instance of {@link ExecutionDTO }
      * 
      */
-    public UnknownGridFault createUnknownGridFault() {
-        return new UnknownGridFault();
+    public ExecutionDTO createExecutionDTO() {
+        return new ExecutionDTO();
     }
 
     /**
@@ -52,11 +52,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ExecutionDTO }
+     * Create an instance of {@link UnknownGridFault }
      * 
      */
-    public ExecutionDTO createExecutionDTO() {
-        return new ExecutionDTO();
+    public UnknownGridFault createUnknownGridFault() {
+        return new UnknownGridFault();
     }
 
     /**
