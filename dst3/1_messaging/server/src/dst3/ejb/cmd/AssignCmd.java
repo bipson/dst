@@ -4,7 +4,7 @@ public class AssignCmd extends CmdWithId {
 
 	@Override
 	public void exec() {
-		System.out.println("exec : " + id);
+		// TODO implement logic
 	}
 
 }

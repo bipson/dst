@@ -6,5 +6,5 @@ public interface ICmd {
 
 	public void init(MapMessage message) throws CmdException;
 
-	public void exec();
+	public void exec() throws CmdException;
 }

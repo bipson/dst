@@ -5,11 +5,16 @@
         <!-- DEFINE QUEUES AND TOPICS HERE -->
 
         <!-- EXAMPLE -->
-        <admin-object-resource enabled="true"
-                jndi-name="queue.dst.MyQueue" res-adapter="jmsra" res-type="javax.jms.Queue">
-                <property name="Name" value="queue.dst.MyQueue" />
+                <admin-object-resource enabled="true"
+                jndi-name="queue.dst.ServerQueue" res-adapter="jmsra" res-type="javax.jms.Queue">
+                <property name="Name" value="queue.dst.ServerQueue" />
         </admin-object-resource>
-
+        
+        <admin-object-resource enabled="true"
+                jndi-name="queue.dst.SchedulerQueue" res-adapter="jmsra" res-type="javax.jms.Queue">
+                <property name="Name" value="queue.dst.SchedulerQueue" />
+        </admin-object-resource>
+        
         <!-- FACTORY & POOL -->
         <connector-resource jndi-name="dst.Factory"
                 pool-name="dst.FactoryPool" />
