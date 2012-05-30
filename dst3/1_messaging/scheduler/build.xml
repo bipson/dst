@@ -33,7 +33,7 @@
 
 	<!-- set your main class -->
 	<target name="run" depends="compile">
-		<java classname="your.main.Class" fork="true" classpathref="classpath" />
+		<java classname="dst3.scheduler.Scheduler" fork="true" classpathref="classpath" />
 	</target>
 
 	<target name="clean">
