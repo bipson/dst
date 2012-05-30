@@ -86,6 +86,7 @@ public class Scheduler {
 		serverQueue = (Queue) jndi.lookup("queue.dst.ServerQueue");
 		receiverQueue = (Queue) jndi.lookup("queue.dst.SchedulerQueue");
 		QueueConnection qConn = (QueueConnection) qFactory.createConnection();
+		qConn.start();
 		session = qConn.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
 	}
 
@@ -166,12 +167,15 @@ public class Scheduler {
 					System.out.println("Receiver in loop");
 
 					Message message = queueReceiver.receive();
+
+					System.out.println("message received");
+
 					if (message != null) {
 						System.out.println("Message not null");
 						if (message instanceof ObjectMessage) {
 							ObjectMessage objectMessage = (ObjectMessage) message;
 							System.out.println("Received Task: "
-									+ (String) (objectMessage.getObject()));
+									+ objectMessage.getObject().toString());
 						}
 					}
 				}
