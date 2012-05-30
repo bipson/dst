@@ -8,19 +8,22 @@ import dst3.ejb.util.Provider;
 
 public class InfoCmd extends CmdWithId {
 
-	QueueSender schedulerQueue;
+	QueueSender queueSender;
 
-	public InfoCmd(QueueSender schedulerQueue) {
-		this.schedulerQueue = schedulerQueue;
+	public InfoCmd(QueueSender queueSender) {
+		this.queueSender = queueSender;
 	}
 
 	@Override
 	public void exec() throws CmdException {
 		// TODO get Task from db
+		
+		System.out.println("received : "+id);
 
 		try {
 			ObjectMessage message = Provider.getSession().createObjectMessage(
-					id);
+					id.toString());
+			queueSender.send(message);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			throw new CmdException(e.getMessage());
