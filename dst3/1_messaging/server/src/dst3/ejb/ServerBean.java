@@ -71,6 +71,9 @@ public class ServerBean implements MessageListener {
 			QueueConnection connection = factory.createQueueConnection();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
+			Provider.setEntityManager(entityManager);
+			Provider.setSession(session);
+
 			schedulerQueueSender = (QueueSender) session
 					.createProducer(schedulerQueue);
 		} catch (JMSException e) {
@@ -78,9 +81,6 @@ public class ServerBean implements MessageListener {
 			e.printStackTrace();
 			return;
 		}
-
-		Provider.setEntityManager(entityManager);
-		Provider.setSession(session);
 
 		cmdMap.put("assign", new AssignCmd());
 		cmdMap.put("info", new InfoCmd(schedulerQueueSender));

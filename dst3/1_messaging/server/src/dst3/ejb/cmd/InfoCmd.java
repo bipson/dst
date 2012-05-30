@@ -17,12 +17,12 @@ public class InfoCmd extends CmdWithId {
 	@Override
 	public void exec() throws CmdException {
 		// TODO get Task from db
-		
-		System.out.println("received : "+id);
+
+		System.out.println("received : " + id);
 
 		try {
 			ObjectMessage message = Provider.getSession().createObjectMessage(
-					id.toString());
+					id);
 			queueSender.send(message);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
