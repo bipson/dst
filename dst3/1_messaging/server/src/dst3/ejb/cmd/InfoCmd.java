@@ -5,6 +5,7 @@ import javax.jms.ObjectMessage;
 import javax.jms.QueueSender;
 
 import dst3.ejb.util.Provider;
+import dst3.model.Task;
 
 public class InfoCmd extends CmdWithId {
 
@@ -16,13 +17,14 @@ public class InfoCmd extends CmdWithId {
 
 	@Override
 	public void exec() throws CmdException {
-		// TODO get Task from db
 
-		System.out.println("received : " + id);
+		Task task = Provider.getEntityManager().find(Task.class, id);
 
 		try {
-			ObjectMessage message = Provider.getSession().createObjectMessage(
-					id);
+			ObjectMessage message = Provider.getSession()
+					.createObjectMessage(
+							task != null ? task.getDTO() : new String(
+									"No Task found!"));
 			queueSender.send(message);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block

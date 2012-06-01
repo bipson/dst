@@ -15,6 +15,11 @@
                 <property name="Name" value="queue.dst.SchedulerQueue" />
         </admin-object-resource>
         
+        <admin-object-resource enabled="true"
+                jndi-name="topic.dst.ClusterTopic" res-adapter="jmsra" res-type="javax.jms.Topic">
+                <property name="Name" value="topic.dst.ClusterTopic" />
+        </admin-object-resource>
+        
         <!-- FACTORY & POOL -->
         <connector-resource jndi-name="dst.Factory"
                 pool-name="dst.FactoryPool" />

@@ -14,8 +14,11 @@ import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueReceiver;
 import javax.jms.QueueSession;
 import javax.jms.Session;
+import javax.jms.TextMessage;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import dst3.DTO.TaskDTO;
 
 public class Scheduler {
 
@@ -47,13 +50,8 @@ public class Scheduler {
 
 		while (!stop) {
 
-			System.out.flush();
-			System.out.print("Please enter Command: \n<");
-			System.out.flush();
-
+			System.out.println("Please enter command:");
 			String cmd = scan.nextLine();
-
-			System.out.flush();
 
 			if (Pattern.matches("assign [0-9]+$", cmd)) {
 				parseAssign(cmd);
@@ -107,9 +105,8 @@ public class Scheduler {
 
 	private void parseAssign(String cmd) {
 		Integer jobId = getSingleIntArg(cmd);
-		MapMessage msg;
 		try {
-			msg = session.createMapMessage();
+			MapMessage msg = session.createMapMessage();
 
 			msg.setString("name", "assign");
 			msg.setLong("taskid", jobId);
@@ -123,9 +120,8 @@ public class Scheduler {
 	private void parseInfo(String cmd) {
 		Integer taskId = getSingleIntArg(cmd);
 
-		MapMessage msg;
 		try {
-			msg = session.createMapMessage();
+			MapMessage msg = session.createMapMessage();
 
 			msg.setString("name", "info");
 			msg.setLong("taskid", taskId);
@@ -160,22 +156,28 @@ public class Scheduler {
 			try {
 				QueueReceiver queueReceiver = session.createReceiver(queue);
 
-				System.out.println("Receiver started...");
-
 				while (!stop) {
 
-					System.out.println("Receiver in loop");
-
-					Message message = queueReceiver.receive();
-
-					System.out.println("message received");
+					Message message = queueReceiver.receive(1000);
 
 					if (message != null) {
-						System.out.println("Message not null");
 						if (message instanceof ObjectMessage) {
 							ObjectMessage objectMessage = (ObjectMessage) message;
-							System.out.println("Received Task: "
-									+ objectMessage.getObject().toString());
+							Object object = objectMessage.getObject();
+
+							if (object instanceof TaskDTO) {
+								TaskDTO task = (TaskDTO) object;
+
+								System.out.println(task.toString());
+							} else if (object instanceof String) {
+								String result = (String) object;
+								System.out.println(result);
+							}
+						}
+						if (message instanceof TextMessage) {
+							TextMessage textMessage = (TextMessage) message;
+							String text = textMessage.getText();
+							System.out.println(text);
 						}
 					}
 				}
@@ -184,7 +186,7 @@ public class Scheduler {
 					queueReceiver.close();
 				}
 
-				System.out.println("receiver going down...");
+				System.out.println("receiver thread going down...");
 
 			} catch (JMSException e) {
 				e.printStackTrace();

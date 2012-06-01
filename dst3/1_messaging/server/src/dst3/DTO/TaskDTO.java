@@ -1,17 +1,13 @@
-package dst3.model;
+package dst3.DTO;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import java.io.Serializable;
 
-import dst3.DTO.TaskDTO;
+import dst3.model.TaskComplexity;
+import dst3.model.TaskStatus;
 
-@Entity
-public class Task {
+public class TaskDTO implements Serializable {
+
+	private static final long serialVersionUID = -5855208452712230201L;
 
 	private Long id;
 	private Long jobId;
@@ -19,30 +15,32 @@ public class Task {
 	private String ratedBy;
 	private TaskComplexity complexity;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	public TaskDTO(Long id, Long jobId, TaskStatus status, String ratedBy,
+			TaskComplexity complexity) {
+		super();
+		this.id = id;
+		this.jobId = jobId;
+		this.status = status;
+		this.ratedBy = ratedBy;
+		this.complexity = complexity;
+	}
+
 	public Long getId() {
 		return id;
 	}
 
-	@Column
 	public Long getJobId() {
 		return jobId;
 	}
 
-	@Column(columnDefinition = "ENUM('ASSIGNED', 'READY_FOR_PROCESSING', 'PROCESSING_NOT_POSSIBLE', 'PROCESSED')")
-	@Enumerated(EnumType.STRING)
 	public TaskStatus getStatus() {
 		return status;
 	}
 
-	@Column
 	public String getRatedBy() {
 		return ratedBy;
 	}
 
-	@Column(columnDefinition = "ENUM('UNRATED', 'EASY', 'CHALLENGING')")
-	@Enumerated(EnumType.STRING)
 	public TaskComplexity getComplexity() {
 		return complexity;
 	}
@@ -67,13 +65,10 @@ public class Task {
 		this.complexity = complexity;
 	}
 
-	public TaskDTO getDTO() {
-		return new TaskDTO(id, jobId, status, ratedBy, complexity);
-	}
-
 	@Override
 	public String toString() {
-		return "Task [id=" + id + ", jobId=" + jobId + ", status=" + status
+		return "TaskDTO [id=" + id + ", jobId=" + jobId + ", status=" + status
 				+ ", ratedBy=" + ratedBy + ", complexity=" + complexity + "]";
 	}
+
 }

@@ -33,13 +33,13 @@
 
 	<!-- set your main class -->
 	<target name="run-c1" depends="compile">
-		<java classname="your.main.Class" fork="true" classpathref="classpath">
+		<java classname="dst3.cluster.Cluster" fork="true" classpathref="classpath">
 			<arg value="c1" />
 		</java>
 	</target>
 
 	<target name="run-c2" depends="compile">
-		<java classname="your.main.Class" fork="true" classpathref="classpath">
+		<java classname="dst3.cluster.Cluster" fork="true" classpathref="classpath">
 			<arg value="c2" />
 		</java>
 	</target>

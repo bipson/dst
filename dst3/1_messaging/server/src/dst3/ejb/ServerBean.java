@@ -3,21 +3,25 @@ package dst3.ejb;
 import java.util.HashMap;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.MessageDriven;
-import javax.ejb.MessageDrivenContext;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.jms.ObjectMessage;
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueSender;
 import javax.jms.Session;
+import javax.jms.Topic;
+import javax.jms.TopicPublisher;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import dst3.ejb.cmd.AcceptCmd;
 import dst3.ejb.cmd.AssignCmd;
 import dst3.ejb.cmd.CmdException;
 import dst3.ejb.cmd.ICmd;
@@ -29,12 +33,14 @@ public class ServerBean implements MessageListener {
 
 	HashMap<String, ICmd> cmdMap = new HashMap<String, ICmd>();
 
-	@Resource
-	private MessageDrivenContext mdbContext;
-	@Resource(mappedName = "dst.Factory")
+	// @Resource
+	// private MessageDrivenContext mdbContext;
+	@Resource(lookup = "dst.Factory")
 	private QueueConnectionFactory factory;
-	@Resource(mappedName = "queue.dst.SchedulerQueue")
+	@Resource(lookup = "queue.dst.SchedulerQueue")
 	private Queue schedulerQueue;
+	@Resource(lookup = "topic.dst.ClusterTopic")
+	private Topic clusterTopic;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -47,7 +53,24 @@ public class ServerBean implements MessageListener {
 				command = cmdMap.get(((MapMessage) message).getString("name"));
 
 				if (command != null) {
-					command.init((MapMessage) message);
+					command.init((Message) message);
+					command.exec();
+				}
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (CmdException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else if (message instanceof ObjectMessage) {
+			ICmd command;
+			try {
+				command = cmdMap.get(((ObjectMessage) message)
+						.getStringProperty("name"));
+
+				if (command != null) {
+					command.init((Message) message);
 					command.exec();
 				}
 			} catch (JMSException e) {
@@ -62,11 +85,12 @@ public class ServerBean implements MessageListener {
 	}
 
 	@PostConstruct
-	public void init() {
+	private void init() {
 
 		Session session = null;
 
 		QueueSender schedulerQueueSender;
+		TopicPublisher clusterTopicPublisher;
 		try {
 			QueueConnection connection = factory.createQueueConnection();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -76,13 +100,23 @@ public class ServerBean implements MessageListener {
 
 			schedulerQueueSender = (QueueSender) session
 					.createProducer(schedulerQueue);
+
+			clusterTopicPublisher = (TopicPublisher) session
+					.createProducer(clusterTopic);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}
 
-		cmdMap.put("assign", new AssignCmd());
+		cmdMap.put("assign", new AssignCmd(schedulerQueueSender,
+				clusterTopicPublisher));
 		cmdMap.put("info", new InfoCmd(schedulerQueueSender));
+		cmdMap.put("int_accept", new AcceptCmd());
+	}
+
+	@PreDestroy
+	private void tearDown() {
+
 	}
 }

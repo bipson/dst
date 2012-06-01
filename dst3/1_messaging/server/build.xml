@@ -53,10 +53,10 @@
         </jar>
         <jar jarfile="${lib.dir}/${clientJarfile.name}.jar">
             <fileset dir="${build.dir}">
-                <!-- set the classes to be included for your clients
-                <include name="dst2/ejb/your.first.class"/>
-                <include name="dst2/ejb/your.second.class"/>
-                .-->
+                <!-- set the classes to be included for your clients .-->
+                <include name="dst3/DTO/TaskDTO.class"/>
+                <include name="dst3/model/TaskComplexity.class"/>
+                <include name="dst3/model/TaskStatus.class"/>
             </fileset>
         </jar>
     </target>
