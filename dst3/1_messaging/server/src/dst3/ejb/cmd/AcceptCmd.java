@@ -7,6 +7,7 @@ public class AcceptCmd extends CmdWithTask {
 	@Override
 	public void exec() throws CmdException {
 		Provider.getEntityManager().merge(task);
+		Provider.getEntityManager().flush();
 	}
 
 }

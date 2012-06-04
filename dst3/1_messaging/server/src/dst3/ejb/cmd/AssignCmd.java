@@ -4,7 +4,6 @@ import javax.jms.JMSException;
 import javax.jms.ObjectMessage;
 import javax.jms.QueueSender;
 import javax.jms.TextMessage;
-import javax.jms.TopicPublisher;
 
 import dst3.ejb.util.Provider;
 import dst3.model.Task;
@@ -13,13 +12,13 @@ import dst3.model.TaskStatus;
 
 public class AssignCmd extends CmdWithId {
 
-	QueueSender queueSender;
-	TopicPublisher clusterTopicPublisher;
+	QueueSender schedulerQueueSender;
+	QueueSender clusterQueueSender;
 
-	public AssignCmd(QueueSender queueSender,
-			TopicPublisher clusterTopicPublisher) {
-		this.queueSender = queueSender;
-		this.clusterTopicPublisher = clusterTopicPublisher;
+	public AssignCmd(QueueSender schedulerQueueSender,
+			QueueSender clusterQueueSender) {
+		this.schedulerQueueSender = schedulerQueueSender;
+		this.clusterQueueSender = clusterQueueSender;
 	}
 
 	@Override
@@ -35,8 +34,8 @@ public class AssignCmd extends CmdWithId {
 
 		try {
 			ObjectMessage objMessage = Provider.getSession()
-					.createObjectMessage(task.getId().toString());
-			clusterTopicPublisher.send(objMessage);
+					.createObjectMessage(task.getDTO());
+			clusterQueueSender.send(objMessage);
 		} catch (JMSException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -45,7 +44,7 @@ public class AssignCmd extends CmdWithId {
 		try {
 			TextMessage message = Provider.getSession().createTextMessage(
 					task.getId().toString());
-			queueSender.send(message);
+			schedulerQueueSender.send(message);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			throw new CmdException(e.getMessage());
