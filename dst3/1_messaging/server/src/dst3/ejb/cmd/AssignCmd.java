@@ -41,9 +41,11 @@ public class AssignCmd extends CmdWithId {
 			e1.printStackTrace();
 		}
 
+		String text = "This is the id of your Task for further reference: '"
+				+ task.getId() + "'";
+
 		try {
-			TextMessage message = Provider.getSession().createTextMessage(
-					task.getId().toString());
+			TextMessage message = Provider.getSession().createTextMessage(text);
 			schedulerQueueSender.send(message);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block

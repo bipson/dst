@@ -104,7 +104,7 @@ public class Scheduler {
 	}
 
 	private void parseAssign(String cmd) {
-		Integer jobId = getSingleIntArg(cmd);
+		Long jobId = getSingleIntArg(cmd);
 		try {
 			MapMessage msg = session.createMapMessage();
 
@@ -118,7 +118,7 @@ public class Scheduler {
 	}
 
 	private void parseInfo(String cmd) {
-		Integer taskId = getSingleIntArg(cmd);
+		Long taskId = getSingleIntArg(cmd);
 
 		try {
 			MapMessage msg = session.createMapMessage();
@@ -132,8 +132,8 @@ public class Scheduler {
 		}
 	}
 
-	private Integer getSingleIntArg(String cmd) {
-		return Integer.parseInt(cmd.split(" ")[1]);
+	private Long getSingleIntArg(String cmd) {
+		return Long.parseLong(cmd.split(" ")[1]);
 	}
 
 	public static QueueSession getSession() {

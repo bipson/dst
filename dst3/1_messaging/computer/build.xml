@@ -33,7 +33,7 @@
 
 	<!-- set your main class -->
 	<target name="run-pc1" depends="compile">
-		<java classname="your.main.Class" fork="true" classpathref="classpath">
+		<java classname="dst3.computer.Computer" fork="true" classpathref="classpath">
 			<arg value="pc1" />
 			<arg value="c1" />
 			<arg value="CHALLENGING" />
@@ -42,7 +42,7 @@
 
 	<!-- set your main class -->
 	<target name="run-pc2" depends="compile">
-		<java classname="dst3.client.Computer" fork="true" classpathref="classpath">
+		<java classname="dst3.computer.Computer" fork="true" classpathref="classpath">
 			<arg value="pc2" />
 			<arg value="c1" />
 			<arg value="EASY" />
@@ -51,7 +51,7 @@
 
 	<!-- set your main class -->
 	<target name="run-pc3" depends="compile">
-		<java classname="your.main.Class" fork="true" classpathref="classpath">
+		<java classname="dst3.computer.Computer" fork="true" classpathref="classpath">
 			<arg value="pc3" />
 			<arg value="c2" />
 			<arg value="CHALLENGING" />
@@ -60,7 +60,7 @@
 
 	<!-- set your main class -->
 	<target name="run-pc4" depends="compile">
-		<java classname="your.main.Class" fork="true" classpathref="classpath">
+		<java classname="dst3.computer.Computer" fork="true" classpathref="classpath">
 			<arg value="pc4" />
 			<arg value="c2" />
 			<arg value="EASY" />

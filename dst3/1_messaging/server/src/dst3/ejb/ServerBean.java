@@ -17,6 +17,7 @@ import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueSender;
 import javax.jms.Session;
 import javax.jms.Topic;
+import javax.jms.TopicPublisher;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -25,6 +26,7 @@ import dst3.ejb.cmd.AssignCmd;
 import dst3.ejb.cmd.CmdException;
 import dst3.ejb.cmd.ICmd;
 import dst3.ejb.cmd.InfoCmd;
+import dst3.ejb.cmd.ProcessCmd;
 import dst3.ejb.util.Provider;
 
 @MessageDriven(mappedName = "queue.dst.ServerQueue")
@@ -36,10 +38,10 @@ public class ServerBean implements MessageListener {
 	private QueueConnectionFactory factory;
 	@Resource(mappedName = "queue.dst.SchedulerQueue")
 	private Queue schedulerQueue;
-	@Resource(mappedName = "topic.dst.ComputerTopic")
-	private Topic computerTopic;
 	@Resource(mappedName = "queue.dst.ClusterQueue")
 	private Queue clusterQueue;
+	@Resource(mappedName = "topic.dst.ComputerTopic")
+	private Topic computerTopic;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -91,6 +93,7 @@ public class ServerBean implements MessageListener {
 
 		QueueSender schedulerQueueSender;
 		QueueSender clusterQueueSender;
+		TopicPublisher computerPublisher;
 		try {
 			QueueConnection connection = factory.createQueueConnection();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -103,6 +106,9 @@ public class ServerBean implements MessageListener {
 
 			clusterQueueSender = (QueueSender) session
 					.createProducer(clusterQueue);
+
+			computerPublisher = (TopicPublisher) session
+					.createProducer(computerTopic);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -112,7 +118,8 @@ public class ServerBean implements MessageListener {
 		cmdMap.put("assign", new AssignCmd(schedulerQueueSender,
 				clusterQueueSender));
 		cmdMap.put("info", new InfoCmd(schedulerQueueSender));
-		cmdMap.put("int_accept", new AcceptCmd());
+		cmdMap.put("int_accept", new AcceptCmd(computerPublisher));
+		cmdMap.put("int_processed", new ProcessCmd(schedulerQueueSender));
 	}
 
 	@PreDestroy
