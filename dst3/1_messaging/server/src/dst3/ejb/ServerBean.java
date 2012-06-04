@@ -35,11 +35,11 @@ public class ServerBean implements MessageListener {
 
 	// @Resource
 	// private MessageDrivenContext mdbContext;
-	@Resource(lookup = "dst.Factory")
+	@Resource(mappedName = "dst.Factory")
 	private QueueConnectionFactory factory;
-	@Resource(lookup = "queue.dst.SchedulerQueue")
+	@Resource(mappedName = "queue.dst.SchedulerQueue")
 	private Queue schedulerQueue;
-	@Resource(lookup = "topic.dst.ClusterTopic")
+	@Resource(mappedName = "topic.dst.ClusterTopic")
 	private Topic clusterTopic;
 
 	@PersistenceContext
