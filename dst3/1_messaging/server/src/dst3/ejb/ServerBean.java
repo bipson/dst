@@ -16,8 +16,6 @@ import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueSender;
 import javax.jms.Session;
-import javax.jms.Topic;
-import javax.jms.TopicPublisher;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -33,14 +31,12 @@ public class ServerBean implements MessageListener {
 
 	HashMap<String, ICmd> cmdMap = new HashMap<String, ICmd>();
 
-	// @Resource
-	// private MessageDrivenContext mdbContext;
 	@Resource(lookup = "dst.Factory")
 	private QueueConnectionFactory factory;
 	@Resource(lookup = "queue.dst.SchedulerQueue")
 	private Queue schedulerQueue;
-	@Resource(lookup = "topic.dst.ClusterTopic")
-	private Topic clusterTopic;
+	@Resource(lookup = "queue.dst.ClusterQueue")
+	private Queue clusterQueue;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -84,13 +80,14 @@ public class ServerBean implements MessageListener {
 
 	}
 
+	@SuppressWarnings("unused")
 	@PostConstruct
 	private void init() {
 
 		Session session = null;
 
 		QueueSender schedulerQueueSender;
-		TopicPublisher clusterTopicPublisher;
+		QueueSender clusterQueueSender;
 		try {
 			QueueConnection connection = factory.createQueueConnection();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -101,8 +98,8 @@ public class ServerBean implements MessageListener {
 			schedulerQueueSender = (QueueSender) session
 					.createProducer(schedulerQueue);
 
-			clusterTopicPublisher = (TopicPublisher) session
-					.createProducer(clusterTopic);
+			clusterQueueSender = (QueueSender) session
+					.createProducer(clusterQueue);
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,7 +107,7 @@ public class ServerBean implements MessageListener {
 		}
 
 		cmdMap.put("assign", new AssignCmd(schedulerQueueSender,
-				clusterTopicPublisher));
+				clusterQueueSender));
 		cmdMap.put("info", new InfoCmd(schedulerQueueSender));
 		cmdMap.put("int_accept", new AcceptCmd());
 	}

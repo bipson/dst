@@ -3,16 +3,16 @@ package dst3.cluster;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
+import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
+import javax.jms.QueueReceiver;
+import javax.jms.QueueSession;
 import javax.jms.Session;
-import javax.jms.Topic;
-import javax.jms.TopicSubscriber;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -22,147 +22,191 @@ import dst3.model.TaskStatus;
 
 public class Cluster {
 
-	private static Session session;
+	private static QueueConnectionFactory qFactory;
 	private static Queue serverQueue;
 	private static Queue receiverQueue;
 	private static MessageProducer producer;
-	private static Topic topic;
+	private static QueueReceiver queueReceiver;
 	private static Boolean stop = false;
-	private static TopicSubscriber subscriber;
+	private static QueueSession queueSession;
+	private static QueueConnection qConn;
 
 	private static String clusterName;
+	private static TaskDTO taskDTO;
 
 	public static void main(String[] args) {
-		new Cluster().execute(args);
-	}
-
-	private void execute(String[] args) {
 
 		if (args.length != 1) {
 			System.out.println("Wrong Usage");
+			return;
 		}
 
 		clusterName = args[0];
 
+		Cluster cluster = new Cluster();
+
 		try {
-			initQueues();
+			cluster.initQueues();
+			cluster.initSender();
+			cluster.initReceiver();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
 
-		try {
-			initSender();
-			initReceiver();
-		} catch (JMSException e1) {
-			e1.printStackTrace();
-			teardown();
-			return;
-		}
+		cluster.exec();
+
+		System.out.println("Cluster Service was quit by user - bye.");
+	}
+
+	private void exec() {
+
+		new Thread(new UserInputChecker(this)).start();
 
 		while (!stop) {
-
-			Message message;
 			try {
-				message = subscriber.receive();
+
+				Message message = queueReceiver.receive(1000);
 
 				if (message instanceof ObjectMessage) {
 					ObjectMessage objMessage = (ObjectMessage) message;
 
-					try {
-						Object object = objMessage.getObject();
-						if (object instanceof TaskDTO) {
-							TaskDTO taskDTO = (TaskDTO) object;
-							taskDTO = getUserInput(taskDTO);
+					Object object = objMessage.getObject();
+					if (object instanceof TaskDTO) {
 
-							if (taskDTO == null) {
-								return;
+						qConn.close();
+
+						taskDTO = (TaskDTO) object;
+
+						System.out
+								.println("Received a Task, what should i do?");
+						System.out
+								.println("Usage: accept {EASY|CHALLENGING} | deny | stop");
+						try {
+							synchronized (this) {
+								this.wait();
 							}
-
-							try {
-								ObjectMessage msg = session
-										.createObjectMessage();
-
-								msg.setStringProperty("name", "int_accept");
-								msg.setObject(taskDTO);
-
-								producer.send(msg);
-							} catch (JMSException e) {
-								e.printStackTrace();
-							}
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
 						}
-					} catch (JMSException e) {
-						e.printStackTrace();
+
+						if (stop)
+							break;
+
+						try {
+							initQueues();
+							initSender();
+							initReceiver();
+						} catch (NamingException e) {
+							e.printStackTrace();
+						}
+
+						ObjectMessage msg = queueSession.createObjectMessage();
+
+						msg.setStringProperty("name", "int_accept");
+						msg.setObject(taskDTO);
+
+						System.out.println("sending task back");
+
+						taskDTO = null;
+
+						producer.send(msg);
 					}
 				}
 			} catch (JMSException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		}
 
 		teardown();
 
-		System.out.println("Scheduler Service was quit by user - bye.");
+		return;
 	}
 
-	private void teardown() {
-		// TODO close everything
+	private static void teardown() {
+		try {
+			qConn.close();
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void initQueues() throws NamingException, JMSException {
 		InitialContext jndi = new InitialContext();
+		qFactory = (QueueConnectionFactory) jndi.lookup("dst.Factory");
 		serverQueue = (Queue) jndi.lookup("queue.dst.ServerQueue");
-		topic = (Topic) jndi.lookup("queue.dst.ClusterTopic");
-
-		QueueConnectionFactory qFactory = (QueueConnectionFactory) jndi
-				.lookup("dst.Factory");
-		Connection Conn = (Connection) qFactory.createConnection();
-		Conn.start();
-		session = Conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		receiverQueue = (Queue) jndi.lookup("queue.dst.ClusterQueue");
+		qConn = (QueueConnection) qFactory.createConnection();
+		qConn.start();
+		queueSession = qConn
+				.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
 	}
 
-	private void initSender() throws JMSException {
-		producer = session.createProducer(serverQueue);
+	private void initSender() {
+		try {
+			producer = queueSession.createProducer(serverQueue);
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void initReceiver() throws JMSException {
-		subscriber = session.createDurableSubscriber(topic, clusterName);
+		queueReceiver = queueSession.createReceiver(receiverQueue);
 	}
 
-	public static Session getSession() {
-		return Cluster.session;
-	}
+	public class UserInputChecker implements Runnable {
+		Cluster cluster;
 
-	public TaskDTO getUserInput(TaskDTO taskDTO) {
-
-		Scanner scan = new Scanner(System.in);
-
-		System.out.println("Received a Task, what should i do?");
-		System.out.println("Usage: accept {EASY|CHALLENGING} | deny | stop");
-		String cmd = scan.nextLine();
-
-		if (Pattern.matches("accept (EASY|CHALLENGING)$", cmd)) {
-			String complexityStr = cmd.split(" ")[1];
-			if (complexityStr.equals("EASY")) {
-				taskDTO.setComplexity(TaskComplexity.EASY);
-			} else {
-				taskDTO.setComplexity(TaskComplexity.CHALLENGING);
-			}
-			taskDTO.setStatus(TaskStatus.READY_FOR_PROCESSING);
-			taskDTO.setRatedBy(clusterName);
-		} else if (Pattern.matches("deny$", cmd)) {
-			taskDTO.setStatus(TaskStatus.PROCESSING_NOT_POSSIBLE);
-			taskDTO.setRatedBy(clusterName);
-		} else if (cmd.startsWith("stop")) {
-			return null;
-		} else {
-			System.out
-					.println("ERROR: Not a valid command! Usage: accept {EASY|CHALLENGING} | deny | stop");
+		public UserInputChecker(Cluster cluster) {
+			this.cluster = cluster;
 		}
 
-		return taskDTO;
-	}
+		public void run() {
 
+			Scanner scan = new Scanner(System.in);
+
+			while (!stop) {
+				String cmd = scan.nextLine();
+				if (Pattern.matches("accept (EASY|CHALLENGING)$", cmd)) {
+					if (taskDTO == null) {
+						System.out.println("No task received yet! wait for it");
+						break;
+					}
+					String complexityStr = cmd.split(" ")[1];
+					if (complexityStr.equals("EASY")) {
+						taskDTO.setComplexity(TaskComplexity.EASY);
+					} else {
+						taskDTO.setComplexity(TaskComplexity.CHALLENGING);
+					}
+					taskDTO.setStatus(TaskStatus.READY_FOR_PROCESSING);
+					taskDTO.setRatedBy(clusterName);
+					synchronized (cluster) {
+						cluster.notify();
+					}
+				} else if (Pattern.matches("deny$", cmd)) {
+					if (taskDTO == null) {
+						System.out.println("No task received yet! wait for it");
+						break;
+					}
+					taskDTO.setStatus(TaskStatus.PROCESSING_NOT_POSSIBLE);
+					taskDTO.setRatedBy(clusterName);
+					synchronized (cluster) {
+						cluster.notify();
+					}
+				} else if (cmd.equals("stop")) {
+					stop = true;
+					taskDTO = null;
+					synchronized (cluster) {
+						cluster.notify();
+					}
+				} else {
+					System.out
+							.println("ERROR: Not a valid command! Usage: accept {EASY|CHALLENGING} | deny | stop");
+				}
+			}
+		}
+	}
 }
