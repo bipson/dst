@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
@@ -19,6 +18,7 @@ import javax.jms.Topic;
 import javax.jms.TopicConnection;
 import javax.jms.TopicConnectionFactory;
 import javax.jms.TopicSession;
+import javax.jms.TopicSubscriber;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
@@ -32,7 +32,7 @@ public class Computer implements MessageListener {
 	private static Queue serverQueue;
 	private static Topic receiverTopic;
 	private static MessageProducer producer;
-	private static MessageConsumer consumer;
+	private static TopicSubscriber consumer;
 
 	private static String clusterSelector;
 	private static String pcName;
@@ -128,11 +128,14 @@ public class Computer implements MessageListener {
 		TopicConnectionFactory qFactory = (TopicConnectionFactory) jndi
 				.lookup("dst.Factory");
 		TopicConnection conn = (TopicConnection) qFactory.createConnection();
+		conn.setClientID(pcName);
+
 		conn.start();
 		topicSession = (TopicSession) conn.createSession(false,
 				Session.AUTO_ACKNOWLEDGE);
-		consumer = topicSession.createConsumer(receiverTopic, "Comb = '"
-				+ clusterSelector + ":" + complexity + "'");
+		consumer = topicSession.createDurableSubscriber(receiverTopic,
+				"computer", "Comb = '" + clusterSelector + ":" + complexity
+						+ "'", false);
 
 		consumer.setMessageListener(this);
 	}
