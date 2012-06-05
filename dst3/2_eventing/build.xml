@@ -29,7 +29,7 @@
     </target>
 
     <target name="run" depends="compile">
-        <java fork="true" classname="your.main.Class" classpathref="classpath"/>
+        <java fork="true" classname="dst3.eventing.EventProcessor" classpathref="classpath"/>
     </target>
     
     <target name="clean">
