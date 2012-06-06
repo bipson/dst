@@ -8,7 +8,7 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
-import com.espertech.esper.event.bean.BeanEventBean;
+import com.espertech.esper.event.map.MapEventBean;
 
 import dst3.DTO.TaskDTO;
 import dst3.model.TaskComplexity;
@@ -41,9 +41,9 @@ public class EventProcessor {
 		@Override
 		public void update(EventBean[] newData, EventBean[] oldData) {
 
-			BeanEventBean bEB = (BeanEventBean) newData[0].getUnderlying();
+			MapEventBean mEB = (MapEventBean) newData[0];
 
-			TaskDTO task = (TaskDTO) bEB.get("failed3");
+			TaskDTO task = (TaskDTO) mEB.get("failed3");
 
 			System.out.println("Received a 3x failed Task: " + task);
 		}
