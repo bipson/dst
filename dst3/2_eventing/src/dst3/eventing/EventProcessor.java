@@ -8,6 +8,7 @@ import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
+import com.espertech.esper.event.bean.BeanEventBean;
 
 import dst3.DTO.TaskDTO;
 import dst3.model.TaskComplexity;
@@ -35,13 +36,16 @@ public class EventProcessor {
 		}
 	}
 
-	public static class TaskListener implements UpdateListener {
+	public static class Task3xFailedListener implements UpdateListener {
 
 		@Override
 		public void update(EventBean[] newData, EventBean[] oldData) {
 
-			System.out.println("Received a 3x failed Task: "
-					+ newData[0].getUnderlying());
+			BeanEventBean bEB = (BeanEventBean) newData[0].getUnderlying();
+
+			TaskDTO task = (TaskDTO) bEB.get("failed3");
+
+			System.out.println("Received a 3x failed Task: " + task);
 		}
 	}
 
@@ -52,10 +56,9 @@ public class EventProcessor {
 
 	private static final String DURATION_SCHEMA_QUERY = "select * from TaskDuration";
 	private static final String DURATION_SCHEMA_QUERY2 = "select avg(duration) from TaskDuration.win:time(60 sec)";
-	private static final String TASK_QUERY = "select failed3 from pattern [every "
-			+ "(ready = Task(status=dst3.model.TaskStatus.READY_FOR_PROCESSING) -> failed = Task(status=dst3.model.TaskStatus.PROCESSING_NOT_POSSIBLE)"
-			+ " -> ready2 = Task(status=dst3.model.TaskStatus.READY_FOR_PROCESSING) -> failed2 = Task(status=dst3.model.TaskStatus.PROCESSING_NOT_POSSIBLE)"
-			+ " -> ready3 = Task(status=dst3.model.TaskStatus.READY_FOR_PROCESSING) -> failed3 = Task(status=dst3.model.TaskStatus.PROCESSING_NOT_POSSIBLE) )]";
+	private static final String TASK_3FAILED_PATTERN = "every (ready = Task(status=dst3.model.TaskStatus.READY_FOR_PROCESSING) -> failed = Task(jobId = ready.jobId, status=dst3.model.TaskStatus.PROCESSING_NOT_POSSIBLE)"
+			+ " -> ready2 = Task(jobId=failed.jobId, status=dst3.model.TaskStatus.READY_FOR_PROCESSING) -> failed2 = Task(jobId=ready2.jobId, status=dst3.model.TaskStatus.PROCESSING_NOT_POSSIBLE)"
+			+ " -> ready3 = Task(jobId=failed2.jobId, status=dst3.model.TaskStatus.READY_FOR_PROCESSING) -> failed3 = Task(jobId=ready3.jobId, status=dst3.model.TaskStatus.PROCESSING_NOT_POSSIBLE) )";
 
 	private static final String ASSIGNED_SCHEMA = "create schema TaskAssigned as (jobId long, timeStamp long)";
 	private static final String PROCESSED_SCHEMA = "create schema TaskProcessed as (jobId long, timeStamp long)";
@@ -94,18 +97,16 @@ public class EventProcessor {
 
 		EPStatement durationSchemaQueryStatement = cepAdm
 				.createEPL(DURATION_SCHEMA_QUERY);
-
 		durationSchemaQueryStatement.addListener(new DurationSchemaListener());
 
 		EPStatement durationSchemaQueryStatement2 = cepAdm
 				.createEPL(DURATION_SCHEMA_QUERY2);
-
 		durationSchemaQueryStatement2
 				.addListener(new DurationSchemaListener2());
 
-		EPStatement taskQueryStatement2 = cepAdm.createEPL(TASK_QUERY);
-
-		taskQueryStatement2.addListener(new TaskListener());
+		EPStatement task3xFailedQueryStatement = cepAdm
+				.createPattern(TASK_3FAILED_PATTERN);
+		task3xFailedQueryStatement.addListener(new Task3xFailedListener());
 
 		TaskDTO task1 = assign(cepRT, 1L, 1L); // entry 1
 		TaskDTO task2 = assign(cepRT, 2L, 2L); // entry 2
