@@ -3,8 +3,10 @@
 		<aspect name="dst3.aspect.LoggerAspect"/>
 	</aspects>
 	
-<!--	<weaver> -->
+<weaver>
+<!--
 		<weaver options="-verbose">
+-->
 		<exclude within="java.*"/>
 		<exclude within="javax.*"/>
 		<exclude within="org.apache.*"/>

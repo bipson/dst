@@ -1,4 +1,4 @@
-package dst3.aspect.annotation;
+package dst3.dynload.logging;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
