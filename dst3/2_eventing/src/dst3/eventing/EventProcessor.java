@@ -144,6 +144,11 @@ public class EventProcessor {
 		ready(cepRT, task6);
 		failed(cepRT, task6); // failed 6 1x
 
+		wait_msec(1256);
+
+		ready(cepRT, task5);
+		finished(cepRT, task5); // end 5
+
 		TaskDTO task7 = assign(cepRT, 7L, 7L); // entry 7
 
 		wait_msec(145);

@@ -32,7 +32,7 @@
 
 	<!-- Set your main class -->
 	<target name="run" depends="compile">
-		<java classname="your.main.Class" fork="true" classpathref="classpath">
+		<java classname="dst3.dynload.Loader" fork="true" classpathref="classpath">
 			<jvmarg value="-javaagent:${lib.dir}/aspectjweaver.jar"/>	
 			<jvmarg value="-Djava.util.logging.config.file=META-INF/logging.properties"/>
 			<!-- This option is required for compatibility with Java 1.7,
