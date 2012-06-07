@@ -38,7 +38,6 @@ public class MonitorThread implements Runnable {
 				continue;
 			if (file.getPath().endsWith(".jar")) {
 				try {
-					System.out.println(file);
 					new JarHandler(file).find();
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
