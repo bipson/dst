@@ -46,27 +46,27 @@ public class ServerBean implements MessageListener {
 	@PersistenceContext
 	private EntityManager entityManager;
 
+	Session session = null;
+	QueueConnection qConnection;
+
+	QueueSender schedulerQueueSender;
+	QueueSender clusterQueueSender;
+	TopicPublisher computerPublisher;
+
 	@Override
 	public void onMessage(Message message) {
-		if (message instanceof MapMessage) {
-			ICmd command;
-			try {
+		try {
+			if (message instanceof MapMessage) {
+				ICmd command;
+
 				command = cmdMap.get(((MapMessage) message).getString("name"));
 
 				if (command != null) {
 					command.init((Message) message);
 					command.exec();
 				}
-			} catch (JMSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (CmdException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else if (message instanceof ObjectMessage) {
-			ICmd command;
-			try {
+			} else if (message instanceof ObjectMessage) {
+				ICmd command;
 				command = cmdMap.get(((ObjectMessage) message)
 						.getStringProperty("name"));
 
@@ -74,13 +74,12 @@ public class ServerBean implements MessageListener {
 					command.init((Message) message);
 					command.exec();
 				}
-			} catch (JMSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (CmdException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
 			}
+		} catch (JMSException e) {
+			e.printStackTrace();
+		} catch (CmdException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -89,14 +88,10 @@ public class ServerBean implements MessageListener {
 	@PostConstruct
 	private void init() {
 
-		Session session = null;
-
-		QueueSender schedulerQueueSender;
-		QueueSender clusterQueueSender;
-		TopicPublisher computerPublisher;
 		try {
-			QueueConnection connection = factory.createQueueConnection();
-			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+			qConnection = factory.createQueueConnection();
+			session = qConnection
+					.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
 			Provider.setEntityManager(entityManager);
 			Provider.setSession(session);
@@ -122,8 +117,18 @@ public class ServerBean implements MessageListener {
 		cmdMap.put("int_processed", new ProcessCmd(schedulerQueueSender));
 	}
 
+	@SuppressWarnings("unused")
 	@PreDestroy
 	private void tearDown() {
-
+		try {
+			cmdMap.clear();
+			qConnection.close();
+			session.close();
+			schedulerQueueSender.close();
+			clusterQueueSender.close();
+			computerPublisher.close();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
 	}
 }

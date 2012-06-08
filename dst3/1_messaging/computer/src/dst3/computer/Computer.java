@@ -117,7 +117,6 @@ public class Computer implements MessageListener {
 		QueueConnectionFactory qFactory = (QueueConnectionFactory) jndi
 				.lookup("dst.Factory");
 		QueueConnection conn = (QueueConnection) qFactory.createConnection();
-		// conn.start();
 		queueSession = conn.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
 		producer = queueSession.createProducer(serverQueue);
 	}
