@@ -1,33 +1,32 @@
 package dst3.aspect;
 
-import java.lang.reflect.Field;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+
+import dst3.dynload.IPluginExecutable;
 
 @Aspect
 public class LoggerAspect {
 	@Before("execution( !@dst3.dynload.logging.Invisible * dst3.dynload.IPluginExecutable+.execute() )")
 	public void atStart(JoinPoint joinPoint) {
 
+		IPluginExecutable target = joinPoint.getTarget();
+
 		Class<?> clazz = joinPoint.getTarget().getClass();
 
-		for (Field currentField : clazz.getDeclaredFields()) {
-			if (Logger.class.isAssignableFrom(currentField.getType())) {
-				currentField.setAccessible(true);
+		for (Field field : clazz.getDeclaredFields()) {
+			if (Logger.class.isAssignableFrom(field.getType())) {
+				field.setAccessible(true);
 				try {
-					Logger logger = (Logger) currentField.get(joinPoint
-							.getTarget());
+					Logger logger = (Logger) field.get(target);
 					if (logger == null)
 						continue;
 
-					logger.log(Level.INFO, "Aspect: Execution of "
-							+ joinPoint.getTarget().getClass().toString()
-							+ " started.");
+					logger.log(Level.INFO,
+							"Execution of Plugin '" + clazz.getCanonicalName()
+									+ "' started");
 					return;
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block
@@ -46,20 +45,21 @@ public class LoggerAspect {
 	@After("execution( !@dst3.dynload.logging.Invisible * dst3.dynload.IPluginExecutable+.execute() )")
 	public void atEnd(JoinPoint joinPoint) {
 
+		IPluginExecutable target = joinPoint.getTarget();
+
 		Class<?> clazz = joinPoint.getTarget().getClass();
 
-		for (Field currentField : clazz.getDeclaredFields()) {
-			if (Logger.class.isAssignableFrom(currentField.getType())) {
-				currentField.setAccessible(true);
+		for (Field field : clazz.getDeclaredFields()) {
+			if (Logger.class.isAssignableFrom(field.getType())) {
+				field.setAccessible(true);
 				try {
-					Logger logger = (Logger) currentField.get(joinPoint
-							.getTarget());
+					Logger logger = (Logger) field.get(target);
 					if (logger == null)
 						continue;
 
-					logger.log(Level.INFO, "Aspect: Execution of "
-							+ joinPoint.getTarget().getClass().toString()
-							+ " started.");
+					logger.log(Level.INFO,
+							"Execution of Plugin '" + clazz.getCanonicalName()
+									+ "' finished");
 					return;
 				} catch (IllegalArgumentException e) {
 					// TODO Auto-generated catch block

@@ -22,14 +22,17 @@ import dst3.model.TaskStatus;
 
 public class Cluster {
 
+	private static InitialContext jndi;
 	private static QueueConnectionFactory qFactory;
 	private static Queue serverQueue;
 	private static Queue receiverQueue;
 	private static MessageProducer producer;
 	private static QueueReceiver queueReceiver;
-	private static Boolean stop = false;
 	private static QueueSession queueSession;
 	private static QueueConnection qConn;
+
+	private static Boolean stop = false;
+	Thread userInputThread;
 
 	private static String clusterName;
 	private static TaskDTO taskDTO;
@@ -62,7 +65,8 @@ public class Cluster {
 
 	private void exec() {
 
-		new Thread(new UserInputChecker(this)).start();
+		userInputThread = new Thread(new UserInputChecker(this));
+		userInputThread.start();
 
 		while (!stop) {
 			try {
@@ -127,15 +131,24 @@ public class Cluster {
 
 	private static void teardown() {
 		try {
+			qConn.stop();
+			producer.close();
+			queueReceiver.close();
 			qConn.close();
+			queueSession.close();
+			jndi.close();
+
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} finally {
+			System.exit(0);
 		}
 	}
 
 	private void initQueues() throws NamingException, JMSException {
-		InitialContext jndi = new InitialContext();
+		jndi = new InitialContext();
 		qFactory = (QueueConnectionFactory) jndi.lookup("dst.Factory");
 		serverQueue = (Queue) jndi.lookup("queue.dst.ServerQueue");
 		receiverQueue = (Queue) jndi.lookup("queue.dst.ClusterQueue");

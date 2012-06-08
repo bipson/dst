@@ -105,7 +105,6 @@ public class ServerBean implements MessageListener {
 			computerPublisher = (TopicPublisher) session
 					.createProducer(computerTopic);
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return;
 		}

@@ -4,20 +4,17 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+import javax.jms.Connection;
+import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Queue;
-import javax.jms.QueueConnection;
-import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueSession;
 import javax.jms.Session;
 import javax.jms.Topic;
-import javax.jms.TopicConnection;
-import javax.jms.TopicConnectionFactory;
-import javax.jms.TopicSession;
 import javax.jms.TopicSubscriber;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -27,17 +24,18 @@ import dst3.model.TaskStatus;
 
 public class Computer implements MessageListener {
 
-	private static QueueSession queueSession;
-	private static TopicSession topicSession;
+	private static InitialContext jndi;
+	private static Session session;
 	private static Queue serverQueue;
 	private static Topic receiverTopic;
 	private static MessageProducer producer;
 	private static TopicSubscriber consumer;
+	private static Connection conn;
 
 	private static String clusterSelector;
 	private static String pcName;
 	private static String complexity;
-	private Boolean stop = false;
+	private static Boolean stop = false;
 
 	private static HashMap<Long, TaskDTO> taskMap = new HashMap<Long, TaskDTO>();
 
@@ -56,11 +54,11 @@ public class Computer implements MessageListener {
 
 		new Computer().execute();
 
-		System.out.println("Computer Service was quit by user - bye.");
 	}
 
 	public void execute() {
 		try {
+			initQueues();
 			initSender();
 			initReceiver();
 		} catch (JMSException e) {
@@ -71,70 +69,92 @@ public class Computer implements MessageListener {
 			e.printStackTrace();
 		}
 
+		Scanner scan = new Scanner(System.in);
+
 		while (!stop) {
-
-			Scanner scan = new Scanner(System.in);
-
-			while (!stop) {
-				String cmd = scan.nextLine();
-				if (Pattern.matches("processed [0-9]+$", cmd)) {
-					Long taskId = getSingleIntArg(cmd);
-					TaskDTO task = taskMap.get(taskId);
-					if (task == null) {
-						System.out.println("No such task received");
-						break;
-					}
-
-					task.setStatus(TaskStatus.PROCESSED);
-
-					try {
-						ObjectMessage msg = queueSession.createObjectMessage();
-						msg.setStringProperty("name", "int_processed");
-						msg.setObject(task);
-
-						producer.send(msg);
-
-						System.out.println("sending task back");
-					} catch (JMSException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-
-				} else if (cmd.equals("stop")) {
-					stop = true;
-				} else {
-					System.out
-							.println("ERROR: Not a valid command! Usage: processed <task-id> | stop");
+			String cmd = scan.nextLine();
+			if (Pattern.matches("processed [0-9]+$", cmd)) {
+				Long taskId = getSingleIntArg(cmd);
+				TaskDTO task = taskMap.get(taskId);
+				if (task == null) {
+					System.out.println("No such task received");
+					break;
 				}
+
+				task.setStatus(TaskStatus.PROCESSED);
+
+				try {
+					ObjectMessage msg = session.createObjectMessage();
+					msg.setStringProperty("name", "int_processed");
+					msg.setObject(task);
+
+					producer.send(msg);
+					taskMap.remove(task);
+
+					System.out.println("sending task back");
+				} catch (JMSException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			} else if (cmd.equals("stop")) {
+				stop = true;
+			} else {
+				System.out
+						.println("ERROR: Not a valid command! Usage: processed <task-id> | stop");
 			}
 		}
 
+		System.out.println("Computer Service was quit by user - bye.");
+
+		teardown();
+
+	}
+
+	private void teardown() {
+		try {
+			conn.stop();
+			producer.close();
+			consumer.close();
+			conn.close();
+			session.close();
+			jndi.close();
+		} catch (JMSException e) {
+			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} finally {
+			System.exit(0);
+		}
+	}
+
+	private void initQueues() {
+		try {
+			jndi = new InitialContext();
+			serverQueue = (Queue) jndi.lookup("queue.dst.ServerQueue");
+			receiverTopic = (Topic) jndi.lookup("topic.dst.ComputerTopic");
+			ConnectionFactory cFactory = (ConnectionFactory) jndi
+					.lookup("dst.Factory");
+			conn = cFactory.createConnection();
+			conn.setClientID(pcName);
+			session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		} catch (NamingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private void initSender() throws JMSException, NamingException {
-		InitialContext jndi = new InitialContext();
-		serverQueue = (Queue) jndi.lookup("queue.dst.ServerQueue");
-		QueueConnectionFactory qFactory = (QueueConnectionFactory) jndi
-				.lookup("dst.Factory");
-		QueueConnection conn = (QueueConnection) qFactory.createConnection();
-		queueSession = conn.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-		producer = queueSession.createProducer(serverQueue);
+		producer = ((QueueSession) session).createProducer(serverQueue);
 	}
 
 	private void initReceiver() throws JMSException, NamingException {
-		InitialContext jndi = new InitialContext();
-		receiverTopic = (Topic) jndi.lookup("topic.dst.ComputerTopic");
-		TopicConnectionFactory qFactory = (TopicConnectionFactory) jndi
-				.lookup("dst.Factory");
-		TopicConnection conn = (TopicConnection) qFactory.createConnection();
-		conn.setClientID(pcName);
-
 		conn.start();
-		topicSession = (TopicSession) conn.createSession(false,
-				Session.AUTO_ACKNOWLEDGE);
-		consumer = topicSession.createDurableSubscriber(receiverTopic,
-				"computer", "Comb = '" + clusterSelector + ":" + complexity
-						+ "'", false);
+		consumer = session.createDurableSubscriber(receiverTopic, "computer",
+				"Comb = '" + clusterSelector + ":" + complexity + "'", false);
 
 		consumer.setMessageListener(this);
 	}

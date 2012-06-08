@@ -23,6 +23,7 @@ import dst3.DTO.TaskDTO;
 
 public class Scheduler implements MessageListener {
 
+	private InitialContext jndi;
 	private static QueueSession session;
 	private static Queue serverQueue;
 	private static Queue receiverQueue;
@@ -71,9 +72,9 @@ public class Scheduler implements MessageListener {
 
 		scan.close();
 
-		teardown();
-
 		System.out.println("Scheduler Service was quit by user - bye.");
+
+		teardown();
 	}
 
 	private void teardown() {
@@ -83,13 +84,19 @@ public class Scheduler implements MessageListener {
 			receiver.close();
 			qConn.close();
 			session.close();
+			jndi.close();
 		} catch (JMSException e) {
 			e.printStackTrace();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		} finally {
+			// due to bug in glassfish
+			System.exit(0);
 		}
 	}
 
 	private void initQueues() throws NamingException, JMSException {
-		InitialContext jndi = new InitialContext();
+		jndi = new InitialContext();
 		QueueConnectionFactory qFactory = (QueueConnectionFactory) jndi
 				.lookup("dst.Factory");
 		serverQueue = (Queue) jndi.lookup("queue.dst.ServerQueue");
