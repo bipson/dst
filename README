@@ -1,4 +1,4 @@
 This repo contains my solutions (at least 90% of the code written by me) for the DST course SS2012 for further reference (mostly for future me - hi there!).
 The assignmentN.pdf describes the exercices solved in folder dstN.
-Importing into Eclipse as existing ant project with corresponding build.xml is the fastest way of getting the stuff up and running or see the project unfolds.
+Importing into Eclipse as existing ant project with corresponding build.xml is the fastest way of getting the stuff up and running or for just taking a peek at the code.
 Don't forget to setup Glassfish 3.x and MySQL.
