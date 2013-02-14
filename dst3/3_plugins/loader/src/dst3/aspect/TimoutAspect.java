@@ -18,9 +18,7 @@ public class TimoutAspect {
 			throws Throwable {
 		Timer timer = new Timer();
 
-		Long killin = timeout.timeout();
-
-		if (!(killin == 0L)) {
+		if (!(timeout.timeout() == 0L)) {
 			timer.schedule(new MyWatcher(joinPoint.getTarget()),
 					timeout.timeout());
 		}

@@ -1,5 +1,9 @@
 package dst3.aspect;
 
+import java.lang.reflect.Field;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,29 +16,29 @@ public class LoggerAspect {
 	@Before("execution( !@dst3.dynload.logging.Invisible * dst3.dynload.IPluginExecutable+.execute() )")
 	public void atStart(JoinPoint joinPoint) {
 
-		IPluginExecutable target = joinPoint.getTarget();
+		IPluginExecutable target = (IPluginExecutable) joinPoint.getTarget();
 
 		Class<?> clazz = joinPoint.getTarget().getClass();
 
 		for (Field field : clazz.getDeclaredFields()) {
 			if (Logger.class.isAssignableFrom(field.getType())) {
 				field.setAccessible(true);
+				field.setAccessible(true);
+				Logger logger = null;
 				try {
-					Logger logger = (Logger) field.get(target);
-					if (logger == null)
-						continue;
-
-					logger.log(Level.INFO,
-							"Execution of Plugin '" + clazz.getCanonicalName()
-									+ "' started");
-					return;
+					logger = (Logger) field.get(target);
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				if (logger == null)
+					continue;
+
+				logger.log(Level.INFO,
+						"Execution of Plugin '" + clazz.getCanonicalName()
+								+ "' started");
+				return;
 			}
 		}
 
@@ -45,29 +49,28 @@ public class LoggerAspect {
 	@After("execution( !@dst3.dynload.logging.Invisible * dst3.dynload.IPluginExecutable+.execute() )")
 	public void atEnd(JoinPoint joinPoint) {
 
-		IPluginExecutable target = joinPoint.getTarget();
+		IPluginExecutable target = (IPluginExecutable) joinPoint.getTarget();
 
 		Class<?> clazz = joinPoint.getTarget().getClass();
 
 		for (Field field : clazz.getDeclaredFields()) {
 			if (Logger.class.isAssignableFrom(field.getType())) {
 				field.setAccessible(true);
+				Logger logger = null;
 				try {
-					Logger logger = (Logger) field.get(target);
-					if (logger == null)
-						continue;
-
-					logger.log(Level.INFO,
-							"Execution of Plugin '" + clazz.getCanonicalName()
-									+ "' finished");
-					return;
+					logger = (Logger) field.get(target);
 				} catch (IllegalArgumentException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				if (logger == null)
+					continue;
+
+				logger.log(Level.INFO,
+						"Execution of Plugin '" + clazz.getCanonicalName()
+								+ "' finished");
+				return;
 			}
 		}
 

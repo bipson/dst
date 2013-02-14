@@ -22,11 +22,15 @@ public class MatchingClassInvisible implements IPluginExecutable {
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void interrupted() {
 		System.out.println(this.getClass().getCanonicalName()
 				+ ": I was INTERRUPTED! Oh noes!");
 		executionThread.interrupt();
+		// Although this considered harmful, we wan't to fulfill the
+		// specification, don't we?
+		executionThread.stop();
 	}
 
 }

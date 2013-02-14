@@ -17,19 +17,22 @@ public class MatchingClassTooLong implements IPluginExecutable {
 			Thread.sleep(2000);
 			System.out.println(this.getClass().getCanonicalName()
 					+ ": I can't feel my legs, but I'm alive!");
-			Thread.sleep(2000);
-			wait();
 		} catch (InterruptedException e) {
 			System.out.println(this.getClass().getCanonicalName()
 					+ ": execution interrupted");
+			return;
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void interrupted() {
 		System.out.println(this.getClass().getCanonicalName()
 				+ ": I was INTERRUPTED! Oh noes!");
 		executionThread.interrupt();
+		// Although this considered harmful, we wan't to fulfill the
+		// specification, don't we?
+		executionThread.stop();
 	}
 
 }
